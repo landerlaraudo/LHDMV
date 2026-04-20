@@ -102,10 +102,15 @@
       aspect-ratio: 1 / 1;
       border-radius: 34px;
       border: 9px solid rgba(25, 25, 28, 0.8);
-      background-color: #ffb58d;
+      background-image:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(26, 26, 30, 0.82)),
+        url("songs/all%20the%20stars.jpeg");
+      background-size: cover;
+      background-position: center;
       box-shadow:
         0 24px 38px rgba(0, 0, 0, 0.4),
         inset 0 -55px 70px rgba(0, 0, 0, 0.52);
+      transition: background-image 0.3s ease;
     }
     .title-large-inner {
       width: 100%;
@@ -173,7 +178,7 @@
       font-size: 11px;
     }
     .player-bottom {
-      background: linear-gradient(180deg, rgba(255, 254, 253, 0), );
+      background: linear-gradient(180deg, rgba(15, 15, 18, 0));
       border-radius: 16px;
       padding: 10px 8px 7px;
     }
@@ -280,6 +285,73 @@
       color: #fff;
       font-size: 12px;
     }
+    .music-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 50;
+      display: none;
+      align-items: flex-end;
+    }
+    .music-overlay.open { display: flex; }
+    .music-overlay-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+    }
+    .music-panel {
+      position: relative;
+      width: 100%;
+      max-height: 62%;
+      border-radius: 22px 22px 0 0;
+      background: rgba(20, 20, 24, 0.94);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      padding: 14px;
+      overflow: auto;
+    }
+    .music-panel-title {
+      font-family: "NeueHaas", sans-serif;
+      font-size: 19px;
+      margin-bottom: 10px;
+    }
+    .song-list { display: grid; gap: 8px; }
+    .song-item {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+      padding: 10px;
+      text-align: left;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .song-item.active {
+      background: rgba(255, 143, 90, 0.22);
+      border-color: rgba(255, 255, 255, 0.24);
+    }
+    .song-title {
+      font-size: 13px;
+      font-family: "NeueHaas", sans-serif;
+    }
+    .song-artist {
+      margin-top: 2px;
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .song-cover {
+      width: 42px;
+      height: 42px;
+      border-radius: 10px;
+      background-size: cover;
+      background-position: center;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      flex: 0 0 auto;
+    }
+    .song-text { min-width: 0; }
   </style>
 </head>
 <body>
@@ -304,13 +376,14 @@
       <h1>I’m giving my mind<br />some space... |</h1>
 
       <section class="grid">
-        <article class="tile title large">
+        <article class="tile title large" id="playerCard">
           <div class="title-large-inner">
             <div class="player-top">
               <div class="author-pill">
                 <div class="avatar"></div>
                 <div class="author-meta">
-                  <div class="author-name">Terence Howard</div>
+                  <div class="author-name" id="authorName">Kendrick Lamar</div>
+                  <div class="author-handle" id="trackName">@allthestars</div>
                 </div>
               </div>
               <div class="top-actions">
@@ -320,14 +393,14 @@
             </div>
             <div class="player-bottom">
               <div class="time-row">
-                <span>0:52</span>
-                <span>-1:21</span>
+                <span id="currentTime">0:00</span>
+                <span id="remainingTime">-0:00</span>
               </div>
-              <div class="bar"><span></span></div>
+              <div class="bar"><span id="progressFill"></span></div>
               <div class="player-controls">
-                <button class="circle-btn" aria-label="Prev">⏮</button>
+                <button class="circle-btn" id="prevBtn" aria-label="Prev">⏮</button>
                 <button class="circle-btn play" id="playBtn" aria-label="Play">▶</button>
-                <button class="circle-btn" aria-label="Next">⏭</button>
+                <button class="circle-btn" id="nextBtn" aria-label="Next">⏭</button>
               </div>
             </div>
           </div>
@@ -359,6 +432,14 @@
         </article>
       </section>
     </section>
+
+    <section class="music-overlay" id="musicOverlay">
+      <div class="music-overlay-backdrop" id="overlayBackdrop"></div>
+      <div class="music-panel">
+        <h2 class="music-panel-title">Songs</h2>
+        <div class="song-list" id="songList"></div>
+      </div>
+    </section>
   </main>
   <script>
     document.querySelectorAll(".tab").forEach((tab) => {
@@ -368,12 +449,145 @@
       });
     });
 
+    const songs = [
+      {
+        src: "songs/All The Stars.mp3",
+        title: "All The Stars",
+        artist: "Kendrick Lamar",
+        cover: "songs/all the stars.jpeg"
+      },
+      {
+        src: "songs/Cinnamon Girl.mp3",
+        title: "Cinnamon Girl",
+        artist: "Lana Del Rey",
+        cover: "songs/Cinnamon Girl.jpg"
+      },
+      {
+        src: "songs/Say Yes To Heaven.mp3",
+        title: "Say Yes To Heaven",
+        artist: "Lana Del Rey",
+        cover: "songs/Say Yes To Heaven.webp"
+      },
+      {
+        src: "songs/The Cranberries - Linger.mp3",
+        title: "Linger",
+        artist: "The Cranberries",
+        cover: "songs/Linger.jpg"
+      }
+    ];
+
+    const audio = new Audio();
+    let currentIndex = 0;
+
+    const playerCard = document.getElementById("playerCard");
     const playBtn = document.getElementById("playBtn");
-    let isPlaying = false;
-    playBtn.addEventListener("click", () => {
-      isPlaying = !isPlaying;
-      playBtn.textContent = isPlaying ? "⏸" : "▶";
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const currentTimeEl = document.getElementById("currentTime");
+    const remainingTimeEl = document.getElementById("remainingTime");
+    const progressFill = document.getElementById("progressFill");
+    const authorName = document.getElementById("authorName");
+    const trackName = document.getElementById("trackName");
+    const musicOverlay = document.getElementById("musicOverlay");
+    const overlayBackdrop = document.getElementById("overlayBackdrop");
+    const songList = document.getElementById("songList");
+
+    function formatTime(seconds) {
+      if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
+      const mins = Math.floor(seconds / 60);
+      const secs = Math.floor(seconds % 60);
+      return `${mins}:${String(secs).padStart(2, "0")}`;
+    }
+
+    function loadSong(index, autoplay = false) {
+      currentIndex = (index + songs.length) % songs.length;
+      const song = songs[currentIndex];
+      audio.src = encodeURI(song.src);
+      authorName.textContent = song.artist;
+      trackName.textContent = `@${song.title.toLowerCase().replace(/\s+/g, "")}`;
+      playerCard.style.backgroundImage = `linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(26, 26, 30, 0.82)), url("${encodeURI(song.cover)}")`;
+      currentTimeEl.textContent = "0:00";
+      remainingTimeEl.textContent = "-0:00";
+      progressFill.style.width = "0%";
+      renderSongList();
+      if (autoplay) {
+        audio.play().catch(() => {});
+      }
+      updatePlayButton();
+    }
+
+    function updatePlayButton() {
+      playBtn.textContent = audio.paused ? "▶" : "⏸";
+    }
+
+    function togglePlay() {
+      if (!audio.src) loadSong(currentIndex, false);
+      if (audio.paused) {
+        audio.play().catch(() => {});
+      } else {
+        audio.pause();
+      }
+      updatePlayButton();
+    }
+
+    function nextSong(autoplay = true) {
+      loadSong(currentIndex + 1, autoplay);
+    }
+
+    function prevSong(autoplay = true) {
+      loadSong(currentIndex - 1, autoplay);
+    }
+
+    function renderSongList() {
+      songList.innerHTML = "";
+      songs.forEach((song, index) => {
+        const item = document.createElement("button");
+        item.className = `song-item${index === currentIndex ? " active" : ""}`;
+        item.innerHTML = `<div class="song-cover" style="background-image:url('${encodeURI(song.cover)}')"></div><div class="song-text"><div class="song-title">${song.title}</div><div class="song-artist">${song.artist}</div></div>`;
+        item.addEventListener("click", () => {
+          loadSong(index, true);
+          closeOverlay();
+        });
+        songList.appendChild(item);
+      });
+    }
+
+    function openOverlay() {
+      musicOverlay.classList.add("open");
+    }
+
+    function closeOverlay() {
+      musicOverlay.classList.remove("open");
+    }
+
+    playerCard.addEventListener("click", openOverlay);
+    overlayBackdrop.addEventListener("click", closeOverlay);
+    playBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      togglePlay();
     });
+    nextBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      nextSong(true);
+    });
+    prevBtn.addEventListener("click", (event) => {
+      event.stopPropagation();
+      prevSong(true);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      const current = audio.currentTime || 0;
+      const duration = audio.duration || 0;
+      currentTimeEl.textContent = formatTime(current);
+      remainingTimeEl.textContent = `-${formatTime(duration - current)}`;
+      const progress = duration > 0 ? (current / duration) * 100 : 0;
+      progressFill.style.width = `${progress}%`;
+    });
+    audio.addEventListener("play", updatePlayButton);
+    audio.addEventListener("pause", updatePlayButton);
+    audio.addEventListener("ended", () => nextSong(true));
+
+    loadSong(0, false);
   </script>
 </body>
 </html>
