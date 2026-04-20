@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Viajes</title>
+  <style>
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayRoman.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayLight.ttf") format("truetype"); font-weight: 300; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayXXThin.ttf") format("truetype"); font-weight: 100; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayBold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Reg.otf") format("opentype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Lig.otf") format("opentype"); font-weight: 300; }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f6f6f8;
+      --ink: #141518;
+      --muted: #6f7380;
+      --shadow: 0 16px 30px rgba(17, 18, 24, 0.08);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(120% 80% at 10% -10%, rgba(255, 187, 149, 0.18), transparent 50%),
+        radial-gradient(100% 70% at 90% 0%, rgba(162, 184, 255, 0.14), transparent 45%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Europa", system-ui, sans-serif;
+    }
+
+    .shell {
+      width: min(520px, 100%);
+      margin: 0 auto;
+      padding: max(env(safe-area-inset-top), 18px) 16px max(env(safe-area-inset-bottom), 40px);
+    }
+
+    .topbar {
+      padding: calc(max(env(safe-area-inset-top), 18px) + 16.67vh) 0 24px;
+    }
+
+    .title {
+      font-family: "NeueHaas", sans-serif;
+      font-weight: 700;
+      font-size: clamp(48px, 14vw, 80px);
+      letter-spacing: -0.02em;
+      line-height: 0.88;
+      text-transform: uppercase;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      width: 90%;
+      line-height: 1.5;
+    }
+
+    .trips {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+    }
+
+    .trip-card {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(17, 18, 24, 0.18);
+      cursor: pointer;
+      display: block;
+      text-decoration: none;
+    }
+
+    .trip-bg {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .trip-card:hover .trip-bg { transform: scale(1.04); }
+
+    .trip-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.18) 0%,
+        rgba(0,0,0,0.0) 35%,
+        rgba(0,0,0,0.0) 45%,
+        rgba(0,0,0,0.65) 100%
+      );
+    }
+
+    .trip-top {
+      position: absolute;
+      top: 18px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trip-label {
+      font-family: "Europa", sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
+      letter-spacing: 0.01em;
+    }
+
+    .trip-dots {
+      display: flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .trip-dots span {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.7);
+      display: block;
+    }
+
+    .trip-bottom {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      right: 20px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .trip-title {
+      font-family: "NeueHaas", sans-serif;
+      font-weight: 300;
+      font-size: clamp(22px, 6vw, 30px);
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .trip-arrow {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 18px;
+      color: var(--ink);
+      transition: transform 0.2s, background 0.2s;
+      pointer-events: none;
+    }
+    .trip-card:hover .trip-arrow { transform: translate(2px, -2px); }
+
+    /* — Nav — */
+    .icon-chip {
+      width: 13px;
+      height: 13px;
+      border-radius: 50%;
+      background: #0a0a0e;
+      border: none;
+      display: block;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: transform 0.18s;
+      position: fixed;
+      top: max(env(safe-area-inset-top), 18px);
+      right: 16px;
+      z-index: 98;
+    }
+    .icon-chip:hover { transform: scale(1.08); }
+
+    @keyframes linkIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 10px; left: 8px; right: 8px;
+      bottom: auto;
+      max-height: calc(100vh - 20px);
+      z-index: 100;
+      border-radius: 28px;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(28px) saturate(1.6);
+      -webkit-backdrop-filter: blur(28px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.07);
+      padding: 28px 28px 28px;
+      display: flex;
+      flex-direction: column;
+      clip-path: circle(0% at calc(100% - 24px) 38px);
+      opacity: 0;
+      transition: clip-path 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .nav-menu.open {
+      clip-path: circle(150% at calc(100% - 28px) 44px);
+      opacity: 1;
+      pointer-events: all;
+    }
+    .nav-menu-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 40px;
+    }
+    .nav-brand {
+      font-family: "NeueHaas", sans-serif;
+      font-weight: 100;
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.35);
+    }
+    .nav-close {
+      background: none;
+      border: none;
+      color: rgba(0,0,0,0.5);
+      font-family: "Europa", sans-serif;
+      font-weight: 300;
+      font-size: 26px;
+      cursor: pointer;
+      line-height: 1;
+      transition: color 0.18s;
+      padding: 0;
+    }
+    .nav-close:hover { color: #000; }
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      justify-content: center;
+      gap: 0;
+    }
+    .nav-link {
+      font-family: "NeueHaas", sans-serif;
+      font-weight: 300;
+      font-size: clamp(32px, 9vw, 44px);
+      color: rgba(0,0,0,0.75);
+      text-decoration: none;
+      letter-spacing: -0.03em;
+      padding: 4px 0;
+      display: flex;
+      align-items: baseline;
+      gap: 12px;
+      transition: color 0.2s;
+      opacity: 0;
+    }
+    .nav-menu.open .nav-link:nth-child(1) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.18s both; }
+    .nav-menu.open .nav-link:nth-child(2) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.24s both; }
+    .nav-menu.open .nav-link:nth-child(3) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
+    .nav-menu.open .nav-link:nth-child(4) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.36s both; }
+    .nav-link:hover { color: #000; }
+    .nav-link-arrow {
+      margin-left: auto;
+      font-size: 14px;
+      color: rgba(0,0,0,0.18);
+      transition: transform 0.2s, color 0.2s;
+    }
+    .nav-link:hover .nav-link-arrow { transform: translate(3px, -3px); color: rgba(0,0,0,0.5); }
+    .nav-player {
+      border-radius: 22px;
+      overflow: hidden;
+      position: relative;
+      margin-top: 28px;
+      margin-bottom: 0;
+      height: 90px;
+      background-size: cover;
+      background-position: center 25%;
+      background-color: #1a1a1e;
+      flex-shrink: 0;
+    }
+    .nav-player-filter { position: absolute; inset: 0; mix-blend-mode: multiply; z-index: 1; pointer-events: none; }
+    .nav-player-inner { position: absolute; inset: 0; z-index: 2; padding: 12px 14px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .nav-player-info { min-width: 0; }
+    .nav-player-name { font-family: "NeueHaas", sans-serif; font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-player-track { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-player-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .nav-player-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.20); background: rgba(255,255,255,0.12); color: #fff; display: grid; place-items: center; font-size: 10px; cursor: pointer; transition: background 0.15s; }
+    .nav-player-btn:hover { background: rgba(255,255,255,0.22); }
+    .nav-player-play { width: 30px; height: 30px; background: rgba(255,255,255,0.92); color: #0a0a0e; font-size: 11px; border-color: transparent; }
+    .nav-player-play:hover { background: #fff; }
+    .nav-player-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.15); z-index: 3; }
+    .nav-player-progress { height: 100%; background: rgba(255,255,255,0.8); width: 0%; transition: width 0.3s linear; }
+    .nav-menu-backdrop { position: fixed; inset: 0; z-index: 99; display: none; }
+    .nav-menu-backdrop.open { display: block; }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <h1 class="title">Fuera<br>de casa</h1>
+      <p class="subtitle">Cada sitio nuevo, una historia nuestra.</p>
+    </div>
+
+    <div class="trips">
+
+      <a class="trip-card" href="#">
+        <div class="trip-bg" style="background-image: url('links/gallery/100.jpg')"></div>
+        <div class="trip-overlay"></div>
+        <div class="trip-top">
+          <span class="trip-label">Agosto 2024</span>
+          <div class="trip-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="trip-bottom">
+          <h2 class="trip-title">Aventuras<br>en Bilbao</h2>
+          <div class="trip-arrow">→</div>
+        </div>
+      </a>
+
+      <a class="trip-card" href="#">
+        <div class="trip-bg" style="background-image: url('links/gallery/1.jpg')"></div>
+        <div class="trip-overlay"></div>
+        <div class="trip-top">
+          <span class="trip-label">Abril 2026</span>
+          <div class="trip-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="trip-bottom">
+          <h2 class="trip-title">Un día<br>en Astondo</h2>
+          <div class="trip-arrow">→</div>
+        </div>
+      </a>
+
+      <a class="trip-card" href="#">
+        <div class="trip-bg" style="background-image: url('links/gallery/3.jpg')"></div>
+        <div class="trip-overlay"></div>
+        <div class="trip-top">
+          <span class="trip-label">Por definir</span>
+          <div class="trip-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="trip-bottom">
+          <h2 class="trip-title">Escapada<br>sin plan</h2>
+          <div class="trip-arrow">→</div>
+        </div>
+      </a>
+
+      <a class="trip-card" href="#">
+        <div class="trip-bg" style="background-image: url('links/gallery/9.jpg')"></div>
+        <div class="trip-overlay"></div>
+        <div class="trip-top">
+          <span class="trip-label">Por definir</span>
+          <div class="trip-dots"><span></span><span></span><span></span></div>
+        </div>
+        <div class="trip-bottom">
+          <h2 class="trip-title">Los mejores<br>momentos</h2>
+          <div class="trip-arrow">→</div>
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <button class="icon-chip" id="menuBtn" aria-label="Menú"></button>
+
+  <div class="nav-menu-backdrop" id="navBackdrop"></div>
+  <nav class="nav-menu" id="navMenu">
+    <div class="nav-menu-header">
+      <span class="nav-brand">J &amp; L</span>
+      <button class="nav-close" id="navClose">X</button>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Inicio<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+      <a class="nav-link" href="gallery.html">Galería<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+      <a class="nav-link" href="viajes.html">Viajes<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+      <a class="nav-link" href="#">Música<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+    </div>
+    <div class="nav-player" id="navPlayer">
+      <div class="nav-player-filter" id="navPlayerFilter"></div>
+      <div class="nav-player-inner">
+        <div class="nav-player-info">
+          <div class="nav-player-name" id="navAuthorName">Kendrick Lamar</div>
+          <div class="nav-player-track" id="navTrackName">@allthestars</div>
+        </div>
+        <div class="nav-player-controls">
+          <button class="nav-player-btn" id="navPrevBtn">⏮&#xFE0E;</button>
+          <button class="nav-player-btn nav-player-play" id="navPlayBtn">▶&#xFE0E;</button>
+          <button class="nav-player-btn" id="navNextBtn">⏭&#xFE0E;</button>
+        </div>
+      </div>
+      <div class="nav-player-bar"><div class="nav-player-progress" id="navProgressFill"></div></div>
+    </div>
+  </nav>
+
+  <script>
+    const menuBtn    = document.getElementById("menuBtn");
+    const navMenu    = document.getElementById("navMenu");
+    const navClose   = document.getElementById("navClose");
+    const navBackdrop = document.getElementById("navBackdrop");
+
+    function openNav()  { navMenu.classList.add("open");    navBackdrop.classList.add("open"); }
+    function closeNav() { navMenu.classList.remove("open"); navBackdrop.classList.remove("open"); }
+
+    menuBtn.addEventListener("click", openNav);
+    navClose.addEventListener("click", closeNav);
+    navBackdrop.addEventListener("click", closeNav);
+
+    const navSongs = [
+      { src: "songs/All The Stars.mp3",            title: "All The Stars",    artist: "Kendrick Lamar", cover: "songs/all the stars.jpeg",     filter: "rgba(90,40,180,0.55)" },
+      { src: "songs/Cinnamon Girl.mp3",            title: "Cinnamon Girl",    artist: "Lana Del Rey",   cover: "songs/Cinnamon Girl.jpg",       filter: "rgba(200,100,30,0.50)" },
+      { src: "songs/Say Yes To Heaven.mp3",        title: "Say Yes To Heaven",artist: "Lana Del Rey",   cover: "songs/Say Yes To Heaven.webp",  filter: "rgba(40,90,210,0.50)" },
+      { src: "songs/The Cranberries - Linger.mp3", title: "Linger",           artist: "The Cranberries",cover: "songs/Linger.jpg",             filter: "rgba(30,140,80,0.50)" }
+    ];
+    const navAudio        = new Audio();
+    let   navCurrentIndex = 0;
+    const navPlayer       = document.getElementById("navPlayer");
+    const navPlayerFilter = document.getElementById("navPlayerFilter");
+    const navAuthorName   = document.getElementById("navAuthorName");
+    const navTrackName    = document.getElementById("navTrackName");
+    const navPlayBtn      = document.getElementById("navPlayBtn");
+    const navPrevBtn      = document.getElementById("navPrevBtn");
+    const navNextBtn      = document.getElementById("navNextBtn");
+    const navProgressFill = document.getElementById("navProgressFill");
+
+    function navLoadSong(index, autoplay = false) {
+      navCurrentIndex = (index + navSongs.length) % navSongs.length;
+      const song = navSongs[navCurrentIndex];
+      navAudio.src = encodeURI(song.src);
+      navAuthorName.textContent = song.artist;
+      navTrackName.textContent  = `@${song.title.toLowerCase().replace(/\s+/g,"")}`;
+      navPlayer.style.backgroundImage = `linear-gradient(180deg,rgba(255,255,255,0.09),rgba(26,26,30,0.82)),url("${encodeURI(song.cover)}")`;
+      navPlayerFilter.style.background = song.filter;
+      navProgressFill.style.width = "0%";
+      navUpdatePlayBtn();
+      if (autoplay) navAudio.play().catch(() => {});
+    }
+    function navUpdatePlayBtn() {
+      navPlayBtn.textContent = (navAudio.paused ? "▶" : "⏸") + "\uFE0E";
+    }
+    navPlayBtn.addEventListener("click", () => {
+      if (!navAudio.src) navLoadSong(0, false);
+      navAudio.paused ? navAudio.play().catch(() => {}) : navAudio.pause();
+      navUpdatePlayBtn();
+    });
+    navPrevBtn.addEventListener("click", () => navLoadSong(navCurrentIndex - 1, !navAudio.paused));
+    navNextBtn.addEventListener("click", () => navLoadSong(navCurrentIndex + 1, !navAudio.paused));
+    navAudio.addEventListener("ended", () => navLoadSong(navCurrentIndex + 1, true));
+    navAudio.addEventListener("timeupdate", () => {
+      if (navAudio.duration) navProgressFill.style.width = `${(navAudio.currentTime / navAudio.duration) * 100}%`;
+    });
+    navLoadSong(0, false);
+  </script>
+</body>
+</html>
