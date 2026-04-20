@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Gallery</title>
+  <style>
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayRoman.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Reg.otf") format("opentype"); font-weight: 400; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f6f6f8;
+      --ink: #141518;
+      --muted: #6f7380;
+      --card: #ffffff;
+      --shadow: 0 16px 30px rgba(17, 18, 24, 0.08);
+    }
+
+    body {
+      min-height: 100vh;
+      background:
+        radial-gradient(120% 80% at 10% -10%, rgba(255, 187, 149, 0.18), transparent 50%),
+        radial-gradient(100% 70% at 90% 0%, rgba(162, 184, 255, 0.14), transparent 45%),
+        var(--bg);
+      color: var(--ink);
+      font-family: "Europa", system-ui, sans-serif;
+    }
+
+    .shell {
+      width: min(1120px, 100%);
+      margin: 0 auto;
+      padding: max(env(safe-area-inset-top), 18px) 16px max(env(safe-area-inset-bottom), 24px);
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 5;
+      background: linear-gradient(180deg, rgba(246, 246, 248, 0.96), rgba(246, 246, 248, 0.84));
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(20, 21, 24, 0.08);
+      margin: -18px -16px 14px;
+      padding: max(env(safe-area-inset-top), 18px) 16px 12px;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .title {
+      font-family: "NeueHaas", sans-serif;
+      font-size: clamp(24px, 5.5vw, 36px);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+
+    .subtitle {
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .back-btn {
+      border: 1px solid rgba(20, 21, 24, 0.14);
+      background: #fff;
+      border-radius: 999px;
+      padding: 8px 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font-size: 13px;
+      box-shadow: var(--shadow);
+    }
+
+    .gallery {
+      column-count: 2;
+      column-gap: 12px;
+    }
+
+    @media (min-width: 740px) {
+      .gallery { column-count: 3; column-gap: 14px; }
+    }
+    @media (min-width: 1024px) {
+      .gallery { column-count: 4; column-gap: 16px; }
+    }
+
+    .pin {
+      position: relative;
+      break-inside: avoid;
+      margin-bottom: 12px;
+      width: 100%;
+      border: none;
+      background: transparent;
+      padding: 0;
+      cursor: zoom-in;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: block;
+    }
+
+    .pin img {
+      width: 100%;
+      height: var(--h, auto);
+      object-fit: cover;
+      display: block;
+      transform: scale(1.001);
+      transition: transform 0.3s ease;
+      background: #ececf1;
+    }
+
+    .pin:hover img { transform: scale(1.03); }
+
+    .pin::after {
+      content: "Ver";
+      position: absolute;
+      right: 10px;
+      bottom: 10px;
+      font-size: 12px;
+      color: #fff;
+      background: rgba(15, 16, 20, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 999px;
+      padding: 5px 10px;
+      opacity: 0;
+      transform: translateY(5px);
+      transition: 0.2s ease;
+      pointer-events: none;
+    }
+
+    .pin:hover::after {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .empty {
+      margin-top: 20px;
+      background: #fff;
+      border: 1px dashed rgba(20, 21, 24, 0.2);
+      border-radius: 16px;
+      padding: 18px;
+      color: var(--muted);
+      font-size: 14px;
+      display: none;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 40;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(11, 12, 16, 0.82);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 24px 14px;
+    }
+
+    .overlay.open { display: flex; }
+
+    .overlay-content {
+      position: relative;
+      width: min(900px, 100%);
+      max-height: 100%;
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
+      background: #121316;
+    }
+
+    .overlay-img {
+      width: 100%;
+      max-height: min(86vh, 920px);
+      object-fit: contain;
+      display: block;
+      background: #121316;
+    }
+
+    .overlay-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(255, 255, 255, 0.22);
+      border-radius: 50%;
+      background: rgba(20, 20, 24, 0.7);
+      color: #fff;
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+    }
+  </style>
+</head>
+<body>
+  <main class="shell">
+    <div class="topbar">
+      <div class="header-row">
+        <h1 class="title">Gallery</h1>
+        <a class="back-btn" href="index.html">Volver</a>
+      </div>
+      <p class="subtitle">Estilo Pinterest, con layout variable y zoom al clicar.</p>
+    </div>
+
+    <section class="gallery" id="galleryGrid"></section>
+    <div class="empty" id="emptyState">No encontré imágenes en <code>links/gallery</code>.</div>
+  </main>
+
+  <div class="overlay" id="imageOverlay" aria-hidden="true">
+    <div class="overlay-content">
+      <button class="overlay-close" id="overlayClose" aria-label="Cerrar">×</button>
+      <img class="overlay-img" id="overlayImg" alt="Imagen ampliada" />
+    </div>
+  </div>
+
+  <script>
+    const knownImages = [
+      "links/gallery/1.jpg",
+      "links/gallery/2.jpg",
+      "links/gallery/3.jpg",
+      "links/gallery/4.jpg",
+      "links/gallery/7.jpg",
+      "links/gallery/8.jpg",
+      "links/gallery/9.jpg",
+      "links/gallery/10.jpg"
+    ];
+
+    const probeExtensions = ["jpg", "jpeg", "png", "webp", "gif"];
+    const probeMax = 200;
+    const galleryGrid = document.getElementById("galleryGrid");
+    const emptyState = document.getElementById("emptyState");
+    const overlay = document.getElementById("imageOverlay");
+    const overlayImg = document.getElementById("overlayImg");
+    const overlayClose = document.getElementById("overlayClose");
+    const sizePattern = [220, 290, 360, 250, 320, 270];
+
+    function checkImage(src) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(src);
+        img.onerror = () => resolve(null);
+        img.src = encodeURI(src);
+      });
+    }
+
+    async function discoverImages() {
+      const probes = [];
+      for (let n = 1; n <= probeMax; n += 1) {
+        for (const ext of probeExtensions) {
+          probes.push(`links/gallery/${n}.${ext}`);
+        }
+      }
+
+      const checked = await Promise.all(
+        [...new Set([...knownImages, ...probes])].map(checkImage)
+      );
+
+      return checked.filter(Boolean);
+    }
+
+    function openOverlay(src, altText) {
+      overlayImg.src = encodeURI(src);
+      overlayImg.alt = altText || "Imagen ampliada";
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+    }
+
+    function closeOverlay() {
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+    }
+
+    function createPin(src, index) {
+      const fileName = decodeURIComponent(src.split("/").pop() || "foto");
+      const button = document.createElement("button");
+      button.className = "pin";
+      button.style.setProperty("--h", `${sizePattern[index % sizePattern.length]}px`);
+      button.innerHTML = `<img loading="lazy" src="${encodeURI(src)}" alt="${fileName}" />`;
+      button.addEventListener("click", () => openOverlay(src, fileName));
+      return button;
+    }
+
+    async function renderGallery() {
+      const images = await discoverImages();
+      if (!images.length) {
+        emptyState.style.display = "block";
+        return;
+      }
+
+      images.forEach((src, index) => {
+        galleryGrid.appendChild(createPin(src, index));
+      });
+    }
+
+    overlayClose.addEventListener("click", closeOverlay);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) closeOverlay();
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") closeOverlay();
+    });
+
+    renderGallery();
+  </script>
+</body>
+</html>
