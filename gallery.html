@@ -37,10 +37,6 @@
       position: sticky;
       top: 0;
       z-index: 5;
-      background: linear-gradient(180deg, rgba(246, 246, 248, 0.96), rgba(246, 246, 248, 0.84));
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(20, 21, 24, 0.08);
       margin: -18px -16px 14px;
       padding: max(env(safe-area-inset-top), 18px) 16px 12px;
     }
@@ -101,6 +97,8 @@
       overflow: hidden;
       box-shadow: var(--shadow);
       display: block;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
     .pin img {
@@ -111,6 +109,9 @@
       transform: scale(1.001);
       transition: transform 0.3s ease;
       background: #ececf1;
+      border-radius: 20px;
+      -webkit-border-radius: 20px;
+      clip-path: inset(0 round 20px);
     }
 
     .pin:hover img { transform: scale(1.03); }
@@ -153,12 +154,13 @@
       inset: 0;
       z-index: 40;
       display: none;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
       background: rgba(11, 12, 16, 0.82);
       backdrop-filter: blur(8px);
       -webkit-backdrop-filter: blur(8px);
-      padding: 24px 14px;
+      padding: 24px 14px max(env(safe-area-inset-bottom), 24px);
+      overflow-y: auto;
     }
 
     .overlay.open { display: flex; }
@@ -166,19 +168,22 @@
     .overlay-content {
       position: relative;
       width: min(900px, 100%);
-      max-height: 100%;
+      margin: auto 0;
       border-radius: 22px;
-      overflow: hidden;
+      overflow: visible;
       box-shadow: 0 28px 60px rgba(0, 0, 0, 0.45);
-      background: #121316;
+      background: transparent;
+      display: grid;
+      gap: 10px;
     }
 
     .overlay-img {
       width: 100%;
-      max-height: min(86vh, 920px);
+      max-height: min(72vh, 820px);
       object-fit: contain;
       display: block;
       background: #121316;
+      border-radius: 22px;
     }
 
     .overlay-close {
@@ -194,6 +199,26 @@
       cursor: pointer;
       font-size: 18px;
       line-height: 1;
+    }
+
+    .photo-meta {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: 20px;
+      padding: 14px;
+      color: #000000;
+    }
+
+    .meta-row + .meta-row {
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .meta-value {
+      font-size: 14px;
+      line-height: 1.35;
+      color: rgba(0, 0, 0, 0.96);
+      word-break: break-word;
     }
   </style>
 </head>
@@ -215,6 +240,13 @@
     <div class="overlay-content">
       <button class="overlay-close" id="overlayClose" aria-label="Cerrar">×</button>
       <img class="overlay-img" id="overlayImg" alt="Imagen ampliada" />
+      <div class="photo-meta">
+        <div class="meta-row">
+          <p class="meta-value" id="metaDate">Por definir</p>
+          <p class="meta-value" id="metaPlace">Por definir</p>
+          <p class="meta-value" id="metaText">Por definir</p>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -237,7 +269,20 @@
     const overlay = document.getElementById("imageOverlay");
     const overlayImg = document.getElementById("overlayImg");
     const overlayClose = document.getElementById("overlayClose");
+    const metaDate = document.getElementById("metaDate");
+    const metaPlace = document.getElementById("metaPlace");
+    const metaText = document.getElementById("metaText");
     const sizePattern = [220, 290, 360, 250, 320, 270];
+    const photoMeta = {
+      "1.jpg": { date: " 23 Agosto 2025", place: "Astondo", text: "cs cklc sc wfwofnsknfsleif i ef sfiefiff sif iefs ifenifsnfis fsefnsifnsifo sifsir" },
+      "2.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "3.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "4.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "7.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "8.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "9.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
+      "10.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" }
+    };
 
     function checkImage(src) {
       return new Promise((resolve) => {
@@ -264,8 +309,18 @@
     }
 
     function openOverlay(src, altText) {
+      const fileName = decodeURIComponent(src.split("/").pop() || "");
+      const info = photoMeta[fileName] || {
+        date: "Por definir",
+        place: "Por definir",
+        text: "Por definir"
+      };
+
       overlayImg.src = encodeURI(src);
       overlayImg.alt = altText || "Imagen ampliada";
+      metaDate.textContent = info.date;
+      metaPlace.textContent = info.place;
+      metaText.textContent = info.text;
       overlay.classList.add("open");
       overlay.setAttribute("aria-hidden", "false");
     }
