@@ -3,25 +3,69 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>J&L</title>
   <link rel="manifest" href="manifest.json" />
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');</script>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Montserrat:wght@300;400&display=swap" rel="stylesheet" />
   <style>
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXXThin.ttf') format('truetype'); font-weight: 100; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXXThinItalic.ttf') format('truetype'); font-weight: 100; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXThin.ttf') format('truetype'); font-weight: 150; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXThinItalic.ttf') format('truetype'); font-weight: 150; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayThin.ttf') format('truetype'); font-weight: 200; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayThinItalic.ttf') format('truetype'); font-weight: 200; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight: 300; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayLightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayRomanItalic.ttf') format('truetype'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayMediumItalic.ttf') format('truetype'); font-weight: 500; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBlack.ttf') format('truetype'); font-weight: 900; font-style: normal; }
+    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBlackItalic.ttf') format('truetype'); font-weight: 900; font-style: italic; }
+
+    @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Lig.otf') format('opentype'); font-weight: 300; font-style: normal; }
+    @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Reg.otf') format('opentype'); font-weight: 400; font-style: normal; }
+    @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Ita.otf') format('opentype'); font-weight: 400; font-style: italic; }
+    @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Med.otf') format('opentype'); font-weight: 500; font-style: normal; }
+    @font-face { font-family: 'Europa'; src: url('fonts/Europa_Grotesk_SH_DemBol.ttf') format('truetype'); font-weight: 600; font-style: normal; }
+    @font-face { font-family: 'Europa'; src: url('fonts/europa-grotesk-sh-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
+
+    /* =====================================================
+       CAMBIA AQUÍ LAS TIPOGRAFÍAS
+       
+       Pesos NeueHaas:  100=XXThin · 150=XThin · 200=Thin
+                        300=Light · 400=Roman · 500=Medium
+                        700=Bold · 900=Black
+                        (todos tienen versión italic)
+       Pesos Europa:    300=Light · 400=Regular · 500=Medium
+                        600=DemiBold · 700=Bold · 400italic=Italic
+       ===================================================== */
+    :root {
+      --font-title:        'NeueHaas', sans-serif;
+      --font-title-weight: 100;
+      --font-title-style:  italic;
+
+      --font-label:        'Europa', sans-serif;
+      --font-label-weight: 300;
+      --font-label-style:  normal;
+
+      --font-ui:           'Europa', sans-serif;
+      --font-ui-weight:    400;
+      --font-ui-style:     normal;
+    }
+
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
       height: 100%;
       width: 100%;
       overflow: hidden;
-      font-family: 'Cormorant Garamond', serif;
-      padding-bottom: env(safe-area-inset-bottom);
       background-color: #000;
     }
 
-    /* ── SPLASH SCREEN ── */
     #splash {
       position: fixed;
       inset: 0;
@@ -30,9 +74,9 @@
       flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      padding: env(safe-area-inset-top, 40px) 0 env(safe-area-inset-bottom, 40px);
+      padding-top: env(safe-area-inset-top, 50px);
+      padding-bottom: max(env(safe-area-inset-bottom), 40px);
       transition: opacity 0.8s ease, transform 0.8s ease;
-      padding-bottom: max(env(safe-area-inset-bottom), 34px);
     }
 
     #splash.hide {
@@ -41,7 +85,6 @@
       transform: scale(1.04);
     }
 
-    /* Background photo */
     .splash-bg {
       position: absolute;
       inset: 0;
@@ -49,51 +92,48 @@
       z-index: 0;
     }
 
-    /* Dark gradient overlay — stronger at top and bottom */
     .splash-bg::after {
       content: '';
       position: absolute;
       inset: 0;
-      background:
-        linear-gradient(to bottom,
-          rgba(0,0,0,0.55) 0%,
-          rgba(0,0,0,0.0) 35%,
-          rgba(0,0,0,0.0) 55%,
-          rgba(0,0,0,0.65) 100%
-        );
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0.50) 0%,
+        rgba(0,0,0,0.0) 35%,
+        rgba(0,0,0,0.0) 55%,
+        rgba(0,0,0,0.65) 100%
+      );
     }
 
-    /* Top title */
     .splash-top {
       position: relative;
       z-index: 1;
       text-align: center;
-      padding-top: 60px;
+      padding-top: 20px;
       animation: fadeDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
     }
 
     .splash-top .label {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-      font-size: 0.65rem;
+      font-family: var(--font-label);
+      font-weight: var(--font-label-weight);
+      font-style: var(--font-label-style);
+      font-size: 0.6rem;
       letter-spacing: 0.35em;
-      color: rgba(255,255,255,0.7);
+      color: rgba(255,255,255,0.65);
       text-transform: uppercase;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .splash-top h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-style: italic;
-      font-size: clamp(3rem, 12vw, 5rem);
+      font-family: var(--font-title);
+      font-weight: var(--font-title-weight);
+      font-style: var(--font-title-style);
+      font-size: clamp(3rem, 11vw, 5rem);
       color: #fff;
-      line-height: 1;
-      letter-spacing: 0.02em;
-      text-shadow: 0 2px 30px rgba(0,0,0,0.4);
+      line-height: 1.05;
+      letter-spacing: -0.01em;
+      text-shadow: 0 2px 40px rgba(0,0,0,0.35);
     }
 
-    /* Bottom slider */
     .splash-bottom {
       position: relative;
       z-index: 1;
@@ -101,29 +141,28 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 18px;
-      padding-bottom: 50px;
+      gap: 16px;
+      padding-bottom: 10px;
       animation: fadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
     }
 
     .slider-hint {
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.6rem;
-      font-weight: 300;
+      font-family: var(--font-ui);
+      font-weight: var(--font-ui-weight);
+      font-size: 0.55rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
+      color: rgba(255,255,255,0.5);
     }
 
-    /* The slider track */
     .slider-track {
-      width: 80%;
-      height: 56px;
-      background: rgba(255,255,255,0.12);
-      border: 1px solid rgba(255,255,255,0.25);
-      border-radius: 28px;
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      width: 230px;
+      height: 58px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 29px;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
       position: relative;
       overflow: hidden;
       cursor: grab;
@@ -131,56 +170,43 @@
       user-select: none;
     }
 
-    /* Shimmer animation on track */
     .slider-track::before {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(255,255,255,0.08) 50%,
-        transparent 100%
-      );
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
       background-size: 200% 100%;
       animation: shimmer 2.5s ease-in-out infinite;
     }
 
-    @keyframes shimmer {
-      0% { background-position: -200% 0; }
-      100% { background-position: 200% 0; }
-    }
-
-    /* Slider label */
     .slider-label {
       position: absolute;
       inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.65rem;
-      font-weight: 400;
-      letter-spacing: 0.2em;
+      font-family: var(--font-ui);
+      font-weight: var(--font-ui-weight);
+      font-size: 0.6rem;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.6);
+      color: rgba(255,255,255,0.55);
       pointer-events: none;
       transition: opacity 0.2s;
     }
 
-    /* The draggable thumb */
     .slider-thumb {
       position: absolute;
       top: 5px;
       left: 5px;
-      width: 46px;
-      height: 46px;
+      width: 48px;
+      height: 48px;
       border-radius: 50%;
       background: #fff;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      transition: transform 0.1s ease;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
       will-change: transform;
     }
 
@@ -190,7 +216,10 @@
       color: #111;
     }
 
-    /* Animations */
+    @keyframes shimmer {
+      0%   { background-position: -200% 0; }
+      100% { background-position:  200% 0; }
+    }
     @keyframes fadeDown {
       from { opacity: 0; transform: translateY(-20px); }
       to   { opacity: 1; transform: translateY(0); }
@@ -200,17 +229,13 @@
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ── MAIN APP ── */
     #app {
       opacity: 0;
       transition: opacity 0.8s ease 0.2s;
       height: 100%;
+      width: 100%;
     }
-    #app.show {
-      opacity: 1;
-    }
-
-    /* Embed your index content here or use an iframe */
+    #app.show { opacity: 1; }
     #app iframe {
       width: 100%;
       height: 100%;
@@ -220,14 +245,12 @@
 </head>
 <body>
 
-  <!-- ── SPLASH ── -->
   <div id="splash">
     <div class="splash-bg"></div>
-
     <div class="splash-top">
+      <p class="label">desde el principio</p>
       <h1>Nuestros<br>recuerdos</h1>
     </div>
-
     <div class="splash-bottom">
       <p class="slider-hint">desliza para entrar</p>
       <div class="slider-track" id="sliderTrack">
@@ -241,85 +264,69 @@
     </div>
   </div>
 
-  <!-- ── APP ── -->
   <div id="app">
     <iframe src="index.html" title="J&L"></iframe>
   </div>
 
   <script>
-    const track = document.getElementById('sliderTrack');
-    const thumb = document.getElementById('sliderThumb');
+    const track  = document.getElementById('sliderTrack');
+    const thumb  = document.getElementById('sliderThumb');
     const splash = document.getElementById('splash');
-    const app = document.getElementById('app');
+    const app    = document.getElementById('app');
+    const label  = track.querySelector('.slider-label');
 
-    const maxX = track.clientWidth - thumb.clientWidth - 10;
     let dragging = false;
-    let startX = 0;
+    let startX   = 0;
     let currentX = 0;
+    let maxX     = track.clientWidth - thumb.clientWidth - 10;
 
-    function getClientX(e) {
-      return e.touches ? e.touches[0].clientX : e.clientX;
-    }
+    const getClientX = e => e.touches ? e.touches[0].clientX : e.clientX;
 
     function onStart(e) {
       dragging = true;
-      startX = getClientX(e) - currentX;
+      startX   = getClientX(e) - currentX;
       thumb.style.transition = 'none';
-      track.style.cursor = 'grabbing';
     }
 
     function onMove(e) {
       if (!dragging) return;
       e.preventDefault();
-      let x = getClientX(e) - startX;
-      x = Math.max(0, Math.min(x, maxX));
+      let x = Math.max(0, Math.min(getClientX(e) - startX, maxX));
       currentX = x;
       thumb.style.transform = `translateX(${x}px)`;
-
-      // fade out label as thumb moves
-      const progress = x / maxX;
-      track.querySelector('.slider-label').style.opacity = 1 - progress * 2;
-
-      if (progress >= 0.92) unlock();
+      label.style.opacity   = 1 - (x / maxX) * 2;
+      if (x / maxX >= 0.92) unlock();
     }
 
     function onEnd() {
       if (!dragging) return;
       dragging = false;
-      track.style.cursor = 'grab';
       if (currentX / maxX < 0.92) {
-        // snap back
         thumb.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-        thumb.style.transform = 'translateX(0)';
+        thumb.style.transform  = 'translateX(0)';
         currentX = 0;
-        track.querySelector('.slider-label').style.opacity = 1;
+        label.style.opacity = 1;
       }
     }
 
     function unlock() {
       dragging = false;
       thumb.style.transition = 'transform 0.25s ease';
-      thumb.style.transform = `translateX(${maxX}px)`;
+      thumb.style.transform  = `translateX(${maxX}px)`;
       setTimeout(() => {
         splash.classList.add('hide');
         app.classList.add('show');
       }, 300);
     }
 
-    // Mouse events
-    thumb.addEventListener('mousedown', onStart);
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('mouseup', onEnd);
-
-    // Touch events
+    thumb.addEventListener('mousedown',  onStart);
     thumb.addEventListener('touchstart', onStart, { passive: true });
+    window.addEventListener('mousemove', onMove);
     window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('touchend', onEnd);
-
-    // Recalc maxX on resize
+    window.addEventListener('mouseup',   onEnd);
+    window.addEventListener('touchend',  onEnd);
     window.addEventListener('resize', () => {
-      const newMax = track.clientWidth - thumb.clientWidth - 10;
-      if (currentX > newMax) currentX = newMax;
+      maxX = track.clientWidth - thumb.clientWidth - 10;
     });
   </script>
 
