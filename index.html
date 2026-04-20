@@ -79,16 +79,17 @@
     .icon-chip:hover { transform: scale(1.08); }
     .nav-menu {
       position: absolute;
-      top: 6px; left: 4px; right: 4px;
+      top: 6px; right: 4px;
+      width: 65%;
       bottom: auto;
-      max-height: calc(100% - 12px);
+      height: 55vh;
       z-index: 20;
       border-radius: 28px;
-      background: rgba(255, 255, 255, 0.18);
+      background: rgba(210, 210, 210, 0.45);
       backdrop-filter: blur(28px) saturate(1.6);
       -webkit-backdrop-filter: blur(28px) saturate(1.6);
       border: 1px solid rgba(255, 255, 255, 0.07);
-      padding: 28px 28px 28px;
+      padding: 14px 14px 14px;
       display: flex;
       flex-direction: column;
       clip-path: circle(0% at calc(100% - 20px) 32px);
@@ -114,7 +115,7 @@
     .nav-menu-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       margin-bottom: 40px;
     }
     .nav-brand {
@@ -143,7 +144,8 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      justify-content: center;
+      justify-content: flex-start;
+      align-items: flex-end;
       gap: 0;
     }
     @keyframes linkIn {
@@ -152,13 +154,14 @@
     }
     .nav-link {
       font-family: "NeueHaas", sans-serif;
-      font-weight: 200;
-      font-size: clamp(32px, 9vw, 44px);
-      color: rgba(0,0,0,0.75);
+      font-weight: 300;
+      font-size: clamp(26px, 7vw, 36px);
+      color: #000;
+      text-align: right;
       text-transform: uppercase;
       text-decoration: none;
       letter-spacing: -0.03em;
-      padding: 4px 0;
+      padding: 0;
       border-bottom: none;
       display: flex;
       align-items: baseline;
@@ -205,7 +208,7 @@
       position: relative;
       margin-top: 28px;
       margin-bottom: 16px;
-      height: 90px;
+      height: 140px;
       background-size: cover;
       background-position: center 25%;
       transition: background-image 0.4s ease, box-shadow 0.6s ease;
@@ -226,7 +229,7 @@
       padding: 12px 14px;
       display: flex;
       align-items: flex-end;
-      justify-content: space-between;
+      justify-content: flex-end;
       background: none;
     }
     .nav-player-info { min-width: 0; }
@@ -348,13 +351,13 @@
       padding: 10px;
       display: flex;
       flex-direction: column;
-      justify-content: space-between;
+      justify-content: flex-end;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(20, 20, 24, 0.45));
     }
     .player-top {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 8px;
     }
     .author-pill {
@@ -412,7 +415,7 @@
     }
     .time-row {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       font-size: 12px;
       letter-spacing: 0.01em;
@@ -638,7 +641,7 @@
     .cal-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       margin-bottom: 18px;
     }
     .cal-title {
@@ -951,14 +954,13 @@
     <div class="nav-menu-backdrop" id="navBackdrop"></div>
     <nav class="nav-menu" id="navMenu">
       <div class="nav-menu-header">
-        <span class="nav-brand">J &amp; L</span>
         <button class="nav-close" id="navClose">X</button>
       </div>
       <div class="nav-links">
-        <a class="nav-link" href="index.html">Inicio<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-        <a class="nav-link" href="gallery.html">Galería<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-        <a class="nav-link" href="viajes.html">Viajes<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-        <a class="nav-link" href="#">Música<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+        <a class="nav-link" href="index.html">Inicio</a>
+        <a class="nav-link" href="gallery.html">Galería</a>
+        <a class="nav-link" href="viajes.html">Viajes</a>
+        <a class="nav-link" href="#">Música</a>
       </div>
       <div class="nav-player" id="navPlayer">
         <div class="nav-player-filter" id="navPlayerFilter"></div>
@@ -1325,7 +1327,7 @@
     ];
 
     const audio = new Audio();
-    let currentIndex = 0;
+    let currentIndex = Math.floor(Math.random() * songs.length);
 
     const playerCard = document.getElementById("playerCard");
     const songFilter = document.getElementById("songFilter");
@@ -1496,7 +1498,7 @@
     navPrevBtn.addEventListener("click", () => prevSong(true));
     navNextBtn.addEventListener("click", () => nextSong(true));
 
-    loadSong(0, false);
+    loadSong(currentIndex, false);
 
     const mindGuideEl = document.querySelector(".mind-guide");
     const fullSquareEl = document.querySelector(".full-square");

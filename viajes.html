@@ -105,7 +105,7 @@
       right: 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
 
     .trip-label {
@@ -136,7 +136,7 @@
       right: 20px;
       display: flex;
       align-items: flex-end;
-      justify-content: space-between;
+      justify-content: flex-end;
       gap: 12px;
     }
 
@@ -192,16 +192,17 @@
 
     .nav-menu {
       position: fixed;
-      top: 10px; left: 8px; right: 8px;
+      top: 10px; right: 8px;
+      width: 65%;
       bottom: auto;
-      max-height: calc(100vh - 20px);
+      height: 55vh;
       z-index: 100;
       border-radius: 28px;
-      background: rgba(255,255,255,0.18);
+      background: rgba(210, 210, 210, 0.45);
       backdrop-filter: blur(28px) saturate(1.6);
       -webkit-backdrop-filter: blur(28px) saturate(1.6);
       border: 1px solid rgba(255,255,255,0.07);
-      padding: 28px 28px 28px;
+      padding: 14px 14px 14px;
       display: flex;
       flex-direction: column;
       clip-path: circle(0% at calc(100% - 24px) 38px);
@@ -218,7 +219,7 @@
     .nav-menu-header {
       display: flex;
       align-items: center;
-      justify-content: space-between;
+      justify-content: flex-end;
       margin-bottom: 40px;
     }
     .nav-brand {
@@ -246,17 +247,20 @@
       display: flex;
       flex-direction: column;
       flex: 1;
-      justify-content: center;
+      justify-content: flex-start;
+      align-items: flex-end;
       gap: 0;
     }
     .nav-link {
       font-family: "NeueHaas", sans-serif;
       font-weight: 300;
-      font-size: clamp(32px, 9vw, 44px);
-      color: rgba(0,0,0,0.75);
+      font-size: clamp(26px, 7vw, 36px);
+      color: #000;
+      text-align: right;
       text-decoration: none;
+      text-transform: uppercase;
       letter-spacing: -0.03em;
-      padding: 4px 0;
+      padding: 0;
       display: flex;
       align-items: baseline;
       gap: 12px;
@@ -281,7 +285,7 @@
       position: relative;
       margin-top: 28px;
       margin-bottom: 0;
-      height: 90px;
+      height: 140px;
       background-size: cover;
       background-position: center 25%;
       background-color: #1a1a1e;
@@ -372,14 +376,13 @@
   <div class="nav-menu-backdrop" id="navBackdrop"></div>
   <nav class="nav-menu" id="navMenu">
     <div class="nav-menu-header">
-      <span class="nav-brand">J &amp; L</span>
       <button class="nav-close" id="navClose">X</button>
     </div>
     <div class="nav-links">
-      <a class="nav-link" href="index.html">Inicio<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-      <a class="nav-link" href="gallery.html">Galería<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-      <a class="nav-link" href="viajes.html">Viajes<span class="nav-link-arrow">↗&#xFE0E;</span></a>
-      <a class="nav-link" href="#">Música<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+      <a class="nav-link" href="index.html">Inicio</a>
+      <a class="nav-link" href="gallery.html">Galería</a>
+      <a class="nav-link" href="viajes.html">Viajes</a>
+      <a class="nav-link" href="#">Música</a>
     </div>
     <div class="nav-player" id="navPlayer">
       <div class="nav-player-filter" id="navPlayerFilter"></div>
@@ -418,7 +421,7 @@
       { src: "songs/The Cranberries - Linger.mp3", title: "Linger",           artist: "The Cranberries",cover: "songs/Linger.jpg",             filter: "rgba(30,140,80,0.50)" }
     ];
     const navAudio        = new Audio();
-    let   navCurrentIndex = 0;
+    let   navCurrentIndex = Math.floor(Math.random() * navSongs.length);
     const navPlayer       = document.getElementById("navPlayer");
     const navPlayerFilter = document.getElementById("navPlayerFilter");
     const navAuthorName   = document.getElementById("navAuthorName");
@@ -454,7 +457,7 @@
     navAudio.addEventListener("timeupdate", () => {
       if (navAudio.duration) navProgressFill.style.width = `${(navAudio.currentTime / navAudio.duration) * 100}%`;
     });
-    navLoadSong(0, false);
+    navLoadSong(navCurrentIndex, false);
   </script>
 </body>
 </html>
