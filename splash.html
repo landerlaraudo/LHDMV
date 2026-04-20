@@ -17,6 +17,8 @@
       width: 100%;
       overflow: hidden;
       font-family: 'Cormorant Garamond', serif;
+      padding-bottom: env(safe-area-inset-bottom);
+      background-color: #000;
     }
 
     /* ── SPLASH SCREEN ── */
@@ -30,6 +32,7 @@
       justify-content: space-between;
       padding: env(safe-area-inset-top, 40px) 0 env(safe-area-inset-bottom, 40px);
       transition: opacity 0.8s ease, transform 0.8s ease;
+      padding-bottom: max(env(safe-area-inset-bottom), 34px);
     }
 
     #splash.hide {
