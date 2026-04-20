@@ -276,14 +276,14 @@
     const metaText = document.getElementById("metaText");
     const sizePattern = [220, 290, 360, 250, 320, 270];
     const photoMeta = {
-      "1.jpg": { date: " 23 Agosto 2025", place: "Astondo", text: "cs cklc sc wfwofnsknfsleif i ef sfiefiff sif iefs ifenifsnfis fsefnsifnsifo sifsir" },
-      "2.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "3.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "4.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "7.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "8.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "9.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" },
-      "10.jpg": { date: "Por definir", place: "Por definir", text: "Por definir" }
+      "1.jpg":  { date: "15 Abril 2026", place: "Astondo",     text: "Por definir" },
+      "2.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "3.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "4.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "7.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "8.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "9.jpg":  { date: "15 Abril 2026", place: "Por definir", text: "Por definir" },
+      "10.jpg": { date: "15 Abril 2026", place: "Por definir", text: "Por definir" }
     };
 
     function checkImage(src) {
@@ -348,7 +348,6 @@
         emptyState.style.display = "block";
         return;
       }
-
       images.forEach((src, index) => {
         galleryGrid.appendChild(createPin(src, index));
       });
@@ -362,7 +361,13 @@
       if (event.key === "Escape") closeOverlay();
     });
 
-    renderGallery();
+    renderGallery().then(() => {
+      const autoPhoto = new URLSearchParams(window.location.search).get("photo");
+      if (autoPhoto) {
+        const src = `links/gallery/${autoPhoto}`;
+        openOverlay(src, autoPhoto);
+      }
+    });
   </script>
 </body>
 </html>
