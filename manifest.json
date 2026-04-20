@@ -2,7 +2,7 @@
   "name": "J&L",
   "short_name": "J&L",
   "description": "Nuestros recuerdos",
-  "start_url": "/LHDMV/index.html",
+  "start_url": "/LHDMV/splash.html",
   "display": "standalone",
   "background_color": "#000000",
   "theme_color": "#000000",
