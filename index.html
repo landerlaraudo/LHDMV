@@ -155,6 +155,7 @@
       font-weight: 200;
       font-size: clamp(32px, 9vw, 44px);
       color: rgba(0,0,0,0.75);
+      text-transform: uppercase;
       text-decoration: none;
       letter-spacing: -0.03em;
       padding: 4px 0;
@@ -300,6 +301,7 @@
       color: rgba(0, 0, 0, 0.45);
       white-space: nowrap;
       cursor: pointer;
+      text-decoration: none;
       transition: background 0.18s, color 0.18s, border-color 0.18s;
     }
     .tab:hover:not(.active) { background: rgba(0, 0, 0, 0.08); color: rgba(0,0,0,0.8); }
@@ -872,10 +874,9 @@
       </header>
 
       <nav class="tabs">
-        <button class="tab active">Your dairy</button>
-        <button class="tab">Notes</button>
-        <button class="tab">To Do list</button>
-        <button class="tab">For anxiety</button>
+        <a class="tab active" href="index.html">Inicio</a>
+        <a class="tab" href="gallery.html">Galería</a>
+        <a class="tab" href="viajes.html">Viajes</a>
       </nav>
 
       <h1><strong>De todas las historias,</strong><br />me quedo con la que<br />tiene los peores chistes. <span class="cursor">|</span></h1>
@@ -915,15 +916,15 @@
           </div>
         </a>
 
-        <article class="tile full-square">
+        <a class="tile full-square" href="viajes.html">
           <div class="full-square-content">
             <div class="full-square-text">
               <strong>Aventuras viajando</strong>
               <span>Agosto 2024 · Bilbao</span>
             </div>
-            <button class="full-square-btn">Ver viajes</button>
+            <div class="full-square-btn">Ver viajes</div>
           </div>
-        </article>
+        </a>
 
       </section>
     </section>
@@ -990,16 +991,130 @@
 
     const loremText2 = "ed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.";
 
+    const tBarrika    = "Poke en los acantilados de arrigunaga. Haciendo tiempo para ir a ver Jurassic Park al cine (Primer Cine). Después paramos en Barrika y nos dieron las 3am.";
+    const tAstondo    = "Poke y Sunset espectacular en los acantilados de Astondo. Muchas risas y tonterías. Marchamos a la playa y nos dimos un baño de noche.";
+    const tLaArena    = "Día nublado pero vamos a la playa. Nos refugiamos en una mini cueva entre piedras. Comemos con vistas al mar y después el peor helado de nuestra vida.";
+    const tBarrikaExp = "Tarde express en Barrika. Bajamos hasta abajo y nos sentamos en el muro mirando a las olas.";
+    const tBakioSurf  = "¡Día espectacular! Surfing en Bakio casi solos. Después pintxos, helado y paseito. De vuelta paramos en el mirador.";
+    const tPisoPizza  = "¡Día de pizzas! Fuimos al Mercadona a hacer compras y a jugar...";
+    const tSope       = "Día de muchas risas. Fuimos a ver la playa de \"El Sitio\". Nos gustó mucho, hay que volver con buen tiempo.";
+    const tBallonti1  = "Segundos Bolos, había que desempatar.";
+    const tBakio2     = "Paseito por Bakio con sorpresa preparada. Terminamos con regalices en un banco. Estuvimos hasta la medianoche como en un sueño.";
+    const tBallonti2  = "¿Tercera de bolos? Claro que sí. Después fuimos para Sope y paseito por la playa, que casi nos pilla la marea.";
+    const tBarrika2   = "Eskerrik asko por sacar tiempo. Tarde de chill en Barrika con poke, luego colacadito en el Golfo.";
+    const tCastro     = "Spot nuevo buscado en Maps. Bajamos por un camino de hierbas, cada paso más bonito. Sunset precioso. Luego cena en el Kolombo y helado Gelati.";
+    const tCastroBilbo= "Volvemos de Castro. Cenamos en el Kolombo, helado en bote gigante Oreo, parque de los patos. UNO DE NUESTROS MEJORES DÍAS.";
+    const tBilbo1     = "Jone me invita a cenar al Aitaren. Burgers, churros y helado. El helado se complicó (cucurucho en una mano, la bola en la otra). Pocas veces me había reído tanto.";
+    const tPlentziJone= "Me da el regalo: ¡una camiseta! Y una nota. Cocinamos pasta, cenamos y peli. Ya para dormir, Jone me dice que lea la nota. ¿Mi primer \"TE QUIERO\"? Así es :)";
+    const tSonabia    = "Playa de Sonabia, solos en medio de la nada. \"JONE, ¿QUIERES SER MI NOVIA?\" Le coloco las flores desde el asiento de atrás. Uno de los días más importantes de mi vida.";
+
     const specialDates = {
-      "2026-04-15": [
-        { src: "links/gallery/1.jpg",  place: "Astondo",     text: loremText },
-        { src: "links/gallery/2.jpg",  place: "Por definir", text: loremText },
-        { src: "links/gallery/3.jpg",  place: "Por definir", text: loremText },
-        { src: "links/gallery/4.jpg",  place: "Por definir", text: loremText },
-        { src: "links/gallery/7.jpg",  place: "Por definir", text: loremText2 },
-        { src: "links/gallery/8.jpg",  place: "Por definir", text: loremText2 },
-        { src: "links/gallery/9.jpg",  place: "Por definir", text: loremText2 },
-        { src: "links/gallery/10.jpg", place: "Por definir", text: loremText2 }
+      "2025-08-28": [
+        { src: "links/gallery/1.jpg", place: "Barrika", text: tBarrika },
+        { src: "links/gallery/2.jpg", place: "Barrika", text: tBarrika }
+      ],
+      "2025-09-05": [
+        { src: "links/gallery/3.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/4.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/5.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/6.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/7.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/8.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/9.jpg",  place: "Astondo", text: tAstondo },
+        { src: "links/gallery/10.jpg", place: "Astondo", text: tAstondo },
+        { src: "links/gallery/11.jpg", place: "Astondo", text: tAstondo },
+        { src: "links/gallery/12.jpg", place: "Astondo", text: tAstondo },
+        { src: "links/gallery/13.jpg", place: "Astondo", text: tAstondo }
+      ],
+      "2025-09-11": [
+        { src: "links/gallery/14.jpg", place: "La Arena", text: tLaArena },
+        { src: "links/gallery/15.jpg", place: "La Arena", text: tLaArena }
+      ],
+      "2025-09-23": [
+        { src: "links/gallery/16.jpg", place: "Barrika", text: tBarrikaExp },
+        { src: "links/gallery/17.jpg", place: "Barrika", text: tBarrikaExp },
+        { src: "links/gallery/18.jpg", place: "Barrika", text: tBarrikaExp }
+      ],
+      "2025-09-24": [
+        { src: "links/gallery/19.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/20.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/21.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/22.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/23.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/24.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/25.jpg", place: "Bakio", text: tBakioSurf },
+        { src: "links/gallery/26.jpg", place: "Bakio", text: tBakioSurf }
+      ],
+      "2025-10-04": [
+        { src: "links/gallery/27.jpg", place: "Piso Lan", text: tPisoPizza }
+      ],
+      "2025-10-18": [
+        { src: "links/gallery/28.jpg", place: "Piso Lan", text: "¡Nuestra primera Tortilla juntos! No fue la mejor, hay que mejorar." }
+      ],
+      "2025-10-19": [
+        { src: "links/gallery/29.jpg", place: "Sope", text: tSope },
+        { src: "links/gallery/30.jpg", place: "Sope", text: tSope }
+      ],
+      "2025-10-25": [
+        { src: "links/gallery/31.jpg", place: "Ballonti", text: tBallonti1 },
+        { src: "links/gallery/32.jpg", place: "Ballonti", text: tBallonti1 }
+      ],
+      "2025-11-15": [
+        { src: "links/gallery/33.jpg", place: "Bakio", text: tBakio2 }
+      ],
+      "2025-11-16": [
+        { src: "links/gallery/34.jpg", place: "Plentzi", text: "De chill, gym, estudio y paseito." }
+      ],
+      "2025-11-22": [
+        { src: "links/gallery/35.jpg", place: "Piso Lan", text: "Domingo improvisado. Eroski cerrado, Begoña para llevar, peli y a dormir." }
+      ],
+      "2025-11-25": [
+        { src: "links/gallery/36.jpg", place: "Ballonti", text: tBallonti2 },
+        { src: "links/gallery/37.jpg", place: "Sope",     text: "Paseito por la playa después de los bolos, que casi nos pilla la marea." }
+      ],
+      "2025-11-27": [
+        { src: "links/gallery/38.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/39.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/40.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/41.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/42.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/43.jpg", place: "Barrika", text: tBarrika2 },
+        { src: "links/gallery/44.jpg", place: "Barrika", text: tBarrika2 }
+      ],
+      "2025-12-07": [
+        { src: "links/gallery/45.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/46.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/47.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/48.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/49.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/50.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/51.jpg", place: "Castro",        text: tCastro },
+        { src: "links/gallery/52.jpg", place: "Castro · Bilbo",text: tCastroBilbo }
+      ],
+      "2025-12-09": [
+        { src: "links/gallery/53.jpg", place: "Bilbo", text: "Vamos directos al Golfo. Café y Colacao. \"ERES LO QUE LLEVO BUSCANDO TODA LA VIDA\"" },
+        { src: "links/gallery/54.jpg", place: "Bilbo", text: "Vamos directos al Golfo. Café y Colacao. \"ERES LO QUE LLEVO BUSCANDO TODA LA VIDA\"" }
+      ],
+      "2025-12-13": [
+        { src: "links/gallery/55.jpg", place: "Bilbo", text: tBilbo1 },
+        { src: "links/gallery/56.jpg", place: "Bilbo", text: tBilbo1 }
+      ],
+      "2025-12-16": [
+        { src: "links/gallery/57.jpg", place: "Bilbo", text: "Día de Amigo Invisible. Jone me ayuda a comprar maquillaje para mi Ama." }
+      ],
+      "2025-12-19": [
+        { src: "links/gallery/58.jpg", place: "Plentzi", text: tPlentziJone }
+      ],
+      "2025-12-23": [
+        { src: "links/gallery/59.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/60.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/61.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/62.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/63.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/80.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/81.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/82.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/100.jpg", place: "Sonabia", text: tSonabia }
       ]
     };
 
