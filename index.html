@@ -79,15 +79,19 @@
     .icon-chip:hover { transform: scale(1.08); }
     .nav-menu {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 80%;
+      top: 12px; left: 12px; right: 12px;
+      bottom: auto;
+      max-height: calc(100% - 24px);
       z-index: 20;
-      border-radius: 0 0 32px 32px;
-      background: #0a0a0e;
-      padding: max(env(safe-area-inset-top), 22px) 24px 28px;
+      border-radius: 28px;
+      background: rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(28px) saturate(1.6);
+      -webkit-backdrop-filter: blur(28px) saturate(1.6);
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      padding: 28px 28px 28px;
       display: flex;
       flex-direction: column;
-      clip-path: circle(0% at calc(100% - 22px) 24px);
+      clip-path: circle(0% at calc(100% - 28px) 44px);
       opacity: 0;
       transition: clip-path 0.55s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
       pointer-events: none;
@@ -103,7 +107,7 @@
       pointer-events: none;
     }
     .nav-menu.open {
-      clip-path: circle(150% at calc(100% - 22px) 24px);
+      clip-path: circle(150% at calc(100% - 28px) 44px);
       opacity: 1;
       pointer-events: all;
     }
@@ -119,21 +123,22 @@
       font-size: 13px;
       letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: rgba(255,255,255,0.35);
+      color: rgba(0,0,0,0.35);
     }
     .nav-close {
-      width: 32px; height: 32px;
-      border-radius: 50%;
-      background: rgba(255,255,255,0.07);
-      border: 1px solid rgba(255,255,255,0.12);
-      color: rgba(255,255,255,0.8);
-      display: grid;
-      place-items: center;
-      font-size: 16px;
+      background: none;
+      border: none;
+      color: rgba(0,0,0,0.5);
+      font-family: "Europa", sans-serif;
+      font-weight: 300;
+      font-size: 26px;
       cursor: pointer;
-      transition: background 0.18s;
+      line-height: 1;
+      transition: color 0.18s;
+      padding: 0;
+      letter-spacing: 0;
     }
-    .nav-close:hover { background: rgba(255,255,255,0.12); }
+    .nav-close:hover { color: #000; }
     .nav-links {
       display: flex;
       flex-direction: column;
@@ -149,7 +154,7 @@
       font-family: "NeueHaas", sans-serif;
       font-weight: 200;
       font-size: clamp(32px, 9vw, 44px);
-      color: rgba(255,255,255,0.85);
+      color: rgba(0,0,0,0.75);
       text-decoration: none;
       letter-spacing: -0.03em;
       padding: 4px 0;
@@ -164,7 +169,7 @@
     .nav-menu.open .nav-link:nth-child(2) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.24s both; }
     .nav-menu.open .nav-link:nth-child(3) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
     .nav-menu.open .nav-link:nth-child(4) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.36s both; }
-    .nav-link:hover { color: #fff; }
+    .nav-link:hover { color: #000; }
     .nav-link:last-child { border-bottom: none; }
     .nav-num {
       font-family: "Europa", sans-serif;
@@ -177,12 +182,12 @@
     .nav-link-arrow {
       margin-left: auto;
       font-size: 14px;
-      color: rgba(255,255,255,0.18);
+      color: rgba(0,0,0,0.18);
       transition: transform 0.2s, color 0.2s;
     }
-    .nav-link:hover .nav-link-arrow { transform: translate(3px, -3px); color: rgba(255,255,255,0.5); }
+    .nav-link:hover .nav-link-arrow { transform: translate(3px, -3px); color: rgba(0,0,0,0.5); }
     .nav-footer {
-      border-top: 1px solid rgba(255,255,255,0.07);
+      border-top: 1px solid rgba(0,0,0,0.07);
       padding-top: 14px;
       display: flex;
       justify-content: flex-end;
@@ -191,16 +196,17 @@
     .nav-footer-counter {
       font-family: "NeueHaas", sans-serif;
       font-size: 11px;
-      color: rgba(255,255,255,0.30);
+      color: rgba(0,0,0,0.30);
     }
     .nav-player {
       border-radius: 22px;
       overflow: hidden;
       position: relative;
+      margin-top: 28px;
       margin-bottom: 16px;
       height: 90px;
       background-size: cover;
-      background-position: center;
+      background-position: center 25%;
       transition: background-image 0.4s ease, box-shadow 0.6s ease;
       flex-shrink: 0;
     }
@@ -220,7 +226,7 @@
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
-      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.10) 100%);
+      background: none;
     }
     .nav-player-info { min-width: 0; }
     .nav-player-name {
@@ -328,7 +334,7 @@
         linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(26, 26, 30, 0.82)),
         url("songs/all%20the%20stars.jpeg");
       background-size: cover;
-      background-position: center;
+      background-position: center top;
       box-shadow:
         0 12px 24px rgba(0, 0, 0, 0.18),
         inset 0 -55px 70px rgba(0, 0, 0, 0.35);
@@ -551,7 +557,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url(links/gallery/7.jpg) center center / cover no-repeat;
+      background: url(links/gallery/100.jpg) center center / cover no-repeat;
       z-index: 0;
     }
     .full-square-content {
@@ -895,9 +901,9 @@
               </div>
               <div class="bar"><span id="progressFill"></span></div>
               <div class="player-controls">
-                <button class="circle-btn" id="prevBtn" aria-label="Prev">⏮</button>
-                <button class="circle-btn play" id="playBtn" aria-label="Play">▶</button>
-                <button class="circle-btn" id="nextBtn" aria-label="Next">⏭</button>
+                <button class="circle-btn" id="prevBtn" aria-label="Prev">⏮&#xFE0E;</button>
+                <button class="circle-btn play" id="playBtn" aria-label="Play">▶&#xFE0E;</button>
+                <button class="circle-btn" id="nextBtn" aria-label="Next">⏭&#xFE0E;</button>
               </div>
             </div>
           </div>
@@ -919,20 +925,6 @@
           </div>
         </article>
 
-        <div class="metric-row">
-          <article class="metric">
-            <div class="ring">64%</div>
-            <label>Mind clarity</label>
-          </article>
-          <article class="metric">
-            <div class="ring">15%</div>
-            <label>Stress level</label>
-          </article>
-        </div>
-
-        <article class="tile reflection">
-          <button class="fab" aria-label="Write">Ver Viajes</button>
-        </article>
       </section>
     </section>
 
@@ -959,16 +951,28 @@
     <nav class="nav-menu" id="navMenu">
       <div class="nav-menu-header">
         <span class="nav-brand">J &amp; L</span>
-        <button class="nav-close" id="navClose">×</button>
+        <button class="nav-close" id="navClose">X</button>
       </div>
       <div class="nav-links">
-        <a class="nav-link" href="index.html">Inicio<span class="nav-link-arrow">↗</span></a>
-        <a class="nav-link" href="gallery.html">Galería<span class="nav-link-arrow">↗</span></a>
-        <a class="nav-link" href="#">Notas<span class="nav-link-arrow">↗</span></a>
-        <a class="nav-link" href="#">Música<span class="nav-link-arrow">↗</span></a>
+        <a class="nav-link" href="index.html">Inicio<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+        <a class="nav-link" href="gallery.html">Galería<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+        <a class="nav-link" href="#">Notas<span class="nav-link-arrow">↗&#xFE0E;</span></a>
+        <a class="nav-link" href="#">Música<span class="nav-link-arrow">↗&#xFE0E;</span></a>
       </div>
-      <div class="nav-footer">
-        <span class="nav-footer-counter" id="navCounter"></span>
+      <div class="nav-player" id="navPlayer">
+        <div class="nav-player-filter" id="navPlayerFilter"></div>
+        <div class="nav-player-inner">
+          <div class="nav-player-info">
+            <div class="nav-player-name" id="navAuthorName">Kendrick Lamar</div>
+            <div class="nav-player-track" id="navTrackName">@allthestars</div>
+          </div>
+          <div class="nav-player-controls">
+            <button class="nav-player-btn" id="navPrevBtn">⏮&#xFE0E;</button>
+            <button class="nav-player-btn nav-player-play" id="navPlayBtn">▶&#xFE0E;</button>
+            <button class="nav-player-btn" id="navNextBtn">⏭&#xFE0E;</button>
+          </div>
+        </div>
+        <div class="nav-player-bar"><div class="nav-player-progress" id="navProgressFill"></div></div>
       </div>
     </nav>
 
@@ -1210,6 +1214,14 @@
 
     const playerCard = document.getElementById("playerCard");
     const songFilter = document.getElementById("songFilter");
+    const navPlayer        = document.getElementById("navPlayer");
+    const navPlayerFilter  = document.getElementById("navPlayerFilter");
+    const navAuthorName    = document.getElementById("navAuthorName");
+    const navTrackName     = document.getElementById("navTrackName");
+    const navPlayBtn       = document.getElementById("navPlayBtn");
+    const navPrevBtn       = document.getElementById("navPrevBtn");
+    const navNextBtn       = document.getElementById("navNextBtn");
+    const navProgressFill  = document.getElementById("navProgressFill");
     const playBtn = document.getElementById("playBtn");
     const prevBtn = document.getElementById("prevBtn");
     const nextBtn = document.getElementById("nextBtn");
@@ -1256,8 +1268,13 @@
       audio.src = encodeURI(song.src);
       authorName.textContent = song.artist;
       trackName.textContent = `@${song.title.toLowerCase().replace(/\s+/g, "")}`;
-      playerCard.style.backgroundImage = `linear-gradient(180deg, rgba(255, 255, 255, 0.09), rgba(26, 26, 30, 0.82)), url("${encodeURI(song.cover)}")`;
+      const bgImage = `linear-gradient(180deg, rgba(255,255,255,0.09), rgba(26,26,30,0.82)), url("${encodeURI(song.cover)}")`;
+      playerCard.style.backgroundImage = bgImage;
       songFilter.style.background = song.filter;
+      navAuthorName.textContent = song.artist;
+      navTrackName.textContent = `@${song.title.toLowerCase().replace(/\s+/g,"")}`;
+      navPlayer.style.backgroundImage = bgImage;
+      navPlayerFilter.style.background = song.filter;
       currentTimeEl.textContent = "0:00";
       remainingTimeEl.textContent = "-0:00";
       progressFill.style.width = "0%";
@@ -1274,7 +1291,9 @@
     }
 
     function updatePlayButton() {
-      playBtn.textContent = audio.paused ? "▶" : "⏸";
+      const icon = (audio.paused ? "▶" : "⏸") + "\uFE0E";
+      playBtn.textContent = icon;
+      navPlayBtn.textContent = icon;
     }
 
     function togglePlay() {
@@ -1352,10 +1371,15 @@
       remainingTimeEl.textContent = `-${formatTime(duration - current)}`;
       const progress = duration > 0 ? (current / duration) * 100 : 0;
       progressFill.style.width = `${progress}%`;
+      navProgressFill.style.width = `${progress}%`;
     });
     audio.addEventListener("play", updatePlayButton);
     audio.addEventListener("pause", updatePlayButton);
     audio.addEventListener("ended", () => nextSong(true));
+
+    navPlayBtn.addEventListener("click", togglePlay);
+    navPrevBtn.addEventListener("click", () => prevSong(true));
+    navNextBtn.addEventListener("click", () => nextSong(true));
 
     loadSong(0, false);
 
