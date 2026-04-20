@@ -65,12 +65,14 @@
       border: 1px solid rgba(20, 21, 24, 0.14);
       background: #fff;
       border-radius: 999px;
-      padding: 8px 12px;
+      padding: 8px 16px;
       color: var(--ink);
       text-decoration: none;
       font-size: 13px;
       box-shadow: var(--shadow);
+      transition: background 0.18s, color 0.18s;
     }
+    .back-btn:hover { background: var(--ink); color: #fff; }
 
     .gallery {
       column-count: 2;
@@ -229,7 +231,7 @@
         <h1 class="title">Gallery</h1>
         <a class="back-btn" href="index.html">Volver</a>
       </div>
-      <p class="subtitle">Estilo Pinterest, con layout variable y zoom al clicar.</p>
+      <p class="subtitle">Cada foto guarda algo que no se puede olvidar.</p>
     </div>
 
     <section class="gallery" id="galleryGrid"></section>
