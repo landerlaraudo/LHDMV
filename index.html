@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LHDMV</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="rescale.css">
+</head>
+
+<body>
+    <section class="nav">
+        <div class="dropdown-menu">
+            <div class="circle-menu"></div>
+                <div class="dropdown-content">
+                    <a href="index.html">Home</a>
+                    <a href="gallery.html">Galeria</a>
+                    <a href="#viajes">Viajes</a>
+                    <a href="timeline.html">Timeline</a>
+                </div>
+                
+    <section class="wrapper-music-player">
+            <!-- Slide 1 -->
+            <div class="music-slide active">
+                <div class="wrapper2-music-player">
+                    <section id="mainsong" class="mainsong">
+                        <div class="music-player">
+                            <div class="player-card1">
+                                <!-- Background Image -->
+                                <div class="player-bg"></div>
+
+                                <!-- Overlay Content -->
+                                <div class="player-content">
+                                    <!-- Top Info Section -->
+                                    <div class="player-header">
+                                        <div class="artist-info">
+                                            <img src="links/AUDIO/all the stars.jpeg" alt="Artist" class="artist-avatar">
+                                            <div class="artist-details">
+                                                <div class="artist-name">All The Stars</div>
+                                                <div class="artist-handle">Primera Canción</div>
+                                            </div>
+                                        </div>
+                                        <div class="player-actions">
+                                            <button class="action-btn share-btn">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <circle cx="18" cy="5" r="3"></circle>
+                                                    <circle cx="6" cy="12" r="3"></circle>
+                                                    <circle cx="18" cy="19" r="3"></circle>
+                                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                                </svg>
+                                            </button>
+                                            <button class="action-btn like-btn">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controls -->
+                                    <div class="player-controls">
+                                        <button class="control-btn prev-btn" data-player="0">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="19 5 9 12 19 19 19 5"></polygon>
+                                                <line x1="5" y1="5" x2="5" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn play-btn" data-player="0">
+                                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                                                <rect x="6" y="4" width="4" height="16"></rect>
+                                                <rect x="14" y="4" width="4" height="16"></rect>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn next-btn" data-player="0">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 5 15 12 5 19 5 5"></polygon>
+                                                <line x1="19" y1="5" x2="19" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div class="player-progress">
+                                        <span class="progress-time current-time">0:00</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill"></div>
+                                        </div>
+                                        <span class="progress-time duration-time">0:00</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <audio class="audioPlayer" data-player="0" src="links/AUDIO/All The Stars.mp3"></audio>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="music-slide">
+                <div class="wrapper2-music-player">
+                    <section id="mainsong" class="mainsong">
+                        <div class="music-player">
+                            <div class="player-card2">
+                                <!-- Background Image -->
+                                <div class="player-bg2">
+                                    <img src="links/AUDIO/Cinnamon Girl.jpg" alt="">
+                                </div>
+
+                                <!-- Overlay Content -->
+                                <div class="player-content2">
+                                    <!-- Top Info Section -->
+                                    <div class="player-header">
+                                        <div class="artist-info">
+                                            <img src="links/AUDIO/Cinnamon Girl.jpg" alt="Artist" class="artist-avatar">
+                                            <div class="artist-details">
+                                                <div class="artist-name">Cinnamon Girl</div>
+                                                <div class="artist-handle">Lana del Rey</div>
+                                            </div>
+                                        </div>
+                                        <div class="player-actions">
+                                            <button class="action-btn share-btn">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <circle cx="18" cy="5" r="3"></circle>
+                                                    <circle cx="6" cy="12" r="3"></circle>
+                                                    <circle cx="18" cy="19" r="3"></circle>
+                                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                                </svg>
+                                            </button>
+                                            <button class="action-btn like-btn">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controls -->
+                                    <div class="player-controls">
+                                        <button class="control-btn prev-btn" data-player="1">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="19 5 9 12 19 19 19 5"></polygon>
+                                                <line x1="5" y1="5" x2="5" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn play-btn" data-player="1">
+                                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                                                <rect x="6" y="4" width="4" height="16"></rect>
+                                                <rect x="14" y="4" width="4" height="16"></rect>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn next-btn" data-player="1">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 5 15 12 5 19 5 5"></polygon>
+                                                <line x1="19" y1="5" x2="19" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div class="player-progress">
+                                        <span class="progress-time current-time">0:00</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill"></div>
+                                        </div>
+                                        <span class="progress-time duration-time">0:00</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <audio class="audioPlayer" data-player="1" src="links/AUDIO/Cinnamon Girl.mp3"></audio>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="music-slide">
+                <div class="wrapper2-music-player">
+                    <section id="mainsong" class="mainsong">
+                        <div class="music-player">
+                            <div class="player-card3">
+                                <!-- Background Image -->
+                                <div class="player-bg3"></div>
+
+                                <!-- Overlay Content -->
+                                <div class="player-content3">
+                                    <!-- Top Info Section -->
+                                    <div class="player-header">
+                                        <div class="artist-info">
+                                            <img src="links/AUDIO/Say Yes to Heaven.webp" alt="Artist" class="artist-avatar">
+                                            <div class="artist-details">
+                                                <div class="artist-name">Say yes to heaven</div>
+                                                <div class="artist-handle">Lana del Rey</div>
+                                            </div>
+                                        </div>
+                                        <div class="player-actions">
+                                            <button class="action-btn share-btn">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <circle cx="18" cy="5" r="3"></circle>
+                                                    <circle cx="6" cy="12" r="3"></circle>
+                                                    <circle cx="18" cy="19" r="3"></circle>
+                                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                                </svg>
+                                            </button>
+                                            <button class="action-btn like-btn">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controls -->
+                                    <div class="player-controls">
+                                        <button class="control-btn prev-btn" data-player="2">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="19 5 9 12 19 19 19 5"></polygon>
+                                                <line x1="5" y1="5" x2="5" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn play-btn" data-player="2">
+                                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                                                <rect x="6" y="4" width="4" height="16"></rect>
+                                                <rect x="14" y="4" width="4" height="16"></rect>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn next-btn" data-player="2">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 5 15 12 5 19 5 5"></polygon>
+                                                <line x1="19" y1="5" x2="19" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div class="player-progress">
+                                        <span class="progress-time current-time">0:00</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill"></div>
+                                        </div>
+                                        <span class="progress-time duration-time">0:00</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <audio class="audioPlayer" data-player="2" src="links/AUDIO/Say Yes To Heaven.mp3"></audio>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="music-slide">
+                <div class="wrapper2-music-player">
+                    <section id="mainsong" class="mainsong">
+                        <div class="music-player">
+                            <div class="player-card2">
+                                <!-- Background Image -->
+                                <div class="player-bg2">
+                                    <img src="links/AUDIO/Linger.jpg" alt="">
+                                </div>
+
+                                <!-- Overlay Content -->
+                                <div class="player-content4">
+                                    <!-- Top Info Section -->
+                                    <div class="player-header">
+                                        <div class="artist-info">
+                                            <img src="links/AUDIO/Linger.jpg" alt="Artist" class="artist-avatar">
+                                            <div class="artist-details">
+                                                <div class="artist-name">Linger</div>
+                                                <div class="artist-handle">The Cranberries</div>
+                                            </div>
+                                        </div>
+                                        <div class="player-actions">
+                                            <button class="action-btn share-btn">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <circle cx="18" cy="5" r="3"></circle>
+                                                    <circle cx="6" cy="12" r="3"></circle>
+                                                    <circle cx="18" cy="19" r="3"></circle>
+                                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                                </svg>
+                                            </button>
+                                            <button class="action-btn like-btn">
+                                                <svg viewBox="0 0 24 24" fill="currentColor">
+                                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Controls -->
+                                    <div class="player-controls">
+                                        <button class="control-btn prev-btn" data-player="1">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="19 5 9 12 19 19 19 5"></polygon>
+                                                <line x1="5" y1="5" x2="5" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn play-btn" data-player="1">
+                                            <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                                            </svg>
+                                            <svg class="pause-icon" viewBox="0 0 24 24" fill="currentColor" style="display:none;">
+                                                <rect x="6" y="4" width="4" height="16"></rect>
+                                                <rect x="14" y="4" width="4" height="16"></rect>
+                                            </svg>
+                                        </button>
+                                        <button class="control-btn next-btn" data-player="1">
+                                            <svg viewBox="0 0 24 24" fill="currentColor">
+                                                <polygon points="5 5 15 12 5 19 5 5"></polygon>
+                                                <line x1="19" y1="5" x2="19" y2="19"></line>
+                                            </svg>
+                                        </button>
+                                    </div>
+
+                                    <!-- Progress Bar -->
+                                    <div class="player-progress">
+                                        <span class="progress-time current-time">0:00</span>
+                                        <div class="progress-bar">
+                                            <div class="progress-fill"></div>
+                                        </div>
+                                        <span class="progress-time duration-time">0:00</span>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <audio class="audioPlayer" data-player="1" src="links/AUDIO/The Cranberries - Linger.mp3"></audio>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="header" class="header">
+            <div class="flechadiv"></div>
+            <div class="titulo">
+                <h1>J / L</h1>
+                <h2>7 AGOSTO 2025</h2>
+            </div>
+            <div class="flechadiv">
+                <a href="#section02"><img src="links/Flecha.png" class="flecha2" alt="Flecha Arriba"></a>
+            </div>
+    </section>
+
+    <section id="section02" class="section02">
+        <div class="flechadiv">
+            <a href="#header"><img src="links/Flecha.png" class="flecha" alt="Flecha Arriba"></a>
+        </div>
+        <div class="firstquote">
+            <p id="firstquotewritting"
+                data-text="A veces aparece sin avisar, como si el mundo hubiera calculado cada paso para que dos personas coincidieran en el momento exacto. No sabes si llamarlo destino o casualidad. Tal vez sea azar.">
+            </p>
+        </div>
+    </section>
+
+   <section id="scrollgallery" class="gallery">
+        <div class="gallery-item speed-1" data-date="07/08/2025" data-place="Playa Norte">
+            <img src="links/GALLERY/1.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-2" data-date="12/06/2024" data-place="Ciudad Vieja">
+            <img src="links/GALLERY/4.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-3" data-date="01/01/2023" data-place="Montaña Azul">
+            <img src="links/GALLERY/8.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-4" data-date="14/02/2022" data-place="Jardín Secreto">
+            <img src="links/GALLERY/13.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-1" data-date="23/09/2021" data-place="Cielo Abierto">
+            <img src="links/GALLERY/17.jpg" alt="">
+        </div>      
+
+        <div class="gallery-item speed-2" data-date="23/09/2021" data-place="Cielo Abierto">
+            <img src="links/GALLERY/22.jpg" alt="">
+        </div>
+
+         <div class="gallery-item speed-3" data-date="23/09/2021" data-place="Cielo Abierto">
+            <img src="links/GALLERY/33.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-3" data-date="23/09/2021" data-place="Cielo Abierto">
+            <img src="links/GALLERY/36.jpg" alt="">
+        </div>
+
+        <div class="gallery-item speed-1" data-date="23/09/2021" data-place="Cielo Abierto">
+            <img src="links/GALLERY/40.jpg" alt="">
+        </div>
+        <div class="open-gallery-button-div">
+            <div class="open-gallery-button">
+                <a href="gallery.html"> Ver Galeria</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="viajes">
+        <div id="viajes" class="hossegor">
+            <div class="hossegordate">
+                <p>16</p>
+                <P>ENERO</P>
+                <P>2026</P>
+                <P>FRANCE</P>
+            </div>
+            <div class="hossegor-title">
+            </div>
+            <div class="hossegordescription">
+                <a href="hossegor.html"><img src="" class="" alt="">
+                <div class="hossegorbutton"><p>Ver Viaje</p></div></a>
+                <p>Primer viaje juntos. Nos vamos para la france a disfrutar y a desconectar un poco de los examenes de Jone.</p>
+            </div>
+        </div>
+        <div class="candanchu">
+            <div class="candanchu-date">
+                <p>16</p>
+                <P>ENERO</P>
+                <P>2026</P>
+                <P>FRANCE</P>
+            </div>
+            <div class="candanchu-title">
+                <h1>CANDANCHÚ</h1>
+                <h2>PIRINEOS</h2>
+            </div>
+            <div class="candanchu-date">
+                <p>16</p>
+                <P>ENERO</P>
+                <P>2026</P>
+                <P>FRANCE</P>
+            </div>
+        </div>
+        <div class="viaje3"></div>
+    </section>
+
+        
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
