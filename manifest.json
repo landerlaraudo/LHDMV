@@ -4,8 +4,8 @@
   "description": "Nuestros recuerdos",
   "start_url": "/LHDMV/splash.html",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#f6f6f8",
+  "theme_color": "#f6f6f8",
   "orientation": "portrait",
   "icons": [
     {
