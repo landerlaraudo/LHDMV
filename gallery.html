@@ -13,14 +13,9 @@
     @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Lig.otf") format("opentype"); font-weight: 300; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html { background: #f6f6f8; overflow-x: hidden; }
-    @keyframes slideInFromRight { from { transform: translateX(100vw); } to { transform: translateX(0); } }
-    @keyframes slideInFromLeft  { from { transform: translateX(-100vw); } to { transform: translateX(0); } }
-    @keyframes slideOutToLeft   { from { transform: translateX(0); } to { transform: translateX(-100vw); } }
-    @keyframes slideOutToRight  { from { transform: translateX(0); } to { transform: translateX(100vw); } }
-    body.slide-in-from-right { animation: slideInFromRight 0.38s cubic-bezier(0.22,1,0.36,1) both; }
-    body.slide-in-from-left  { animation: slideInFromLeft  0.38s cubic-bezier(0.22,1,0.36,1) both; }
-    body.slide-out-to-left   { animation: slideOutToLeft   0.3s  cubic-bezier(0.55,0,1,0.45) both; }
-    body.slide-out-to-right  { animation: slideOutToRight  0.3s  cubic-bezier(0.55,0,1,0.45) both; }
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root) { animation: none; }
+    ::view-transition-new(root) { animation: none; }
 
     :root {
       --bg: #f6f6f8;
@@ -90,52 +85,53 @@
     .cal-backdrop {
       position: absolute;
       inset: 0;
-      background: rgba(0,0,0,0.22);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
+      background: rgba(0,0,0,0.14);
+      backdrop-filter: blur(22px);
+      -webkit-backdrop-filter: blur(22px);
     }
     .cal-panel {
       position: relative;
       width: 100%;
       max-width: 420px;
-      max-height: 82vh;
+      max-height: 88vh;
       overflow-y: auto;
       background: #ffffff;
-      border-radius: 24px;
-      padding: 20px;
-      border: 1px solid rgba(0,0,0,0.07);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+      border-radius: 32px;
+      padding: 26px 22px 22px;
+      border: none;
+      box-shadow: 0 28px 64px rgba(0,0,0,0.14), 0 4px 16px rgba(0,0,0,0.07);
       animation: panelIn 0.3s cubic-bezier(0.22,1,0.36,1);
     }
     @keyframes panelIn { from { opacity:0; transform:scale(0.96) translateY(10px); } to { opacity:1; transform:none; } }
-    .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
-    .cal-title { font-family:"NeueHaas",sans-serif; font-size:15px; font-weight:400; color:#0a0a0e; letter-spacing:-0.01em; }
-    .cal-nav { background:none; border:1px solid rgba(0,0,0,0.10); border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:13px; color:#0a0a0e; display:grid; place-items:center; transition:background 0.15s; }
-    .cal-nav:hover { background:rgba(0,0,0,0.06); }
-    .cal-weekdays, .cal-days { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
-    .cal-weekdays { margin-bottom:6px; }
-    .cal-weekday { text-align:center; font-size:9px; color:rgba(0,0,0,0.30); letter-spacing:0.06em; text-transform:uppercase; padding:2px 0; }
-    .cal-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%; font-size:11px; color:rgba(0,0,0,0.65); position:relative; cursor:default; gap:2px; transition:background 0.15s; }
-    .cal-day.other-month { color:rgba(0,0,0,0.18); }
-    .cal-day.today { background:rgba(0,0,0,0.07); color:#0a0a0e; font-weight:500; }
+    .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; padding:0 2px; }
+    .cal-title { font-family:"NeueHaas",sans-serif; font-size:20px; font-weight:300; color:#0a0a0e; letter-spacing:-0.02em; }
+    .cal-nav { background:none; border:none; width:34px; height:34px; cursor:pointer; font-size:17px; color:rgba(0,0,0,0.30); display:grid; place-items:center; border-radius:50%; transition:background 0.15s, color 0.15s; }
+    .cal-nav:hover { background:rgba(0,0,0,0.06); color:#0a0a0e; }
+    .cal-weekdays, .cal-days { display:grid; grid-template-columns:repeat(7,1fr); gap:2px; }
+    .cal-weekdays { margin-bottom:4px; }
+    .cal-weekday { text-align:center; font-size:10px; font-weight:500; color:rgba(0,0,0,0.25); letter-spacing:0.02em; padding:4px 0 8px; }
+    .cal-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%; font-size:13px; font-family:"Europa",sans-serif; font-weight:400; color:#0a0a0e; position:relative; cursor:default; gap:3px; transition:background 0.15s; border:none; background:transparent; }
+    .cal-day.other-month { color:rgba(0,0,0,0.15); }
+    .cal-day.today { background:#0a0a0e; color:#fff; font-weight:500; }
+    .cal-day.today .cal-dot { background:rgba(255,255,255,0.55); }
     .cal-day.has-moment { cursor:pointer; }
-    .cal-day.has-moment:hover { background:rgba(0,0,0,0.06); }
+    .cal-day.has-moment:hover:not(.today):not(.selected) { background:rgba(0,0,0,0.06); }
     .cal-day.selected { background:#0a0a0e; color:#fff; }
-    .cal-day.selected .cal-dot { background:#fff; }
-    .cal-dot { width:4px; height:4px; border-radius:50%; background:#e07050; flex-shrink:0; }
-    .cal-preview { margin-top:14px; display:none; }
+    .cal-day.selected .cal-dot { background:rgba(255,255,255,0.55); }
+    .cal-dot { width:3px; height:3px; border-radius:50%; background:#e07050; flex-shrink:0; }
+    .cal-preview { margin-top:18px; display:none; }
     .cal-preview.show { display:block; }
-    .cal-preview-label { font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(0,0,0,0.30); margin-bottom:8px; }
+    .cal-preview-label { font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(0,0,0,0.28); margin-bottom:10px; padding:0 2px; }
     .cal-gallery { column-count:2; column-gap:6px; }
-    .cal-pin { break-inside:avoid; margin-bottom:6px; border-radius:14px; overflow:hidden; display:block; text-decoration:none; position:relative; cursor:zoom-in; }
+    .cal-pin { break-inside:avoid; margin-bottom:6px; border-radius:16px; overflow:hidden; display:block; text-decoration:none; position:relative; cursor:zoom-in; }
     .cal-pin img { width:100%; height:var(--h); object-fit:cover; display:block; transition:transform 0.25s ease; }
     .cal-pin:hover img { transform:scale(1.04); }
     .cal-pin-info { position:absolute; bottom:0; left:0; right:0; padding:20px 8px 7px; background:linear-gradient(to top,rgba(0,0,0,0.55),transparent); opacity:0; transition:opacity 0.2s; }
     .cal-pin:hover .cal-pin-info { opacity:1; }
     .cal-pin-place { font-size:10px; color:#fff; font-family:"NeueHaas",sans-serif; }
     .cal-day-texts { margin-top:12px; display:flex; flex-direction:column; gap:8px; }
-    .cal-day-text-block { border:1px solid #0a0a0e; border-radius:16px; padding:12px 14px; background:#ffffff; }
-    .cal-day-text-date { font-size:10px; color:rgba(0,0,0,0.35); margin-bottom:4px; letter-spacing:0.03em; }
+    .cal-day-text-block { border:1px solid rgba(0,0,0,0.07); border-radius:18px; padding:14px 16px; background:rgba(0,0,0,0.02); }
+    .cal-day-text-date { font-size:10px; color:rgba(0,0,0,0.30); margin-bottom:4px; letter-spacing:0.03em; }
     .cal-day-text-place { font-family:"NeueHaas",sans-serif; font-weight:500; font-size:13px; color:#0a0a0e; margin-bottom:6px; }
     .cal-day-text-body { font-size:11px; line-height:1.6; color:rgba(0,0,0,0.52); }
     .tabs {
@@ -585,6 +581,7 @@
       margin-bottom: 10px;
     }
   </style>
+  <script>window.addEventListener('pagereveal',function(e){if(!e.viewTransition)return;var d=sessionStorage.getItem('slideDir')||'left';sessionStorage.removeItem('slideDir');e.viewTransition.ready.then(function(){document.documentElement.animate([{transform:'translateX('+(d==='right'?'-100vw':'100vw')+')'},{transform:'translateX(0)'}],{duration:380,easing:'cubic-bezier(0.22,1,0.36,1)',fill:'both',pseudoElement:'::view-transition-new(root)'});});});</script>
 </head>
 <body>
   <main class="shell">
@@ -1186,22 +1183,12 @@
     (function() {
       const PAGE_ORDER = { 'index.html': 0, 'gallery.html': 1, 'viajes.html': 2 };
       const currentIndex = 1;
-      const inDir = sessionStorage.getItem('slideDir');
-      if (inDir) {
-        sessionStorage.removeItem('slideDir');
-        document.body.classList.add(inDir === 'left' ? 'slide-in-from-right' : 'slide-in-from-left');
-      }
       document.querySelectorAll('a[href]').forEach(link => {
-        link.addEventListener('click', e => {
-          const href = link.getAttribute('href');
-          const dest = href.split('/').pop().split('?')[0];
+        link.addEventListener('click', () => {
+          const dest = (link.getAttribute('href') || '').split('/').pop().split('?')[0];
           const destIndex = PAGE_ORDER[dest];
           if (destIndex === undefined || destIndex === currentIndex) return;
-          e.preventDefault();
-          const dir = destIndex > currentIndex ? 'left' : 'right';
-          sessionStorage.setItem('slideDir', dir);
-          document.body.classList.add(`slide-out-to-${dir}`);
-          setTimeout(() => { location.href = href; }, 300);
+          sessionStorage.setItem('slideDir', destIndex > currentIndex ? 'left' : 'right');
         });
       });
     })();
