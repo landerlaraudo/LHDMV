@@ -1640,6 +1640,29 @@
         });
       });
     })();
+
+    // — Prefetch de galería en segundo plano —
+    (function() {
+      if (!('serviceWorker' in navigator)) return;
+      const imgs = [];
+      for (let i = 1; i <= 150; i++) imgs.push(`links/gallery/${i}.jpg`);
+      imgs.push('links/gallery/27-1.jpg', 'links/gallery/104.1.jpg', 'links/gallery/104.2.jpg');
+
+      let idx = 0;
+      const BATCH = 5;
+      const idle = window.requestIdleCallback
+        ? fn => requestIdleCallback(fn, { timeout: 3000 })
+        : fn => setTimeout(fn, 300);
+
+      function fetchBatch() {
+        if (idx >= imgs.length) return;
+        const batch = imgs.slice(idx, idx + BATCH);
+        idx += BATCH;
+        Promise.all(batch.map(src => fetch(src).catch(() => {}))).then(() => idle(fetchBatch));
+      }
+
+      window.addEventListener('load', () => idle(fetchBatch));
+    })();
   </script>
 </body>
 </html>
