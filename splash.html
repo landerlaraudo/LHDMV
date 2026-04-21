@@ -33,30 +33,6 @@
     @font-face { font-family: 'Europa'; src: url('fonts/Europa_Grotesk_SH_DemBol.ttf') format('truetype'); font-weight: 600; font-style: normal; }
     @font-face { font-family: 'Europa'; src: url('fonts/europa-grotesk-sh-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
 
-    /* =====================================================
-       CAMBIA AQUÍ LAS TIPOGRAFÍAS
-       
-       Pesos NeueHaas:  100=XXThin · 150=XThin · 200=Thin
-                        300=Light · 400=Roman · 500=Medium
-                        700=Bold · 900=Black
-                        (todos tienen versión italic)
-       Pesos Europa:    300=Light · 400=Regular · 500=Medium
-                        600=DemiBold · 700=Bold · 400italic=Italic
-       ===================================================== */
-    :root {
-      --font-title:        'NeueHaas', sans-serif;
-      --font-title-weight: 100;
-      --font-title-style:  italic;
-
-      --font-label:        'Europa', sans-serif;
-      --font-label-weight: 300;
-      --font-label-style:  normal;
-
-      --font-ui:           'Europa', sans-serif;
-      --font-ui-weight:    400;
-      --font-ui-style:     normal;
-    }
-
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     html, body {
@@ -66,17 +42,12 @@
       background-color: #f6f6f8;
     }
 
+    /* ── Splash ── */
     #splash {
       position: fixed;
       inset: 0;
       z-index: 100;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: space-between;
-      padding-top: env(safe-area-inset-top, 50px);
-      padding-bottom: max(env(safe-area-inset-bottom), 40px);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     #splash.hide {
@@ -85,6 +56,7 @@
       transform: scale(1.04);
     }
 
+    /* ── Foto full-screen ── */
     .splash-bg {
       position: absolute;
       inset: 0;
@@ -92,143 +64,94 @@
       z-index: 0;
     }
 
-    .splash-bg::after {
-      content: '';
+    /* ── Degradado: oscurece la parte baja para legibilidad ── */
+    .splash-overlay {
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.50) 0%,
-        rgba(0,0,0,0.0) 35%,
-        rgba(0,0,0,0.0) 55%,
-        rgba(0,0,0,0.65) 100%
+      z-index: 1;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.32) 0%,
+        rgba(0, 0, 0, 0.08) 35%,
+        rgba(0, 0, 0, 0.0)  65%,
+        rgba(0, 0, 0, 0.0)  100%
       );
     }
 
-    .splash-top {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-      padding-top: 70px;
-      animation: fadeDown 1.2s cubic-bezier(0.22, 1, 0.36, 1) both;
-    }
-
-    .splash-top .label {
-      font-family: var(--font-label);
-      font-weight: var(--font-iu-weight);
-      font-style: var(--font-label-style);
-      font-size: 0.6rem;
-      letter-spacing: 0.35em;
-      color: rgba(255,255,255,0.65);
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    .splash-top h1 {
-      font-family: var(--font-title);
-      font-weight: var(--font-title-weight);
-      font-style: var(--font-title-style);
-      font-size: clamp(3rem, 11vw, 5rem);
-      color: #fff;
-      line-height: 1.05;
-      letter-spacing: -0.01em;
-      text-shadow: 0 2px 40px rgba(0,0,0,0.35);
-    }
-
-    .splash-bottom {
-      position: relative;
-      z-index: 1;
-      width: 100%;
+    /* ── Contenido inferior centrado ── */
+    .splash-content {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 2;
+      padding: calc(max(env(safe-area-inset-top), 18px) + 48px) 28px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 16px;
-      padding-bottom: 10px;
-      animation: fadeUp 1.4s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+      text-align: center;
+      animation: fadeUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
     }
 
-    .slider-hint {
-      font-family: var(--font-ui);
-      font-weight: var(--font-ui-weight);
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.5);
+    .splash-title {
+      font-family: 'NeueHaas', sans-serif;
+      font-weight: 300;
+      font-style: normal;
+      font-size: clamp(2.9rem, 13vw, 5rem);
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.025em;
+      margin-bottom: 14px;
     }
 
-    .slider-track {
-      width: 230px;
-      height: 58px;
-      background: rgba(255,255,255,0.1);
-      border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 29px;
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      position: relative;
-      overflow: hidden;
-      cursor: grab;
-      touch-action: none;
-      user-select: none;
+    .splash-sub {
+      font-family: 'Europa', sans-serif;
+      font-weight: 300;
+      font-size: 0.88rem;
+      color: rgba(255, 255, 255, 0.62);
+      line-height: 1.55;
+      max-width: 280px;
+      margin-bottom: 32px;
     }
 
-    .slider-track::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.07) 50%, transparent 100%);
-      background-size: 200% 100%;
-      animation: shimmer 2.5s ease-in-out infinite;
+    /* ── Botón oscuro tipo pill ── */
+    .splash-btn {
+      width: 280px;
+      max-width: 100%;
+      height: 44px;
+      padding: 0 28px;
+      background: rgba(16, 16, 20, 0.62);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.13);
+      border-radius: 22px;
+      color: rgba(255, 255, 255, 0.92);
+      font-family: 'Europa', sans-serif;
+      font-weight: 300;
+      font-size: 0.82rem;
+      letter-spacing: 0.06em;
+      cursor: pointer;
+      margin-bottom: 18px;
+      transition: background 0.2s, transform 0.15s;
+      -webkit-appearance: none;
+      appearance: none;
     }
 
-    .slider-label {
-      position: absolute;
-      inset: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-family: var(--font-ui);
-      font-weight: var(--font-ui-weight);
+    .splash-btn:active {
+      background: rgba(16, 16, 20, 0.88);
+      transform: scale(0.975);
+    }
+
+    /* ── Texto legal/fecha pequeño ── */
+    .splash-note {
+      font-family: 'Europa', sans-serif;
+      font-weight: 300;
       font-size: 0.6rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.55);
-      pointer-events: none;
-      transition: opacity 0.2s;
+      color: rgba(255, 255, 255, 0.32);
+      letter-spacing: 0.06em;
     }
 
-    .slider-thumb {
-      position: absolute;
-      top: 5px;
-      left: 5px;
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      will-change: transform;
-    }
-
-    .slider-thumb svg {
-      width: 18px;
-      height: 18px;
-      color: #111;
-    }
-
-    @keyframes shimmer {
-      0%   { background-position: -200% 0; }
-      100% { background-position:  200% 0; }
-    }
-    @keyframes fadeDown {
-      from { opacity: 0; transform: translateY(-20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
+    /* ── App iframe ── */
     #app {
       opacity: 0;
       transition: opacity 0.8s ease 0.2s;
@@ -241,26 +164,24 @@
       height: 100%;
       border: none;
     }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
   </style>
 </head>
 <body>
 
   <div id="splash">
     <div class="splash-bg"></div>
-    <div class="splash-top">
-      <p class="label">desde el principio</p>
-      <h1>Nuestros<br>recuerdos</h1>
-    </div>
-    <div class="splash-bottom">
-      <p class="slider-hint">desliza para entrar</p>
-      <div class="slider-track" id="sliderTrack">
-        <div class="slider-label">entrar</div>
-        <div class="slider-thumb" id="sliderThumb">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="9 18 15 12 9 6"/>
-          </svg>
-        </div>
-      </div>
+    <div class="splash-overlay"></div>
+
+    <div class="splash-content">
+      <h1 class="splash-title">Nuestros<br>recuerdos</h1>
+      <p class="splash-sub">Cada momento guardado<br>desde el principio</p>
+      <button class="splash-btn" id="splashBtn">Entrar</button>
+      <p class="splash-note" id="splashNote"></p>
     </div>
   </div>
 
@@ -269,64 +190,36 @@
   </div>
 
   <script>
-    const track  = document.getElementById('sliderTrack');
-    const thumb  = document.getElementById('sliderThumb');
+    // — Nota inferior con tiempo juntos —
+    (function() {
+      const start = new Date(2025, 11, 23);
+      const now   = new Date();
+      let months  = (now.getFullYear() - start.getFullYear()) * 12 + (now.getMonth() - start.getMonth());
+      const dayStart = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
+      if (dayStart > now) months--;
+      const baseDate = new Date(start.getFullYear(), start.getMonth() + months, start.getDate());
+      const days = Math.floor((now - baseDate) / 86400000);
+      let t = '';
+      if (months > 0) t += `${months} mes${months > 1 ? 'es' : ''}`;
+      if (months > 0 && days > 0) t += ' y ';
+      if (days > 0 || months === 0) t += `${days} día${days !== 1 ? 's' : ''}`;
+      document.getElementById('splashNote').textContent = `J&L · juntos desde hace ${t}`;
+    })();
+
+    // — Botón entrar —
     const splash = document.getElementById('splash');
     const app    = document.getElementById('app');
-    const label  = track.querySelector('.slider-label');
 
-    let dragging = false;
-    let startX   = 0;
-    let currentX = 0;
-    let maxX     = track.clientWidth - thumb.clientWidth - 10;
+    document.getElementById('splashBtn').addEventListener('click', () => {
+      splash.classList.add('hide');
+      app.classList.add('show');
+    });
 
-    const getClientX = e => e.touches ? e.touches[0].clientX : e.clientX;
-
-    function onStart(e) {
-      dragging = true;
-      startX   = getClientX(e) - currentX;
-      thumb.style.transition = 'none';
-    }
-
-    function onMove(e) {
-      if (!dragging) return;
+    // Soporte también para tap en pantalla táctil (UX alternativo)
+    document.getElementById('splashBtn').addEventListener('touchend', (e) => {
       e.preventDefault();
-      let x = Math.max(0, Math.min(getClientX(e) - startX, maxX));
-      currentX = x;
-      thumb.style.transform = `translateX(${x}px)`;
-      label.style.opacity   = 1 - (x / maxX) * 2;
-      if (x / maxX >= 0.92) unlock();
-    }
-
-    function onEnd() {
-      if (!dragging) return;
-      dragging = false;
-      if (currentX / maxX < 0.92) {
-        thumb.style.transition = 'transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
-        thumb.style.transform  = 'translateX(0)';
-        currentX = 0;
-        label.style.opacity = 1;
-      }
-    }
-
-    function unlock() {
-      dragging = false;
-      thumb.style.transition = 'transform 0.25s ease';
-      thumb.style.transform  = `translateX(${maxX}px)`;
-      setTimeout(() => {
-        splash.classList.add('hide');
-        app.classList.add('show');
-      }, 300);
-    }
-
-    thumb.addEventListener('mousedown',  onStart);
-    thumb.addEventListener('touchstart', onStart, { passive: true });
-    window.addEventListener('mousemove', onMove);
-    window.addEventListener('touchmove', onMove, { passive: false });
-    window.addEventListener('mouseup',   onEnd);
-    window.addEventListener('touchend',  onEnd);
-    window.addEventListener('resize', () => {
-      maxX = track.clientWidth - thumb.clientWidth - 10;
+      splash.classList.add('hide');
+      app.classList.add('show');
     });
   </script>
 
