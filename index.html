@@ -12,7 +12,15 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     @keyframes blink { 0%,50%{opacity:1} 51%,100%{opacity:0} }
     .cursor { animation: blink 1.1s step-end infinite; }
-    html { background: #fff; }
+    html { background: #fff; overflow-x: hidden; }
+    @keyframes slideInFromRight { from { transform: translateX(100vw); } to { transform: translateX(0); } }
+    @keyframes slideInFromLeft  { from { transform: translateX(-100vw); } to { transform: translateX(0); } }
+    @keyframes slideOutToLeft   { from { transform: translateX(0); } to { transform: translateX(-100vw); } }
+    @keyframes slideOutToRight  { from { transform: translateX(0); } to { transform: translateX(100vw); } }
+    body.slide-in-from-right { animation: slideInFromRight 0.38s cubic-bezier(0.22,1,0.36,1) both; }
+    body.slide-in-from-left  { animation: slideInFromLeft  0.38s cubic-bezier(0.22,1,0.36,1) both; }
+    body.slide-out-to-left   { animation: slideOutToLeft   0.3s  cubic-bezier(0.55,0,1,0.45) both; }
+    body.slide-out-to-right  { animation: slideOutToRight  0.3s  cubic-bezier(0.55,0,1,0.45) both; }
     body {
       min-height: 100vh;
       min-height: 100dvh;
@@ -65,8 +73,15 @@
       align-items: center;
       gap: 8px;
       border-radius: 999px;
-      padding: 8px 12px;
-      font-size: 13px;
+      padding: 9px 16px;
+      font-size: 12px;
+      font-family: "Europa", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      background: #fff !important;
+      border: none !important;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
+      color: #0a0a0e;
     }
     .icon-chip {
       width: 13px;
@@ -299,19 +314,36 @@
       display: none;
     }
     .nav-menu-backdrop.open { display: block; }
-    .tabs { display: flex; gap: 8px; margin-top: 2px; }
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-top: 2px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 999px;
+      padding: 4px;
+      width: fit-content;
+    }
     .tab {
       border-radius: 999px;
-      padding: 7px 12px;
+      padding: 7px 16px;
       font-size: 12px;
-      color: rgba(0, 0, 0, 0.45);
+      font-family: "Europa", sans-serif;
+      font-weight: 400;
+      color: rgba(0,0,0,0.45);
       white-space: nowrap;
       cursor: pointer;
       text-decoration: none;
-      transition: background 0.18s, color 0.18s, border-color 0.18s;
+      border: none;
+      background: transparent;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
     }
-    .tab:hover:not(.active) { background: rgba(0, 0, 0, 0.08); color: rgba(0,0,0,0.8); }
-    .tab.active { background: rgba(0, 0, 0, 0.85); color: #fff; border-color: rgba(0, 0, 0, 0.4); }
+    .tab:hover:not(.active) { color: rgba(0,0,0,0.7); }
+    .tab.active {
+      background: #fff;
+      color: #0a0a0e;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+    }
     h1 {
       font-family: "NeueHaas", sans-serif;
       font-weight: 300;
@@ -1522,6 +1554,30 @@
         fullSquareEl.style.boxShadow = `0 12px 28px ${c}`;
       }
     });
+
+    // — Transiciones entre páginas —
+    (function() {
+      const PAGE_ORDER = { 'index.html': 0, 'gallery.html': 1, 'viajes.html': 2 };
+      const currentIndex = 0;
+      const inDir = sessionStorage.getItem('slideDir');
+      if (inDir) {
+        sessionStorage.removeItem('slideDir');
+        document.body.classList.add(inDir === 'left' ? 'slide-in-from-right' : 'slide-in-from-left');
+      }
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', e => {
+          const href = link.getAttribute('href');
+          const dest = href.split('/').pop().split('?')[0];
+          const destIndex = PAGE_ORDER[dest];
+          if (destIndex === undefined || destIndex === currentIndex) return;
+          e.preventDefault();
+          const dir = destIndex > currentIndex ? 'left' : 'right';
+          sessionStorage.setItem('slideDir', dir);
+          document.body.classList.add(`slide-out-to-${dir}`);
+          setTimeout(() => { location.href = href; }, 300);
+        });
+      });
+    })();
   </script>
 </body>
 </html>

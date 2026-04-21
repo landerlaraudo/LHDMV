@@ -12,7 +12,15 @@
     @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Reg.otf") format("opentype"); font-weight: 400; }
     @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Lig.otf") format("opentype"); font-weight: 300; }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { background: #f6f6f8; }
+    html { background: #f6f6f8; overflow-x: hidden; }
+    @keyframes slideInFromRight { from { transform: translateX(100vw); } to { transform: translateX(0); } }
+    @keyframes slideInFromLeft  { from { transform: translateX(-100vw); } to { transform: translateX(0); } }
+    @keyframes slideOutToLeft   { from { transform: translateX(0); } to { transform: translateX(-100vw); } }
+    @keyframes slideOutToRight  { from { transform: translateX(0); } to { transform: translateX(100vw); } }
+    body.slide-in-from-right { animation: slideInFromRight 0.38s cubic-bezier(0.22,1,0.36,1) both; }
+    body.slide-in-from-left  { animation: slideInFromLeft  0.38s cubic-bezier(0.22,1,0.36,1) both; }
+    body.slide-out-to-left   { animation: slideOutToLeft   0.3s  cubic-bezier(0.55,0,1,0.45) both; }
+    body.slide-out-to-right  { animation: slideOutToRight  0.3s  cubic-bezier(0.55,0,1,0.45) both; }
 
     :root {
       --bg: #f6f6f8;
@@ -41,6 +49,124 @@
     .topbar {
       margin: -18px -16px 14px;
       padding: calc(max(env(safe-area-inset-top), 18px) + 26vh) 16px 12px;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .date-chip {
+      position: fixed;
+      top: max(env(safe-area-inset-top), 18px);
+      left: 16px;
+      z-index: 98;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border-radius: 999px;
+      padding: 9px 16px;
+      font-size: 12px;
+      font-family: "Europa", sans-serif;
+      font-weight: 500;
+      letter-spacing: 0.01em;
+      background: #fff;
+      border: none;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.10), 0 1px 3px rgba(0,0,0,0.07);
+      color: #0a0a0e;
+      cursor: pointer;
+    }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: #0a0a0e; flex-shrink: 0; display: inline-block; }
+    .cal-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .cal-overlay.open { display: flex; }
+    .cal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.22);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .cal-panel {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      max-height: 82vh;
+      overflow-y: auto;
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 20px;
+      border: 1px solid rgba(0,0,0,0.07);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.14);
+      animation: panelIn 0.3s cubic-bezier(0.22,1,0.36,1);
+    }
+    @keyframes panelIn { from { opacity:0; transform:scale(0.96) translateY(10px); } to { opacity:1; transform:none; } }
+    .cal-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:18px; }
+    .cal-title { font-family:"NeueHaas",sans-serif; font-size:15px; font-weight:400; color:#0a0a0e; letter-spacing:-0.01em; }
+    .cal-nav { background:none; border:1px solid rgba(0,0,0,0.10); border-radius:50%; width:28px; height:28px; cursor:pointer; font-size:13px; color:#0a0a0e; display:grid; place-items:center; transition:background 0.15s; }
+    .cal-nav:hover { background:rgba(0,0,0,0.06); }
+    .cal-weekdays, .cal-days { display:grid; grid-template-columns:repeat(7,1fr); gap:3px; }
+    .cal-weekdays { margin-bottom:6px; }
+    .cal-weekday { text-align:center; font-size:9px; color:rgba(0,0,0,0.30); letter-spacing:0.06em; text-transform:uppercase; padding:2px 0; }
+    .cal-day { aspect-ratio:1; display:flex; flex-direction:column; align-items:center; justify-content:center; border-radius:50%; font-size:11px; color:rgba(0,0,0,0.65); position:relative; cursor:default; gap:2px; transition:background 0.15s; }
+    .cal-day.other-month { color:rgba(0,0,0,0.18); }
+    .cal-day.today { background:rgba(0,0,0,0.07); color:#0a0a0e; font-weight:500; }
+    .cal-day.has-moment { cursor:pointer; }
+    .cal-day.has-moment:hover { background:rgba(0,0,0,0.06); }
+    .cal-day.selected { background:#0a0a0e; color:#fff; }
+    .cal-day.selected .cal-dot { background:#fff; }
+    .cal-dot { width:4px; height:4px; border-radius:50%; background:#e07050; flex-shrink:0; }
+    .cal-preview { margin-top:14px; display:none; }
+    .cal-preview.show { display:block; }
+    .cal-preview-label { font-size:9px; letter-spacing:0.08em; text-transform:uppercase; color:rgba(0,0,0,0.30); margin-bottom:8px; }
+    .cal-gallery { column-count:2; column-gap:6px; }
+    .cal-pin { break-inside:avoid; margin-bottom:6px; border-radius:14px; overflow:hidden; display:block; text-decoration:none; position:relative; cursor:zoom-in; }
+    .cal-pin img { width:100%; height:var(--h); object-fit:cover; display:block; transition:transform 0.25s ease; }
+    .cal-pin:hover img { transform:scale(1.04); }
+    .cal-pin-info { position:absolute; bottom:0; left:0; right:0; padding:20px 8px 7px; background:linear-gradient(to top,rgba(0,0,0,0.55),transparent); opacity:0; transition:opacity 0.2s; }
+    .cal-pin:hover .cal-pin-info { opacity:1; }
+    .cal-pin-place { font-size:10px; color:#fff; font-family:"NeueHaas",sans-serif; }
+    .cal-day-texts { margin-top:12px; display:flex; flex-direction:column; gap:8px; }
+    .cal-day-text-block { border:1px solid #0a0a0e; border-radius:16px; padding:12px 14px; background:#ffffff; }
+    .cal-day-text-date { font-size:10px; color:rgba(0,0,0,0.35); margin-bottom:4px; letter-spacing:0.03em; }
+    .cal-day-text-place { font-family:"NeueHaas",sans-serif; font-weight:500; font-size:13px; color:#0a0a0e; margin-bottom:6px; }
+    .cal-day-text-body { font-size:11px; line-height:1.6; color:rgba(0,0,0,0.52); }
+    .tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 20px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 999px;
+      padding: 4px;
+      width: fit-content;
+    }
+    .tab {
+      border-radius: 999px;
+      padding: 7px 16px;
+      font-size: 12px;
+      font-family: "Europa", sans-serif;
+      font-weight: 400;
+      color: rgba(0,0,0,0.45);
+      white-space: nowrap;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+      background: transparent;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .tab:hover:not(.active) { color: rgba(0,0,0,0.7); }
+    .tab.active {
+      background: #fff;
+      color: #0a0a0e;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
     }
 
     .header-row {
@@ -463,6 +589,17 @@
 <body>
   <main class="shell">
     <div class="topbar">
+      <div class="top-bar">
+        <button class="date-chip" id="calBtn">
+          <span class="dot"></span>
+          <span id="dateLabel"></span>
+        </button>
+      </div>
+      <nav class="tabs">
+        <a class="tab" href="index.html">Inicio</a>
+        <a class="tab active" href="gallery.html">Galería</a>
+        <a class="tab" href="viajes.html">Viajes</a>
+      </nav>
       <div class="header-row">
         <h1 class="title">Nuestras<br>locuras</h1>
       </div>
@@ -474,6 +611,25 @@
   </main>
 
   <button class="icon-chip" id="menuBtn" aria-label="Menú" style="position:fixed;top:max(env(safe-area-inset-top),18px);right:16px;z-index:98;"></button>
+  <div class="cal-overlay" id="calOverlay">
+    <div class="cal-backdrop" id="calBackdrop"></div>
+    <div class="cal-panel">
+      <div class="cal-header">
+        <button class="cal-nav" id="calPrev">‹</button>
+        <span class="cal-title" id="calTitle"></span>
+        <button class="cal-nav" id="calNext">›</button>
+      </div>
+      <div class="cal-weekdays">
+        <span class="cal-weekday">Lu</span><span class="cal-weekday">Ma</span>
+        <span class="cal-weekday">Mi</span><span class="cal-weekday">Ju</span>
+        <span class="cal-weekday">Vi</span><span class="cal-weekday">Sá</span>
+        <span class="cal-weekday">Do</span>
+      </div>
+      <div class="cal-days" id="calDays"></div>
+      <div class="cal-preview" id="calPreview"></div>
+    </div>
+  </div>
+
   <div class="nav-menu-backdrop" id="navBackdrop"></div>
   <nav class="nav-menu" id="navMenu">
     <div class="nav-menu-header">
@@ -517,6 +673,132 @@
   </div>
 
   <script>
+    // — Calendario —
+    const tBarrika    = "Poke en los acantilados de arrigunaga. Haciendo tiempo para ir a ver Jurassic Park al cine (Primer Cine). Después paramos en Barrika y nos dieron las 3am.";
+    const tAstondo    = "Poke y Sunset espectacular en los acantilados de Astondo. Muchas risas y tonterías. Marchamos a la playa y nos dimos un baño de noche.";
+    const tLaArena    = "Día nublado pero vamos a la playa. Nos refugiamos en una mini cueva entre piedras. Comemos con vistas al mar y después el peor helado de nuestra vida.";
+    const tBarrikaExp = "Tarde express en Barrika. Bajamos hasta abajo y nos sentamos en el muro mirando a las olas.";
+    const tBakioSurf  = "¡Día espectacular! Surfing en Bakio casi solos. Después pintxos, helado y paseito. De vuelta paramos en el mirador.";
+    const tPisoPizza  = "¡Día de pizzas! Fuimos al Mercadona a hacer compras y a jugar...";
+    const tSope       = "Día de muchas risas. Fuimos a ver la playa de \"El Sitio\". Nos gustó mucho, hay que volver con buen tiempo.";
+    const tBallonti1  = "Segundos Bolos, había que desempatar.";
+    const tBakio2     = "Paseito por Bakio con sorpresa preparada. Terminamos con regalices en un banco. Estuvimos hasta la medianoche como en un sueño.";
+    const tBallonti2  = "¿Tercera de bolos? Claro que sí. Después fuimos para Sope y paseito por la playa, que casi nos pilla la marea.";
+    const tBarrika2   = "Eskerrik asko por sacar tiempo. Tarde de chill en Barrika con poke, luego colacadito en el Golfo.";
+    const tCastro     = "Spot nuevo buscado en Maps. Bajamos por un camino de hierbas, cada paso más bonito. Sunset precioso. Luego cena en el Kolombo y helado Gelati.";
+    const tCastroBilbo= "Volvemos de Castro. Cenamos en el Kolombo, helado en bote gigante Oreo, parque de los patos. UNO DE NUESTROS MEJORES DÍAS.";
+    const tBilbo1     = "Jone me invita a cenar al Aitaren. Burgers, churros y helado. El helado se complicó (cucurucho en una mano, la bola en la otra). Pocas veces me había reído tanto.";
+    const tPlentziJone= "Me da el regalo: ¡una camiseta! Y una nota. Cocinamos pasta, cenamos y peli. Ya para dormir, Jone me dice que lea la nota. ¿Mi primer \"TE QUIERO\"? Así es :)";
+    const tSonabia    = "Playa de Sonabia, solos en medio de la nada. \"JONE, ¿QUIERES SER MI NOVIA?\" Le coloco las flores desde el asiento de atrás. Uno de los días más importantes de mi vida.";
+
+    const specialDates = {
+      "2025-08-28": [{ src:"links/gallery/1.jpg",place:"Barrika",text:tBarrika},{src:"links/gallery/2.jpg",place:"Barrika",text:tBarrika}],
+      "2025-09-05": [{src:"links/gallery/3.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/4.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/5.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/6.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/7.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/8.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/9.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/10.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/11.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/12.jpg",place:"Astondo",text:tAstondo},{src:"links/gallery/13.jpg",place:"Astondo",text:tAstondo}],
+      "2025-09-11": [{src:"links/gallery/14.jpg",place:"La Arena",text:tLaArena},{src:"links/gallery/15.jpg",place:"La Arena",text:tLaArena}],
+      "2025-09-23": [{src:"links/gallery/16.jpg",place:"Barrika",text:tBarrikaExp},{src:"links/gallery/17.jpg",place:"Barrika",text:tBarrikaExp},{src:"links/gallery/18.jpg",place:"Barrika",text:tBarrikaExp}],
+      "2025-09-24": [{src:"links/gallery/19.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/20.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/21.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/22.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/23.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/24.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/25.jpg",place:"Bakio",text:tBakioSurf},{src:"links/gallery/26.jpg",place:"Bakio",text:tBakioSurf}],
+      "2025-10-04": [{src:"links/gallery/27.jpg",place:"Piso Lan",text:tPisoPizza}],
+      "2025-10-18": [{src:"links/gallery/28.jpg",place:"Piso Lan",text:"¡Nuestra primera Tortilla juntos! No fue la mejor, hay que mejorar."}],
+      "2025-10-19": [{src:"links/gallery/29.jpg",place:"Sope",text:tSope},{src:"links/gallery/30.jpg",place:"Sope",text:tSope}],
+      "2025-10-25": [{src:"links/gallery/31.jpg",place:"Ballonti",text:tBallonti1},{src:"links/gallery/32.jpg",place:"Ballonti",text:tBallonti1}],
+      "2025-11-15": [{src:"links/gallery/33.jpg",place:"Bakio",text:tBakio2}],
+      "2025-11-16": [{src:"links/gallery/34.jpg",place:"Plentzi",text:"De chill, gym, estudio y paseito."}],
+      "2025-11-22": [{src:"links/gallery/35.jpg",place:"Piso Lan",text:"Domingo improvisado. Eroski cerrado, Begoña para llevar, peli y a dormir."}],
+      "2025-11-25": [{src:"links/gallery/36.jpg",place:"Ballonti",text:tBallonti2},{src:"links/gallery/37.jpg",place:"Sope",text:"Paseito por la playa después de los bolos, que casi nos pilla la marea."}],
+      "2025-11-27": [{src:"links/gallery/38.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/39.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/40.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/41.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/42.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/43.jpg",place:"Barrika",text:tBarrika2},{src:"links/gallery/44.jpg",place:"Barrika",text:tBarrika2}],
+      "2025-12-07": [{src:"links/gallery/45.jpg",place:"Castro",text:tCastro},{src:"links/gallery/46.jpg",place:"Castro",text:tCastro},{src:"links/gallery/47.jpg",place:"Castro",text:tCastro},{src:"links/gallery/48.jpg",place:"Castro",text:tCastro},{src:"links/gallery/49.jpg",place:"Castro",text:tCastro},{src:"links/gallery/50.jpg",place:"Castro",text:tCastro},{src:"links/gallery/51.jpg",place:"Castro",text:tCastro},{src:"links/gallery/52.jpg",place:"Castro · Bilbo",text:tCastroBilbo}],
+      "2025-12-09": [{src:"links/gallery/53.jpg",place:"Bilbo",text:"Vamos directos al Golfo. Café y Colacao. \"ERES LO QUE LLEVO BUSCANDO TODA LA VIDA\""},{src:"links/gallery/54.jpg",place:"Bilbo",text:"Vamos directos al Golfo. Café y Colacao. \"ERES LO QUE LLEVO BUSCANDO TODA LA VIDA\""}],
+      "2025-12-13": [{src:"links/gallery/55.jpg",place:"Bilbo",text:tBilbo1},{src:"links/gallery/56.jpg",place:"Bilbo",text:tBilbo1}],
+      "2025-12-16": [{src:"links/gallery/57.jpg",place:"Bilbo",text:"Día de Amigo Invisible. Jone me ayuda a comprar maquillaje para mi Ama."}],
+      "2025-12-19": [{src:"links/gallery/58.jpg",place:"Plentzi",text:tPlentziJone}],
+      "2025-12-23": [{src:"links/gallery/59.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/60.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/61.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/62.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/63.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/80.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/81.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/82.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/100.jpg",place:"Sonabia",text:tSonabia}]
+    };
+
+    (function() {
+      const start = new Date(2025,11,23);
+      const now = new Date();
+      let months = (now.getFullYear()-start.getFullYear())*12+(now.getMonth()-start.getMonth());
+      const dayStart = new Date(start.getFullYear(),start.getMonth()+months,start.getDate());
+      if (dayStart>now) months--;
+      const baseDate = new Date(start.getFullYear(),start.getMonth()+months,start.getDate());
+      const days = Math.floor((now-baseDate)/86400000);
+      let label = "";
+      if (months>0) label+=`${months} mes${months>1?"es":""}`;
+      if (months>0&&days>0) label+=" y ";
+      if (days>0||months===0) label+=`${days} día${days!==1?"s":""}`;
+      document.getElementById("dateLabel").textContent = label;
+    })();
+
+    const calBtn      = document.getElementById("calBtn");
+    const calOverlay  = document.getElementById("calOverlay");
+    const calBackdrop = document.getElementById("calBackdrop");
+    const calTitle    = document.getElementById("calTitle");
+    const calDays     = document.getElementById("calDays");
+    const calPreview  = document.getElementById("calPreview");
+    const MONTHS_ES   = ["Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre"];
+    let calYear, calMonth, calSelected = null;
+
+    function toKey(y,m,d){ return `${y}-${String(m+1).padStart(2,"0")}-${String(d).padStart(2,"0")}`; }
+
+    function renderCal(year,month){
+      calYear=year; calMonth=month;
+      calTitle.textContent=`${MONTHS_ES[month]} ${year}`;
+      calDays.innerHTML=""; calPreview.classList.remove("show"); calSelected=null;
+      const firstDay=new Date(year,month,1).getDay();
+      const offset=firstDay===0?6:firstDay-1;
+      const daysInMonth=new Date(year,month+1,0).getDate();
+      const daysInPrev=new Date(year,month,0).getDate();
+      const today=new Date();
+      for(let i=0;i<offset;i++){const d=document.createElement("button");d.className="cal-day other-month";d.textContent=daysInPrev-offset+1+i;calDays.appendChild(d);}
+      for(let day=1;day<=daysInMonth;day++){
+        const key=toKey(year,month,day);
+        const d=document.createElement("button");d.className="cal-day";
+        if(today.getFullYear()===year&&today.getMonth()===month&&today.getDate()===day) d.classList.add("today");
+        if(specialDates[key]){
+          d.classList.add("has-moment");
+          const dot=document.createElement("span");dot.className="cal-dot";
+          d.appendChild(document.createTextNode(day));d.appendChild(dot);
+          d.addEventListener("click",()=>showMoment(key,d));
+        } else { d.textContent=day; }
+        calDays.appendChild(d);
+      }
+      const total=offset+daysInMonth;
+      const remaining=total%7===0?0:7-(total%7);
+      for(let i=1;i<=remaining;i++){const d=document.createElement("button");d.className="cal-day other-month";d.textContent=i;calDays.appendChild(d);}
+    }
+
+    const calHeights=[150,200,175,140,210,165];
+
+    function showMoment(key,dayEl){
+      if(calSelected) calSelected.classList.remove("selected");
+      calSelected=dayEl; dayEl.classList.add("selected");
+      const moments=specialDates[key];
+      const MONTHS_SHORT=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
+      const [y,mo,d]=key.split("-");
+      const dateStr=`${parseInt(d)} ${MONTHS_SHORT[parseInt(mo)-1]} ${y}`;
+      const pins=moments.map((m,i)=>{
+        const h=calHeights[i%calHeights.length];
+        const filename=m.src.split("/").pop();
+        return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px"><img src="${m.src}" alt="${m.place}" loading="lazy"/><div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div></a>`;
+      }).join("");
+      const textGroups=[]; const seen=new Set();
+      for(const m of moments){
+        if(!m.text||m.text==="Por definir") continue;
+        if(!seen.has(m.text)){seen.add(m.text);textGroups.push({text:m.text,place:m.place!=="Por definir"?m.place:""});}
+      }
+      const textsHtml=textGroups.length?`<div class="cal-day-texts">${textGroups.map(g=>`<div class="cal-day-text-block"><div class="cal-day-text-date">${dateStr}</div>${g.place?`<div class="cal-day-text-place">${g.place}</div>`:""}<div class="cal-day-text-body">${g.text}</div></div>`).join("")}</div>`:"";
+      calPreview.innerHTML=`<div class="cal-preview-label">${moments.length} momento${moments.length>1?"s":""} · ${dateStr}</div><div class="cal-gallery">${pins}</div>${textsHtml}`;
+      calPreview.classList.add("show");
+    }
+
+    function openCal(){ const now=new Date(); renderCal(now.getFullYear(),now.getMonth()); calOverlay.classList.add("open"); document.body.style.overflow="hidden"; }
+    function closeCal(){ calOverlay.classList.remove("open"); document.body.style.overflow=""; }
+
+    calBtn.addEventListener("click", openCal);
+    calBackdrop.addEventListener("click", closeCal);
+    document.getElementById("calPrev").addEventListener("click",()=>{calMonth--;if(calMonth<0){calMonth=11;calYear--;}renderCal(calYear,calMonth);});
+    document.getElementById("calNext").addEventListener("click",()=>{calMonth++;if(calMonth>11){calMonth=0;calYear++;}renderCal(calYear,calMonth);});
+
     // — Nav menu —
     const menuBtn   = document.getElementById("menuBtn");
     const navMenu   = document.getElementById("navMenu");
@@ -899,6 +1181,30 @@
         openOverlay(src, autoPhoto);
       }
     });
+
+    // — Transiciones entre páginas —
+    (function() {
+      const PAGE_ORDER = { 'index.html': 0, 'gallery.html': 1, 'viajes.html': 2 };
+      const currentIndex = 1;
+      const inDir = sessionStorage.getItem('slideDir');
+      if (inDir) {
+        sessionStorage.removeItem('slideDir');
+        document.body.classList.add(inDir === 'left' ? 'slide-in-from-right' : 'slide-in-from-left');
+      }
+      document.querySelectorAll('a[href]').forEach(link => {
+        link.addEventListener('click', e => {
+          const href = link.getAttribute('href');
+          const dest = href.split('/').pop().split('?')[0];
+          const destIndex = PAGE_ORDER[dest];
+          if (destIndex === undefined || destIndex === currentIndex) return;
+          e.preventDefault();
+          const dir = destIndex > currentIndex ? 'left' : 'right';
+          sessionStorage.setItem('slideDir', dir);
+          document.body.classList.add(`slide-out-to-${dir}`);
+          setTimeout(() => { location.href = href; }, 300);
+        });
+      });
+    })();
   </script>
 </body>
 </html>
