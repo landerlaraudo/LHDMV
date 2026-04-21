@@ -293,7 +293,7 @@
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
     .nav-brand {
       font-family: "NeueHaas", sans-serif;
@@ -322,12 +322,12 @@
       flex: 1;
       justify-content: flex-start;
       align-items: flex-end;
-      gap: 0;
+      gap: 2px;
     }
     .nav-link {
       font-family: "NeueHaas", sans-serif;
       font-weight: 300;
-      font-size: clamp(26px, 7vw, 36px);
+      font-size: clamp(22px, 6vw, 30px);
       color: #000;
       text-align: right;
       text-decoration: none;
@@ -335,11 +335,13 @@
       letter-spacing: -0.03em;
       padding: 0;
       display: flex;
-      align-items: baseline;
-      gap: 12px;
-      transition: color 0.2s;
+      align-items: center;
+      gap: 8px;
+      transition: color 0.2s, opacity 0.2s;
       opacity: 0;
     }
+    .nav-link.active-page::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #000; flex-shrink: 0; }
+    .nav-link:not(.active-page) { color: rgba(0,0,0,0.35); }
     .nav-menu.open .nav-link:nth-child(1) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.18s both; }
     .nav-menu.open .nav-link:nth-child(2) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.24s both; }
     .nav-menu.open .nav-link:nth-child(3) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
@@ -353,16 +355,18 @@
     }
     .nav-link:hover .nav-link-arrow { transform: translate(3px, -3px); color: rgba(0,0,0,0.5); }
     .nav-player {
-      border-radius: 22px;
+      border-radius: 18px;
       overflow: hidden;
       position: relative;
-      margin-top: 28px;
+      margin-top: 12px;
       margin-bottom: 0;
-      height: 140px;
+      height: 110px;
       background-size: cover;
       background-position: center 25%;
       background-color: #1a1a1e;
       flex-shrink: 0;
+      outline: 1px solid rgba(255,255,255,0.38);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
     }
     .nav-player-filter { position: absolute; inset: 0; mix-blend-mode: multiply; z-index: 1; pointer-events: none; }
     .nav-player-inner { position: absolute; inset: 0; z-index: 2; padding: 12px 14px; display: flex; align-items: flex-end; justify-content: space-between; }
@@ -485,8 +489,8 @@
     <div class="nav-links">
       <a class="nav-link" href="index.html">Inicio</a>
       <a class="nav-link" href="gallery.html">Galería</a>
-      <a class="nav-link" href="viajes.html">Viajes</a>
-      <a class="nav-link" href="#">Música</a>
+      <a class="nav-link active-page" href="viajes.html">Viajes</a>
+      <a class="nav-link" href="javascript:void(0)" id="navMusicBtn">Música</a>
     </div>
     <div class="nav-player" id="navPlayer">
       <div class="nav-player-filter" id="navPlayerFilter"></div>
@@ -606,6 +610,7 @@
     menuBtn.addEventListener("click", openNav);
     navClose.addEventListener("click", closeNav);
     navBackdrop.addEventListener("click", closeNav);
+    document.getElementById("navMusicBtn").addEventListener("click", () => { closeNav(); });
 
     const navSongs = [
       { src: "songs/All The Stars.mp3",            title: "All The Stars",    artist: "Kendrick Lamar", cover: "songs/all the stars.jpeg",     filter: "rgba(90,40,180,0.55)" },
@@ -650,7 +655,26 @@
     navAudio.addEventListener("timeupdate", () => {
       if (navAudio.duration) navProgressFill.style.width = `${(navAudio.currentTime / navAudio.duration) * 100}%`;
     });
-    navLoadSong(navCurrentIndex, false);
+    const _savedAudio = sessionStorage.getItem('audioState');
+    if (_savedAudio) {
+      const _s = JSON.parse(_savedAudio);
+      sessionStorage.removeItem('audioState');
+      navCurrentIndex = _s.index;
+      navLoadSong(_s.index, false);
+      navAudio.addEventListener('canplay', () => {
+        navAudio.currentTime = _s.time || 0;
+        if (_s.playing) navAudio.play().catch(() => {});
+      }, { once: true });
+    } else {
+      navLoadSong(navCurrentIndex, false);
+    }
+    window.addEventListener('pagehide', () => {
+      sessionStorage.setItem('audioState', JSON.stringify({
+        index: navCurrentIndex,
+        time: navAudio.currentTime,
+        playing: !navAudio.paused
+      }));
+    });
 
     // — Transiciones entre páginas —
     (function() {
