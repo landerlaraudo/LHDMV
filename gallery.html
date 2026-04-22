@@ -704,29 +704,8 @@
       sonabiaNote:  "La nota iba con las flores, pero le dije que no la lea conmigo delante. Hay que volver, así que arrancamos y para casa. Al final acordamos, y Jone lee la carta mientras conduzco."
     };
 
-    // — Calendario —
-    const specialDates = {
-      "2025-08-28": [{src:"links/gallery/1.jpg",place:"Barrika",text:T.barrika},{src:"links/gallery/2.jpg",place:"Barrika",text:T.barrika}],
-      "2025-09-05": [{src:"links/gallery/3.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/4.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/5.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/6.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/7.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/8.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/9.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/10.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/11.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/12.jpg",place:"Astondo",text:T.astondo},{src:"links/gallery/13.jpg",place:"Astondo",text:T.astondo}],
-      "2025-09-11": [{src:"links/gallery/14.jpg",place:"La Arena",text:T.laArena},{src:"links/gallery/15.jpg",place:"La Arena",text:T.laArena}],
-      "2025-09-23": [{src:"links/gallery/16.jpg",place:"Barrika",text:T.barrikaExp},{src:"links/gallery/17.jpg",place:"Barrika",text:T.barrikaExp},{src:"links/gallery/18.jpg",place:"Barrika",text:T.barrikaExp}],
-      "2025-09-24": [{src:"links/gallery/19.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/20.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/21.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/22.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/23.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/24.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/25.jpg",place:"Bakio",text:T.bakioSurf},{src:"links/gallery/26.jpg",place:"Bakio",text:T.bakioSurf}],
-      "2025-10-04": [{src:"links/gallery/27.jpg",place:"Piso Lan",text:T.pisoPizza}],
-      "2025-10-18": [{src:"links/gallery/28.jpg",place:"Piso Lan",text:T.pisoTortilla}],
-      "2025-10-19": [{src:"links/gallery/29.jpg",place:"Sope",text:T.sope},{src:"links/gallery/30.jpg",place:"Sope",text:T.sope}],
-      "2025-10-25": [{src:"links/gallery/31.jpg",place:"Ballonti",text:T.ballonti1},{src:"links/gallery/32.jpg",place:"Ballonti",text:T.ballonti1}],
-      "2025-11-15": [{src:"links/gallery/33.jpg",place:"Bakio",text:T.bakio2}],
-      "2025-11-16": [{src:"links/gallery/34.jpg",place:"Plentzi",text:T.plentzi1}],
-      "2025-11-22": [{src:"links/gallery/35.jpg",place:"Piso Lan",text:T.pisoBurgers}],
-      "2025-11-25": [{src:"links/gallery/36.jpg",place:"Ballonti",text:T.ballonti2},{src:"links/gallery/37.jpg",place:"Sope",text:T.sopeWalk}],
-      "2025-11-27": [{src:"links/gallery/38.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/39.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/40.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/41.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/42.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/43.jpg",place:"Barrika",text:T.barrika2},{src:"links/gallery/44.jpg",place:"Barrika",text:T.barrika2}],
-      "2025-12-07": [{src:"links/gallery/45.jpg",place:"Castro",text:T.castro},{src:"links/gallery/46.jpg",place:"Castro",text:T.castro},{src:"links/gallery/47.jpg",place:"Castro",text:T.castro},{src:"links/gallery/48.jpg",place:"Castro",text:T.castro},{src:"links/gallery/49.jpg",place:"Castro",text:T.castro},{src:"links/gallery/50.jpg",place:"Castro",text:T.castro},{src:"links/gallery/51.jpg",place:"Castro",text:T.castro},{src:"links/gallery/52.jpg",place:"Castro · Bilbo",text:T.castroBilbo}],
-      "2025-12-09": [{src:"links/gallery/53.jpg",place:"Bilbo",text:T.castBilbo2},{src:"links/gallery/54.jpg",place:"Bilbo",text:T.castBilbo2}],
-      "2025-12-13": [{src:"links/gallery/55.jpg",place:"Bilbo",text:T.bilbo1},{src:"links/gallery/56.jpg",place:"Bilbo",text:T.bilbo1}],
-      "2025-12-16": [{src:"links/gallery/57.jpg",place:"Bilbo",text:T.bilbo2}],
-      "2025-12-19": [{src:"links/gallery/58.jpg",place:"Plentzi",text:T.plentziJone}],
-      "2025-12-23": [{src:"links/gallery/59.jpg",place:"Sonabia",text:T.sonabia1},{src:"links/gallery/60.jpg",place:"Sonabia",text:T.sonabia1},{src:"links/gallery/61.jpg",place:"Sonabia",text:T.sonabia3},{src:"links/gallery/62.jpg",place:"Sonabia",text:T.sonabia4},{src:"links/gallery/63.jpg",place:"Sonabia",text:T.sonabiaNote},{src:"links/gallery/80.jpg",place:"Sonabia",text:T.sonabia1},{src:"links/gallery/81.jpg",place:"Sonabia",text:T.sonabia1},{src:"links/gallery/82.jpg",place:"Sonabia",text:T.sonabia1},{src:"links/gallery/100.jpg",place:"Sonabia",text:T.sonabia1}]
-    };
+    // — Calendario (se genera automáticamente desde photoMeta al final) —
+    let specialDates = {};
 
     (function() {
       const start = new Date(2025,11,23);
@@ -1040,45 +1019,65 @@
       "109.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
       "110.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
       "111.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "112.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "113.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "114.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "115.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "116.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "117.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "118.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "119.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "120.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "121.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "122.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "123.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "124.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "125.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "126.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "127.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "128.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "129.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "130.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "131.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "132.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "133.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "134.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "135.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "136.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "137.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "138.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "139.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "140.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "141.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "142.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "143.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "144.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "145.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "146.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "147.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "148.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote },
-      "149.jpg":  { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabiaNote }
+      "112.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
+      "113.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
+      "114.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
+      "115.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
+      "116.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "117.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "118.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "119.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "120.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "121.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "122.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "123.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "124.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "125.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "126.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "127.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "128.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "129.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
+      "130.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "131.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
+      "132.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
+      "133.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
+      "134.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
+      "135.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
+      "136.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "137.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "138.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "139.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "140.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "141.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "142.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "143.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "144.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "145.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "146.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "147.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "148.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
+      "149.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote }
     };
+
+    // — Genera specialDates desde photoMeta automáticamente —
+    (function() {
+      const MES = {"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12};
+      function toISOKey(dateStr) {
+        const parts = dateStr.trim().split(" ");
+        if (parts.length < 3) return null;
+        const [d, m, y] = parts;
+        const mn = MES[m];
+        if (!mn) return null;
+        return `${y}-${String(mn).padStart(2,"0")}-${String(parseInt(d)).padStart(2,"0")}`;
+      }
+      specialDates = {};
+      for (const [filename, meta] of Object.entries(photoMeta)) {
+        const key = toISOKey(meta.date);
+        if (!key) continue;
+        if (!specialDates[key]) specialDates[key] = [];
+        specialDates[key].push({ src: `links/gallery/${filename}`, place: meta.place, text: meta.text });
+      }
+    })();
 
     function checkImage(src) {
       return new Promise((resolve) => {
