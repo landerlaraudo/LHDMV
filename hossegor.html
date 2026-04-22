@@ -144,11 +144,18 @@
     /* ── FOTO PAIR ── */
     .photo-pair { background: #fff; padding: 0 32px 80px; display: flex; flex-direction: column; gap: 48px; }
     .photo-pair-item {}
-    .photo-pair-item img { display: block; width: 100%; aspect-ratio: 4/3; object-fit: cover; border-radius: 10px; }
+    .photo-pair-item img { display: block; width: 50%; height: auto; margin: 0 auto; }
     .photo-pair-caption {
       font-family: "Europa", sans-serif; font-weight: 300;
-      font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
-      color: rgba(17,17,17,0.35); margin-top: 10px;
+      font-size: 10px; letter-spacing: 0.04em;
+      color: rgba(17,17,17,0.35); margin-top: 10px; text-align: center;
+    }
+    .ed-video { background: #fff; padding: 0 16px 72px; }
+    .ed-video iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px; }
+    .photo-pair-footer {
+      font-family: "Europa", sans-serif; font-weight: 300;
+      font-size: 13px; line-height: 1.78; color: rgba(17,17,17,0.52);
+      text-align: center; padding: 0 32px 72px; background: #fff;
     }
 
     /* ── EDITORIAL ── */
@@ -269,13 +276,36 @@
       <!-- foto pair -->
       <div class="photo-pair">
         <div class="photo-pair-item">
-          <img src="links/viajes/HOSSEGOR/pizza1.jpg" alt="">
-          <p class="photo-pair-caption">La primera pizza</p>
+          <img src="links/viajes/HOSSEGOR/gigio1.jpg" alt="">
+          <p class="photo-pair-caption">primera línea de texto.<br>segunda línea de texto.</p>
         </div>
         <div class="photo-pair-item">
-          <img src="links/viajes/HOSSEGOR/pizza2.jpg" alt="">
-          <p class="photo-pair-caption">La segunda</p>
+          <img src="links/viajes/HOSSEGOR/gigio2.jpg" alt="">
+          <p class="photo-pair-caption">primera línea de texto.<br>segunda línea de texto.</p>
         </div>
+      </div>
+
+      <!-- vídeos -->
+      <div class="ed-video">
+        <iframe
+          src="https://drive.google.com/file/d/1uoD0xJtS_-QSfyH9XfAUwIY3jgD0tidt/preview"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="ed-video">
+        <iframe
+          src="https://drive.google.com/file/d/1nj2ylcYdgpPV_YHpPM24DiGLbY1KBdU8/preview"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
+      </div>
+      <div class="ed-video">
+        <iframe
+          src="https://drive.google.com/file/d/1HRNxA_DWI27Vb3kKe-zH73pWVNI3Rp25/preview"
+          allow="autoplay"
+          allowfullscreen>
+        </iframe>
       </div>
 
     </div>
