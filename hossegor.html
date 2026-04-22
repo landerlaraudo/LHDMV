@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Hossegor</title>
+  <style>
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayBold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayLight.ttf") format("truetype"); font-weight: 300; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayRoman.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Reg.otf") format("opentype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Lig.otf") format("opentype"); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root) { animation: none; }
+    ::view-transition-new(root) { animation: none; }
+
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: url('links/gallery/97.jpg') center center / cover no-repeat;
+    }
+    .close-btn {
+      position: fixed;
+      top: calc(max(env(safe-area-inset-top), 16px) + 12px);
+      right: 18px; z-index: 200;
+      width: 36px; height: 36px; border-radius: 50%;
+      background: rgba(140,140,148,0.46);
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border: none; cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      text-decoration: none; color: #fff;
+    }
+    .close-btn svg { width: 14px; height: 14px; stroke-width: 2.8; }
+    .scroll {
+      position: fixed; inset: 0; z-index: 1;
+      overflow-y: auto; -webkit-overflow-scrolling: touch;
+    }
+    .spacer { height: 42vh; }
+    .content {
+      position: relative;
+      padding: 56px 22px max(env(safe-area-inset-bottom), 48px);
+      min-height: 62vh;
+    }
+    .content::before {
+      content: ''; position: absolute; inset: 0;
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 9%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 9%);
+      pointer-events: none; z-index: 0;
+    }
+    .content > * { position: relative; z-index: 1; }
+    .trip-title {
+      font-family: "NeueHaas", sans-serif; font-weight: 400;
+      font-size: clamp(2rem, 9vw, 2.8rem); color: #fff;
+      letter-spacing: -0.02em; line-height: 1.0; margin-bottom: 8px;
+    }
+    .trip-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .trip-location { display: flex; align-items: center; gap: 5px; font-family: "Europa", sans-serif; font-size: 13px; font-weight: 300; color: #fff; }
+    .trip-location svg { width: 12px; height: 12px; }
+    .trip-btns { display: flex; gap: 8px; }
+    .trip-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.20); display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
+    .trip-btn svg { width: 15px; height: 15px; stroke-width: 1.8; }
+    .section + .section { margin-top: 26px; }
+    .section-title { font-family: "Europa", sans-serif; font-weight: 700; font-size: 16px; color: #fff; margin-bottom: 10px; }
+    .section-body { font-family: "Europa", sans-serif; font-weight: 300; font-size: 14px; line-height: 1.72; color: #fff; }
+    .fact { font-family: "Europa", sans-serif; font-size: 14px; line-height: 1.8; color: #fff; }
+    .fact strong { font-weight: 600; }
+
+    /* ── EDITORIAL ── */
+    :root { --ink: #0d0d0b; --cream: #f7f5ef; }
+    .ed img, .ed video { display: block; width: 100%; object-fit: cover; }
+
+    /* Tokens */
+    .rl  { font-family: "Europa", sans-serif; font-size: 9px; letter-spacing: 0.20em; text-transform: uppercase; color: rgba(13,13,11,0.26); display: block; }
+    .rlw { font-family: "Europa", sans-serif; font-size: 9px; letter-spacing: 0.20em; text-transform: uppercase; color: rgba(255,255,255,0.36); display: block; }
+    .rc  { font-family: "Europa", sans-serif; font-weight: 300; font-size: 11px; line-height: 1.72; color: rgba(13,13,11,0.46); font-style: italic; }
+    .rcw { font-family: "Europa", sans-serif; font-weight: 300; font-size: 11px; line-height: 1.72; color: rgba(255,255,255,0.50); font-style: italic; }
+
+    /* Grids */
+    .rg2 { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .rg3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 3px; }
+    .rg2 img, .rg3 img { aspect-ratio: 3/4; }
+    .rg2 video, .rg3 video { aspect-ratio: 9/16; }
+
+    /* 01 — HERO */
+    .r-hero { position: relative; height: 100svh; min-height: 580px; overflow: hidden; background: var(--ink); }
+    .r-hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.72; }
+    .r-hero-grad { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 38%, rgba(0,0,0,0.88) 100%); }
+    .r-hero-tl { position: absolute; top: 22px; left: 22px; }
+    .r-hero-bot { position: absolute; bottom: calc(max(env(safe-area-inset-bottom),20px) + 32px); left: 24px; right: 24px; }
+    .r-hero-cap { font-family: "Europa"; font-weight: 300; font-size: 11px; line-height: 1.7; color: rgba(255,255,255,0.46); font-style: italic; max-width: 210px; margin-bottom: 20px; }
+    .r-hero-q { font-family: "NeueHaas"; font-weight: 300; font-size: clamp(2.6rem, 14vw, 5.2rem); letter-spacing: -0.03em; line-height: 1.02; color: #fff; }
+
+    /* 02 — POLAROIDS */
+    .r-pols { background: #fff; padding: 68px 28px 72px; }
+    .r-pols-row { display: flex; gap: 16px; align-items: flex-start; margin-bottom: 24px; }
+    .r-pol { background: #fff; padding: 8px 8px 32px; box-shadow: 0 10px 40px rgba(0,0,0,0.09); flex: 1; }
+    .r-pol img { width: 100%; aspect-ratio: 3/4; object-fit: cover; display: block; }
+    .r-pol-up   { margin-top: -38px; transform: rotate(-2deg); }
+    .r-pol-down { margin-top:  38px; transform: rotate(2.2deg); }
+    .r-pols-date { font-family: "Europa"; font-size: 9px; letter-spacing: 0.22em; color: rgba(13,13,11,0.24); text-transform: uppercase; text-align: center; }
+
+    /* 03 — BICIS */
+    .r-bicis { background: var(--cream); }
+    .r-bicis-top { padding: 60px 22px 28px; }
+    .r-bicis-title { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(5.5rem, 30vw, 12rem); letter-spacing: -0.06em; line-height: 0.82; color: var(--ink); margin: 10px 0 16px; }
+    .r-bicis img { aspect-ratio: 4/3; }
+    .r-bicis-vids { display: flex; gap: 3px; margin-top: 3px; }
+    .r-bicis-vids video { flex: 1; aspect-ratio: 9/16; }
+    .r-bicis-foot { padding: 16px 22px 56px; }
+
+    /* 04 — SEIGNOSSE */
+    .r-seig { position: relative; overflow: hidden; background: var(--ink); }
+    .r-seig img { min-height: 78vh; opacity: 0.86; }
+    .r-seig-over { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.76) 0%, rgba(0,0,0,0) 52%); }
+    .r-seig-bot { position: absolute; bottom: 36px; left: 24px; right: 24px; }
+    .r-seig-name { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(3.2rem, 17vw, 6.5rem); letter-spacing: -0.045em; line-height: 0.86; color: #fff; margin: 8px 0 10px; }
+
+    /* 05 — PALAS */
+    .r-palas { background: #fff; padding: 60px 0 0; }
+    .r-palas-head { padding: 0 22px 24px; }
+    .r-palas-name { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(4.5rem, 26vw, 10rem); letter-spacing: -0.06em; line-height: 0.82; color: var(--ink); font-style: italic; margin: 10px 0 12px; }
+    .r-palas-photo-big img { aspect-ratio: 4/3; }
+    .r-palas-strip { display: flex; gap: 3px; margin-top: 3px; }
+    .r-palas-strip img { flex: 1; aspect-ratio: 1/1; }
+    .r-palas-vids { display: flex; gap: 3px; margin-top: 3px; }
+    .r-palas-vids video { flex: 1; aspect-ratio: 9/16; }
+    .r-palas-foot { padding: 16px 22px 52px; display: flex; justify-content: space-between; border-top: 1px solid rgba(13,13,11,0.08); margin-top: 3px; }
+    .r-palas-foot span { font-family: "Europa"; font-size: 9px; letter-spacing: 0.16em; color: rgba(13,13,11,0.24); text-transform: uppercase; }
+
+    /* 06 — PUEBLO */
+    .r-pueblo { background: var(--cream); padding: 60px 22px 56px; }
+    .r-pueblo-title { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(3rem, 15vw, 5.8rem); letter-spacing: -0.045em; line-height: 0.86; color: var(--ink); margin: 10px 0 14px; }
+    .r-pueblo-photos { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-top: 28px; }
+    .r-pueblo-photos img { aspect-ratio: 3/4; }
+    .r-pueblo-wide { margin-top: 3px; }
+    .r-pueblo-wide img { aspect-ratio: 16/9; }
+
+    /* 07 — DISFRUTONES */
+    .r-dis { background: #fff; padding: 60px 22px 0; }
+    .r-dis-title { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(3rem, 16vw, 6rem); letter-spacing: -0.05em; line-height: 0.84; color: var(--ink); font-style: italic; margin: 10px 0 28px; }
+    .r-dis-vid { margin: 0 -22px; }
+    .r-dis-vid video { aspect-ratio: 9/16; max-height: 66vh; }
+    .r-dis-photos { margin: 3px -22px 0; }
+    .r-dis-foot { padding: 16px 0 56px; }
+
+    /* 08 — SUNSET */
+    .r-sunset { background: var(--cream); padding: 60px 0 0; }
+    .r-sunset-top { padding: 0 22px 24px; }
+    .r-sunset-big { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(5rem, 28vw, 11rem); letter-spacing: -0.06em; line-height: 0.82; color: var(--ink); margin: 10px 0; }
+    .r-sunset-mosaic { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .r-sunset-mosaic > * { aspect-ratio: 3/4; }
+    .r-sunset-full { margin-top: 3px; }
+    .r-sunset-full video { aspect-ratio: 4/3; }
+    .r-sunset-foot { height: 56px; }
+
+    /* 09 — SUNSET LOVERS */
+    .r-lovers { background: #fff; padding: 68px 22px 60px; }
+    .r-lovers-title { font-family: "NeueHaas"; font-weight: 300; font-size: clamp(2.8rem, 14vw, 5.5rem); letter-spacing: -0.03em; line-height: 1.0; color: var(--ink); font-style: italic; margin-bottom: 12px; }
+    .r-lovers-cap { max-width: 220px; margin-bottom: 32px; }
+    .r-lovers-vids { display: flex; gap: 3px; margin: 0 -22px; }
+    .r-lovers-vids video { flex: 1; aspect-ratio: 9/16; }
+    .r-lovers-photos { margin: 3px -22px 0; }
+
+    /* DAY DIVIDER */
+    .r-day { background: #fff; padding: 56px 22px; display: flex; align-items: center; gap: 18px; }
+    .r-day::before, .r-day::after { content: ''; flex: 1; height: 1px; background: rgba(13,13,11,0.09); }
+    .r-day span { font-family: "Europa"; font-size: 9px; letter-spacing: 0.26em; color: rgba(13,13,11,0.24); text-transform: uppercase; white-space: nowrap; }
+
+    /* 10 — BAÏONE */
+    .r-baione { background: var(--cream); padding: 60px 22px 56px; }
+    .r-baione-head { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 10px; }
+    .r-baione-title { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(4rem, 22vw, 9rem); letter-spacing: -0.055em; line-height: 0.82; color: var(--ink); }
+    .r-baione-count { font-family: "NeueHaas"; font-weight: 700; font-size: 3.2rem; letter-spacing: -0.04em; color: rgba(13,13,11,0.10); padding-bottom: 4px; }
+    .r-bhs { display: flex; gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin: 20px -22px 0; padding: 0 22px; }
+    .r-bhs::-webkit-scrollbar { display: none; }
+    .r-bhs img { height: 244px; width: auto; flex-shrink: 0; scroll-snap-align: start; object-fit: cover; display: block; }
+    .r-baione-foot { padding-top: 18px; border-top: 1px solid rgba(13,13,11,0.08); margin-top: 20px; display: flex; justify-content: space-between; }
+
+    /* 11 — QUOTE */
+    .r-quote { position: relative; background: var(--ink); }
+    .r-quote img { aspect-ratio: 4/3; opacity: 0.38; }
+    .r-quote-over { position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 24%, rgba(0,0,0,0.82) 100%); }
+    .r-quote-txt { position: absolute; bottom: 0; left: 0; right: 0; padding: 28px 28px 40px; font-family: "NeueHaas"; font-weight: 300; font-size: clamp(0.95rem, 4.2vw, 1.25rem); color: #fff; letter-spacing: -0.01em; line-height: 1.60; }
+
+    /* 12 — BGRID */
+    .r-bgrid { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; }
+    .r-bgrid img { aspect-ratio: 3/4; }
+    .r-bgrid-tall { grid-row: span 2; aspect-ratio: auto !important; height: 100%; }
+
+    /* 13 — BIARRITZ */
+    .r-bz { background: #fff; padding: 60px 22px calc(max(env(safe-area-inset-bottom),24px) + 64px); }
+    .r-bz-title { font-family: "NeueHaas"; font-weight: 700; font-size: clamp(4rem, 22vw, 9rem); letter-spacing: -0.055em; line-height: 0.82; color: var(--ink); margin: 10px 0 32px; }
+    .r-bz-hero { aspect-ratio: 3/2; margin-bottom: 3px; }
+    .r-bz-split { display: grid; grid-template-columns: 1fr 1fr; gap: 3px; margin-bottom: 24px; align-items: start; }
+    .r-bz-split img { aspect-ratio: 3/4; }
+    .r-bz-cap { font-family: "Europa"; font-weight: 300; font-size: 11px; line-height: 1.75; color: rgba(13,13,11,0.44); font-style: italic; padding-top: 8px; }
+    .r-bz-hs { display: flex; gap: 4px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; -webkit-overflow-scrolling: touch; margin: 0 -22px; padding: 0 22px; }
+    .r-bz-hs::-webkit-scrollbar { display: none; }
+    .r-bz-hs img { height: 220px; width: auto; flex-shrink: 0; scroll-snap-align: start; object-fit: cover; display: block; }
+  </style>
+  <script>window.addEventListener('pagereveal',function(e){if(!e.viewTransition)return;var d=sessionStorage.getItem('slideDir')||'left';sessionStorage.removeItem('slideDir');e.viewTransition.ready.then(function(){document.documentElement.animate([{transform:'translateX('+(d==='right'?'-100vw':'100vw')+')'},{transform:'translateX(0)'}],{duration:380,easing:'cubic-bezier(0.22,1,0.36,1)',fill:'both',pseudoElement:'::view-transition-new(root)'});});});</script>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <a class="close-btn" href="viajes.html" id="backBtn" aria-label="Volver">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+    </svg>
+  </a>
+
+  <div class="scroll">
+    <div class="spacer"></div>
+
+    <!-- ── FROSTED PANEL ── -->
+    <div class="content">
+      <h1 class="trip-title">Hossegor</h1>
+      <div class="trip-row">
+        <span class="trip-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Hossegor, France
+        </span>
+        <div class="trip-btns">
+          <button class="trip-btn" aria-label="Compartir">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button class="trip-btn" aria-label="Favorito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="section">
+        <p class="section-title">Sobre el viaje</p>
+        <p class="section-body">Nuestra primera escapada juntos fuera de Bilbao. Hossegor en enero, con el surf, el calor y las noches largas del sur de Francia. Uno de esos viajes que te das cuenta que quieres repetir nada más llegar a casa.</p>
+      </div>
+      <div class="section">
+        <p class="section-title">Detalles</p>
+        <p class="fact"><strong>Destino:</strong> Hossegor, Nouvelle-Aquitaine</p>
+        <p class="fact"><strong>País:</strong> France</p>
+        <p class="fact"><strong>Fecha:</strong> Enero 2026</p>
+        <p class="fact"><strong>Con:</strong> Jone &amp; Lander</p>
+      </div>
+    </div>
+
+    <!-- ── EDITORIAL ── -->
+    <div class="ed">
+
+      <!-- 01 — LA PROPUESTA -->
+      <section class="r-hero">
+        <img src="links/gallery/104.jpg" alt="">
+        <div class="r-hero-grad"></div>
+        <div class="r-hero-tl">
+          <span class="rlw">Hossegor · France</span>
+        </div>
+        <div class="r-hero-bot">
+          <p class="r-hero-cap">Dejo el móvil grabando. Nos paramos en medio de la playa. La separo un poco, la miro y…</p>
+          <h2 class="r-hero-q">¿Quieres<br>ser mi<br>novia?</h2>
+        </div>
+      </section>
+
+      <!-- 02 — POLAROIDS -->
+      <section class="r-pols">
+        <div class="r-pols-row">
+          <div class="r-pol r-pol-up">
+            <img src="links/gallery/104.1.jpg" alt="">
+          </div>
+          <div class="r-pol r-pol-down">
+            <img src="links/gallery/104.2.jpg" alt="">
+          </div>
+        </div>
+        <p class="r-pols-date">16 · Enero · 2026 · Seignosse</p>
+      </section>
+
+      <!-- 03 — BICIS -->
+      <section class="r-bicis">
+        <div class="r-bicis-top">
+          <span class="rl">001</span>
+          <h2 class="r-bicis-title">Bicis.</h2>
+          <p class="rc" style="max-width:230px">De playa en playa, pedaleando sin prisa entre los pinos de las Landas. El mejor plan con el que empezar un viaje.</p>
+        </div>
+        <img src="links/gallery/86.jpg" alt="">
+        <div class="r-bicis-vids">
+          <video src="links/gallery/VIDEOS/IMG 3843.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/IMG 3844.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/IMG 3845.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="r-bicis-foot">
+          <span class="rc">Hossegor, Landes · Francia</span>
+        </div>
+      </section>
+
+      <!-- 04 — SEIGNOSSE -->
+      <section class="r-seig">
+        <img src="links/gallery/97.jpg" alt="">
+        <div class="r-seig-over"></div>
+        <div class="r-seig-bot">
+          <span class="rlw">003</span>
+          <h2 class="r-seig-name">Seig<br>nosse.</h2>
+          <p class="rcw" style="max-width:200px;margin-top:8px">La playa que querrías tener para vosotros solos. Y casi lo conseguisteis.</p>
+        </div>
+      </section>
+
+      <!-- 05 — #PALAS -->
+      <section class="r-palas">
+        <div class="r-palas-head">
+          <span class="rl">002</span>
+          <h2 class="r-palas-name">#palas</h2>
+          <p class="rc" style="max-width:200px">Mañanas de raqueta en la orilla. El juego que convierte cada punto en una memoria.</p>
+        </div>
+        <div class="r-palas-photo-big">
+          <img src="links/gallery/80.jpg" alt="">
+        </div>
+        <div class="r-palas-strip">
+          <img src="links/gallery/81.jpg" alt="">
+          <img src="links/gallery/82.jpg" alt="">
+          <img src="links/gallery/83.jpg" alt="">
+          <img src="links/gallery/84.jpg" alt="">
+        </div>
+        <div class="r-palas-vids">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-1.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/HOSSEGOR-2.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/HOSSEGOR-3.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="rg2" style="gap:3px;margin-top:3px">
+          <img src="links/gallery/85.jpg" alt="">
+          <img src="links/gallery/86.jpg" alt="">
+        </div>
+        <div class="r-palas-foot">
+          <span>Hossegor</span><span>16 Enero</span><span>2026</span>
+        </div>
+      </section>
+
+      <!-- 06 — HOSSEGOR PUEBLO -->
+      <section class="r-pueblo">
+        <span class="rl">004</span>
+        <h2 class="r-pueblo-title">Hossegor<br>Pueblo.</h2>
+        <p class="rc" style="max-width:220px">El lado tranquilo. Calles de arena, tiendas de surf y el olor a pino mezclado con el mar.</p>
+        <div class="r-pueblo-photos">
+          <img src="links/gallery/88.jpg" alt="">
+          <img src="links/gallery/89.jpg" alt="">
+        </div>
+        <div class="r-pueblo-wide">
+          <img src="links/gallery/91.jpg" alt="">
+        </div>
+        <div class="rg3" style="gap:3px;margin-top:3px">
+          <img src="links/gallery/90.jpg" alt="">
+          <img src="links/gallery/88.jpg" alt="">
+          <img src="links/gallery/89.jpg" alt="">
+        </div>
+      </section>
+
+      <!-- 07 — #DISFRUTONES -->
+      <section class="r-dis">
+        <span class="rl">005</span>
+        <h2 class="r-dis-title">#Dis<br>fru<br>tones.</h2>
+        <div class="r-dis-vid">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-9.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="r-dis-photos rg2">
+          <img src="links/gallery/92.jpg" alt="">
+          <img src="links/gallery/93.jpg" alt="">
+        </div>
+        <div class="r-dis-foot">
+          <span class="rc">Hossegor · Enero 2026</span>
+        </div>
+      </section>
+
+      <!-- 08 — SUNSET TIME -->
+      <section class="r-sunset">
+        <div class="r-sunset-top">
+          <span class="rl">006</span>
+          <h2 class="r-sunset-big">Sun<br>set<br>Time.</h2>
+          <p class="rc" style="max-width:200px;margin-top:10px">Esa hora en la que el cielo lo cambia todo. Las Landas al atardecer son otro mundo.</p>
+        </div>
+        <div class="r-sunset-mosaic">
+          <img src="links/gallery/94.jpg" alt="">
+          <img src="links/gallery/95.jpg" alt="">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-10.mp4" muted autoplay loop playsinline></video>
+          <img src="links/gallery/96.jpg" alt="">
+        </div>
+        <div class="r-sunset-full">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-11.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="r-sunset-mosaic" style="margin-top:3px">
+          <img src="links/gallery/97.jpg" alt="">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-12.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="r-sunset-foot"></div>
+      </section>
+
+      <!-- 09 — SUNSET LOVERS -->
+      <section class="r-lovers">
+        <h2 class="r-lovers-title">Sunset<br>lovers.</h2>
+        <p class="rc r-lovers-cap">Simplemente sabes que estás exactamente donde quieres estar.</p>
+        <div class="r-lovers-vids">
+          <video src="links/gallery/VIDEOS/HOSSEGOR-13.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/HOSSEGOR-14.mp4" muted autoplay loop playsinline></video>
+          <video src="links/gallery/VIDEOS/HOSSEGOR-15.mp4" muted autoplay loop playsinline></video>
+        </div>
+        <div class="r-lovers-photos rg2">
+          <img src="links/gallery/99.jpg" alt="">
+          <img src="links/gallery/101.jpg" alt="">
+          <img src="links/gallery/102.jpg" alt="">
+          <img src="links/gallery/103.jpg" alt="">
+        </div>
+      </section>
+
+      <!-- DÍA 2 -->
+      <div class="r-day"><span>Día 2</span></div>
+
+      <!-- 10 — BAÏONE -->
+      <section class="r-baione">
+        <div class="r-baione-head">
+          <h2 class="r-baione-title">Baïone.</h2>
+          <span class="r-baione-count">15</span>
+        </div>
+        <span class="rl">007</span>
+        <p class="rc" style="max-width:230px;margin-top:8px">Calles medievales, el Nive al fondo y mercadillos que huelen a Francia de verdad.</p>
+        <div class="r-bhs">
+          <img src="links/gallery/64.jpg" alt="">
+          <img src="links/gallery/65.jpg" alt="">
+          <img src="links/gallery/66.jpg" alt="">
+          <img src="links/gallery/68.jpg" alt="">
+          <img src="links/gallery/69.jpg" alt="">
+          <img src="links/gallery/70.jpg" alt="">
+          <img src="links/gallery/71.jpg" alt="">
+          <img src="links/gallery/72.jpg" alt="">
+          <img src="links/gallery/73.jpg" alt="">
+          <img src="links/gallery/74.jpg" alt="">
+          <img src="links/gallery/75.jpg" alt="">
+          <img src="links/gallery/76.jpg" alt="">
+          <img src="links/gallery/77.jpg" alt="">
+          <img src="links/gallery/78.jpg" alt="">
+          <img src="links/gallery/79.jpg" alt="">
+        </div>
+        <div class="r-baione-foot">
+          <span class="rl">15 fotos</span>
+          <span class="rl">Bayonne · France</span>
+        </div>
+      </section>
+
+      <!-- 11 — QUOTE -->
+      <section class="r-quote">
+        <img src="links/gallery/110.jpg" alt="">
+        <div class="r-quote-over"></div>
+        <p class="r-quote-txt">"Supongo que ahora entiendo un poco mejor lo que significa ganar en la vida. No es algo grande ni espectacular; es más bien ir cumpliendo esas pequeñas imágenes que tenías de niño cuando imaginabas cómo sería todo."</p>
+      </section>
+
+      <!-- 12 — GRID -->
+      <div class="r-bgrid">
+        <img src="links/gallery/106.jpg" alt="" class="r-bgrid-tall">
+        <img src="links/gallery/107.jpg" alt="">
+        <img src="links/gallery/108.jpg" alt="">
+        <img src="links/gallery/109.jpg" alt="">
+      </div>
+
+      <!-- 13 — BIARRITZ -->
+      <section class="r-bz">
+        <span class="rl">008</span>
+        <h2 class="r-bz-title">Biarritz.</h2>
+        <img class="r-bz-hero" src="links/gallery/72.jpg" alt="">
+        <div class="r-bz-split" style="margin-top:3px">
+          <img src="links/gallery/104.2.jpg" alt="">
+          <p class="r-bz-cap">Y creo que, al final, esa mirada lo resume bastante bien. Hay cosas que no hacen falta explicarlas: simplemente sabes que estás donde quieres estar.</p>
+        </div>
+        <div class="r-bz-hs">
+          <img src="links/gallery/104.1.jpg" alt="">
+          <img src="links/gallery/105.jpg" alt="">
+          <img src="links/gallery/75.jpg" alt="">
+          <img src="links/gallery/76.jpg" alt="">
+          <img src="links/gallery/77.jpg" alt="">
+          <img src="links/gallery/78.jpg" alt="">
+          <img src="links/gallery/79.jpg" alt="">
+        </div>
+      </section>
+
+    </div><!-- /ed -->
+  </div><!-- /scroll -->
+
+  <script>
+    document.getElementById("backBtn").addEventListener("click", () => {
+      sessionStorage.setItem("slideDir", "right");
+    });
+  </script>
+
+</body>
+</html>
