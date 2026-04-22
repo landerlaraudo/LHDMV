@@ -161,7 +161,7 @@
     }
     .ed-video { background: #fff; padding: 0 16px 16px; }
     .ed-video:last-of-type { padding-bottom: 0; }
-    .ed-section { background: #fff; padding: 64px 24px 72px; }
+    .ed-section { background: #fff; padding: 64px 24px 12px; }
     .ed-section-ttl {
       font-family: "Europa", sans-serif; font-weight: 400;
       font-size: clamp(2.8rem, 14vw, 5.5rem);
@@ -175,6 +175,46 @@
       color: #111; letter-spacing: 0.03em;
     }
     .ed-video iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
+
+    /* ── COLLAGE ── */
+    .collage { background: #fff; padding: 64px 0 0; overflow: hidden; }
+    .cpair { display: flex; align-items: flex-start; padding: 0 16px; margin-bottom: 16px; }
+    .cpair.alt { flex-direction: row-reverse; }
+    .cpair-big { width: 62%; flex-shrink: 0; aspect-ratio: 3/4; object-fit: cover; position: relative; z-index: 1; }
+    .cpair-sm { width: 46%; flex-shrink: 0; aspect-ratio: 1/1; object-fit: cover; margin-left: -8%; margin-top: 72px; position: relative; z-index: 2; }
+    .cpair.alt .cpair-sm { margin-left: 0; margin-right: -8%; }
+    .c3 { padding: 0 16px; margin-bottom: 24px; }
+    .c3-top { display: flex; align-items: flex-start; }
+    .c3.alt .c3-top { flex-direction: row-reverse; }
+    .c3-a { width: 62%; flex-shrink: 0; aspect-ratio: 3/4; object-fit: cover; position: relative; z-index: 1; }
+    .c3-b { width: 50%; flex-shrink: 0; aspect-ratio: 4/5; object-fit: cover; margin-left: -12%; margin-top: 48px; position: relative; z-index: 2; }
+    .c3.alt .c3-b { margin-left: 0; margin-right: -12%; }
+    .c3-c { display: block; width: 38%; aspect-ratio: 1/1; object-fit: cover; margin-top: -44px; margin-left: 6%; position: relative; z-index: 3; }
+    .c3.alt .c3-c { margin-left: auto; margin-right: 6%; }
+    .collage-mid {
+      padding: 32px 20px;
+      font-family: "Europa", sans-serif; font-weight: 300;
+      font-size: 12px; line-height: 1.65;
+      color: rgba(17,17,17,0.45); letter-spacing: 0.03em;
+    }
+    .collage-text { padding: 36px 20px 72px; }
+    .collage-ttl {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      line-height: 1.0; letter-spacing: 0.03em;
+      color: #111; margin-bottom: 14px;
+    }
+    .collage-body {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: 13px; line-height: 1.25;
+      color: #111; letter-spacing: 0.03em;
+      margin-bottom: 20px;
+    }
+    .collage-tags {
+      font-family: "Europa", sans-serif; font-weight: 300;
+      font-size: 10px; letter-spacing: 0.06em;
+      color: rgba(17,17,17,0.3);
+    }
     .photo-pair-footer {
       font-family: "Europa", sans-serif; font-weight: 300;
       font-size: 13px; line-height: 1.78; color: rgba(17,17,17,0.52);
@@ -197,9 +237,9 @@
       color: #111; margin-bottom: 28px;
     }
     .e-intro-body {
-      font-family: "Europa", sans-serif; font-weight: 300;
-      font-size: 13px; line-height: 1.78;
-      color: rgba(17,17,17,0.52);
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: 13px; line-height: 1.25;
+      color: #111;
       letter-spacing: 0.03em; width: 95%; margin-bottom: 36px;
     }
     .e-intro-img { padding: 0 16px 56px; }
@@ -341,6 +381,58 @@
         <h2 class="ed-section-ttl">Seignosse.</h2>
         <img class="ed-section-img" src="links/viajes/HOSSEGOR/DSC02392 copia.jpg" alt="">
         <p class="ed-section-body">Texto largo aquí. Puedes contarme qué pasó en Seignosse, cómo fue el día, qué hicisteis, qué visteis, qué sensación tuvisteis al llegar a ese sitio. Todo el detalle que quieras guardar para que cuando lo leáis dentro de años podáis volver a estar ahí, recordar los olores, la luz, el frío o el calor, la gente que había, lo que dijisteis, lo que sentisteis. Este texto puede ser tan largo como quieras.</p>
+        <img class="ed-section-img" src="links/viajes/HOSSEGOR/DSC02383.jpg" alt="" style="margin-top: 20px;">
+      </div>
+
+      <!-- collage -->
+      <div class="collage">
+
+        <div class="cpair">
+          <img class="cpair-big" src="links/viajes/HOSSEGOR/80.jpg" alt="">
+          <img class="cpair-sm"  src="links/viajes/HOSSEGOR/81.jpg" alt="">
+        </div>
+
+        <div class="c3 alt">
+          <div class="c3-top">
+            <img class="c3-a" src="links/viajes/HOSSEGOR/82.jpg" alt="">
+            <img class="c3-b" src="links/viajes/HOSSEGOR/83.jpg" alt="">
+          </div>
+          <img class="c3-c" src="links/viajes/HOSSEGOR/84.jpg" alt="">
+        </div>
+
+
+        <div class="cpair alt">
+          <img class="cpair-big" src="links/viajes/HOSSEGOR/85.jpg" alt="">
+          <img class="cpair-sm"  src="links/viajes/HOSSEGOR/86.jpg" alt="">
+        </div>
+
+        <div class="c3">
+          <div class="c3-top">
+            <img class="c3-a" src="links/viajes/HOSSEGOR/DSC02130.jpg" alt="">
+            <img class="c3-b" src="links/viajes/HOSSEGOR/DSC02132.jpg" alt="">
+          </div>
+          <img class="c3-c" src="links/viajes/HOSSEGOR/DSC02173.jpg" alt="">
+        </div>
+
+
+        <div class="collage-text">
+          <h2 class="collage-ttl">El resto del día.</h2>
+          <p class="collage-body">todo eso que no cabe en un itinerario pero que es exactamente lo que hace que un viaje valga la pena. los momentos entre medias, sin plan, sin rumbo. las calles que no buscabas, la luz que llegó sin avisar, las risas por nada. el café de pie, el frío que no molestaba, la tarde que se hizo larga sin que nadie lo forzara. eso es lo que queda cuando ya no recuerdas los detalles — la sensación de que estabas exactamente donde tenías que estar.</p>
+          <p class="collage-tags">#Hossegor #Enero2026</p>
+        </div>
+
+        <div class="c3 alt">
+          <div class="c3-top">
+            <img class="c3-a" src="links/viajes/HOSSEGOR/DSC02180.jpg" alt="">
+            <img class="c3-b" src="links/viajes/HOSSEGOR/DSC02212.jpg" alt="">
+          </div>
+          <img class="c3-c" src="links/viajes/HOSSEGOR/DSC02214.jpg" alt="">
+        </div>
+
+        <div class="cpair">
+          <img class="cpair-big" src="links/viajes/HOSSEGOR/DSC02351.jpg" alt="" style="object-position: left center;">
+          <img class="cpair-sm"  src="links/viajes/HOSSEGOR/DSC02356.jpg" alt="" style="object-position: left center;">
+        </div>
       </div>
 
     </div>
