@@ -150,8 +150,16 @@
       font-size: 10px; letter-spacing: 0.04em;
       color: rgba(17,17,17,0.35); margin-top: 10px; text-align: center;
     }
-    .ed-video { background: #fff; padding: 0 16px 72px; }
-    .ed-video iframe { width: 100%; aspect-ratio: 16/9; border: none; border-radius: 10px; }
+    .ed-video-header { background: #fff; padding: 52px 16px 32px; }
+    .ed-video-header p {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: clamp(2rem, 10vw, 4rem);
+      line-height: 1.05; letter-spacing: 0.04em;
+      color: #111; text-align: left; width: 80%;
+    }
+    .ed-video { background: #fff; padding: 0 16px 16px; }
+    .ed-video:last-of-type { padding-bottom: 72px; }
+    .ed-video iframe { width: 100%; aspect-ratio: 16/9; border: none; display: block; }
     .photo-pair-footer {
       font-family: "Europa", sans-serif; font-weight: 300;
       font-size: 13px; line-height: 1.78; color: rgba(17,17,17,0.52);
@@ -283,6 +291,11 @@
           <img src="links/viajes/HOSSEGOR/gigio2.jpg" alt="">
           <p class="photo-pair-caption">primera línea de texto.<br>segunda línea de texto.</p>
         </div>
+      </div>
+
+      <!-- vídeo header -->
+      <div class="ed-video-header">
+        <p>ANOTHER SET OF STUNNING MOCKUPS METICOLOUS ATTENTION TO EVERY DETAIL WITH LIGHT</p>
       </div>
 
       <!-- vídeos -->
