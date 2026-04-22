@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Candanchú</title>
+  <style>
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayBold.ttf") format("truetype"); font-weight: 700; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayLight.ttf") format("truetype"); font-weight: 300; }
+    @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayRoman.ttf") format("truetype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Reg.otf") format("opentype"); font-weight: 400; }
+    @font-face { font-family: "Europa"; src: url("fonts/EuropaGroteskSH-Lig.otf") format("opentype"); font-weight: 300; }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; overflow: hidden; }
+
+    @view-transition { navigation: auto; }
+    ::view-transition-old(root) { animation: none; }
+    ::view-transition-new(root) { animation: none; }
+
+    .bg {
+      position: fixed; inset: 0; z-index: 0;
+      background: url('links/viajes/CANDANCHU/Candanchu.jpg') center center / cover no-repeat;
+    }
+
+    /* ── NAV ── */
+    .icon-chip {
+      width: 13px; height: 13px; border-radius: 50%;
+      background: #0a0a0e; border: none; display: block;
+      cursor: pointer; flex-shrink: 0; transition: transform 0.18s;
+      position: fixed;
+      top: max(env(safe-area-inset-top), 18px);
+      right: 16px; z-index: 98;
+    }
+    .icon-chip:hover { transform: scale(1.08); }
+
+    @keyframes linkIn {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .nav-menu {
+      position: fixed;
+      top: calc(max(env(safe-area-inset-top), 18px) + 24px); right: 8px;
+      width: 65%; height: 55vh;
+      z-index: 100; border-radius: 28px;
+      background: rgba(210,210,210,0.45);
+      backdrop-filter: blur(28px) saturate(1.6);
+      -webkit-backdrop-filter: blur(28px) saturate(1.6);
+      border: 1px solid rgba(255,255,255,0.35);
+      padding: 14px; display: flex; flex-direction: column;
+      clip-path: circle(0% at calc(100% - 24px) 0px);
+      opacity: 0; transition: clip-path 0.55s cubic-bezier(0.22,1,0.36,1), opacity 0.2s ease;
+      pointer-events: none; overflow: hidden;
+    }
+    .nav-menu.open {
+      clip-path: circle(150% at calc(100% - 24px) 0px);
+      opacity: 1; pointer-events: all;
+    }
+    .nav-menu-header { display: flex; align-items: center; justify-content: flex-end; margin-bottom: 20px; }
+    .nav-close {
+      background: none; border: none; color: #000;
+      font-family: "Europa", sans-serif; font-weight: 300;
+      font-size: 26px; cursor: pointer; line-height: 1;
+      transition: color 0.18s; padding: 0;
+    }
+    .nav-links {
+      display: flex; flex-direction: column; flex: 1;
+      justify-content: flex-start; align-items: flex-end; gap: 2px;
+    }
+    .nav-link {
+      font-family: "NeueHaas", sans-serif; font-weight: 300;
+      font-size: clamp(22px,6vw,30px); color: #000;
+      text-align: right; text-decoration: none; text-transform: uppercase;
+      letter-spacing: -0.03em; padding: 0;
+      display: flex; align-items: center; gap: 8px;
+      transition: color 0.2s, opacity 0.2s; opacity: 0;
+    }
+    .nav-link.active-page::after { content: ''; width: 5px; height: 5px; border-radius: 50%; background: #000; flex-shrink: 0; }
+    .nav-link:not(.active-page) { color: rgba(0,0,0,0.35); }
+    .nav-menu.open .nav-link:nth-child(1) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.18s both; }
+    .nav-menu.open .nav-link:nth-child(2) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.24s both; }
+    .nav-menu.open .nav-link:nth-child(3) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.30s both; }
+    .nav-menu.open .nav-link:nth-child(4) { animation: linkIn 0.45s cubic-bezier(0.22,1,0.36,1) 0.36s both; }
+    .nav-link:hover { color: #000; }
+    .nav-player {
+      border-radius: 18px; overflow: hidden; position: relative;
+      margin-top: 12px; height: 110px;
+      background-size: cover; background-position: center 25%;
+      background-color: #1a1a1e; flex-shrink: 0;
+      outline: 1px solid rgba(255,255,255,0.38);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.22);
+    }
+    .nav-player-filter { position: absolute; inset: 0; mix-blend-mode: multiply; z-index: 1; pointer-events: none; }
+    .nav-player-inner { position: absolute; inset: 0; z-index: 2; padding: 12px 14px; display: flex; align-items: flex-end; justify-content: space-between; }
+    .nav-player-info { min-width: 0; }
+    .nav-player-name { font-family: "NeueHaas", sans-serif; font-size: 13px; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-player-track { font-size: 10px; color: rgba(255,255,255,0.55); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .nav-player-controls { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
+    .nav-player-btn { width: 26px; height: 26px; border-radius: 50%; border: 1px solid rgba(255,255,255,0.20); background: rgba(255,255,255,0.12); color: #fff; display: grid; place-items: center; font-size: 10px; cursor: pointer; transition: background 0.15s; }
+    .nav-player-btn:hover { background: rgba(255,255,255,0.22); }
+    .nav-player-play { width: 30px; height: 30px; background: rgba(255,255,255,0.92); color: #0a0a0e; font-size: 11px; border-color: transparent; }
+    .nav-player-play:hover { background: #fff; }
+    .nav-player-bar { position: absolute; bottom: 0; left: 0; right: 0; height: 3px; background: rgba(255,255,255,0.15); z-index: 3; }
+    .nav-player-progress { height: 100%; background: rgba(255,255,255,0.8); width: 0%; transition: width 0.3s linear; }
+    .nav-menu-backdrop { position: fixed; inset: 0; z-index: 99; display: none; }
+    .nav-menu-backdrop.open { display: block; }
+
+    /* ── PAGE ── */
+    .scroll {
+      position: fixed; inset: 0; z-index: 1;
+      overflow-y: auto; overflow-x: hidden; -webkit-overflow-scrolling: touch;
+    }
+    .spacer { height: 74vh; }
+    .content {
+      position: relative;
+      padding: 56px 22px max(env(safe-area-inset-bottom), 48px);
+      min-height: 62vh;
+    }
+    .content::before {
+      content: ''; position: absolute; inset: 0;
+      backdrop-filter: blur(28px); -webkit-backdrop-filter: blur(28px);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
+      mask-image: linear-gradient(to bottom, transparent 0%, black 28%);
+      pointer-events: none; z-index: 0;
+    }
+    .content > * { position: relative; z-index: 1; }
+    .trip-title {
+      font-family: "NeueHaas", sans-serif; font-weight: 400;
+      font-size: clamp(2rem,9vw,2.8rem); color: #fff;
+      letter-spacing: -0.02em; line-height: 1.0; margin-bottom: 8px;
+    }
+    .trip-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+    .trip-location { display: flex; align-items: center; gap: 5px; font-family: "Europa", sans-serif; font-size: 13px; font-weight: 300; color: #fff; letter-spacing: 0.03em; }
+    .trip-location svg { width: 12px; height: 12px; }
+    .trip-btns { display: flex; gap: 8px; }
+    .trip-btn { width: 34px; height: 34px; border-radius: 50%; background: rgba(255,255,255,0.16); border: 1px solid rgba(255,255,255,0.20); display: flex; align-items: center; justify-content: center; cursor: pointer; color: #fff; }
+    .trip-btn svg { width: 15px; height: 15px; stroke-width: 1.8; }
+    .section + .section { margin-top: 26px; }
+    .section-title { font-family: "Europa", sans-serif; font-weight: 700; font-size: 16px; color: #fff; margin-bottom: 10px; letter-spacing: 0.03em; }
+    .section-body { font-family: "Europa", sans-serif; font-weight: 300; font-size: 14px; line-height: 1.72; color: #fff; letter-spacing: 0.03em; }
+    .fact { font-family: "Europa", sans-serif; font-size: 14px; line-height: 1.8; color: #fff; letter-spacing: 0.03em; }
+    .fact strong { font-weight: 600; }
+
+    /* ── COLLAGE ── */
+    .collage { background: #fff; padding: 64px 0 0; overflow: hidden; }
+    .cpair { display: flex; align-items: flex-start; padding: 0 16px; margin-bottom: 16px; }
+    .cpair.alt { flex-direction: row-reverse; }
+    .cpair-big { width: 62%; flex-shrink: 0; aspect-ratio: 3/4; object-fit: cover; position: relative; z-index: 1; }
+    .cpair-sm { width: 46%; flex-shrink: 0; aspect-ratio: 1/1; object-fit: cover; margin-left: -8%; margin-top: 72px; position: relative; z-index: 2; }
+    .cpair.alt .cpair-sm { margin-left: 0; margin-right: -8%; }
+    .c3 { padding: 0 16px; margin-bottom: 24px; }
+    .c3-top { display: flex; align-items: flex-start; }
+    .c3.alt .c3-top { flex-direction: row-reverse; }
+    .c3-a { width: 62%; flex-shrink: 0; aspect-ratio: 3/4; object-fit: cover; position: relative; z-index: 1; }
+    .c3-b { width: 50%; flex-shrink: 0; aspect-ratio: 4/5; object-fit: cover; margin-left: -12%; margin-top: 48px; position: relative; z-index: 2; }
+    .c3.alt .c3-b { margin-left: 0; margin-right: -12%; }
+    .c3-c { display: block; width: 38%; aspect-ratio: 1/1; object-fit: cover; margin-top: -44px; margin-left: 6%; position: relative; z-index: 3; }
+    .c3.alt .c3-c { margin-left: auto; margin-right: 6%; }
+    .collage-text { padding: 36px 20px 72px; }
+    .collage-ttl {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: clamp(2rem, 9vw, 3.2rem);
+      line-height: 1.0; letter-spacing: 0.03em;
+      color: #111; margin-bottom: 14px;
+    }
+    .collage-body {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: 13px; line-height: 1.25;
+      color: #111; letter-spacing: 0.03em;
+      margin-bottom: 20px;
+    }
+    .collage-tags {
+      font-family: "Europa", sans-serif; font-weight: 300;
+      font-size: 10px; letter-spacing: 0.06em;
+      color: rgba(17,17,17,0.3);
+    }
+
+    /* ── EDITORIAL ── */
+    .ed { background: #fff; overflow-x: hidden; }
+    .e-intro { background: #fff; }
+    .e-intro-txt { padding: 88px 24px 0; }
+    .e-intro-lbl {
+      font-family: "Europa", sans-serif; font-size: 9px;
+      letter-spacing: 0.20em; text-transform: uppercase;
+      color: rgba(17,17,17,0.32); display: block; margin-bottom: 20px;
+    }
+    .e-intro-ttl {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: clamp(3rem,17vw,6rem);
+      letter-spacing: 0.03em; line-height: 0.78;
+      color: #111; margin-bottom: 28px;
+    }
+    .e-intro-body {
+      font-family: "Europa", sans-serif; font-weight: 400;
+      font-size: 13px; line-height: 1.25;
+      color: #111; letter-spacing: 0.03em; width: 95%; margin-bottom: 36px;
+    }
+    .e-intro-img { padding: 0 16px 56px; }
+    .e-intro-img img { display: block; width: 100%; aspect-ratio: 16/9; object-fit: cover; }
+  </style>
+  <script>window.addEventListener('pagereveal',function(e){if(!e.viewTransition)return;var d=sessionStorage.getItem('slideDir')||'left';sessionStorage.removeItem('slideDir');e.viewTransition.ready.then(function(){document.documentElement.animate([{transform:'translateX('+(d==='right'?'-100vw':'100vw')+')'},{transform:'translateX(0)'}],{duration:380,easing:'cubic-bezier(0.22,1,0.36,1)',fill:'both',pseudoElement:'::view-transition-new(root)'});});});</script>
+</head>
+<body>
+
+  <div class="bg"></div>
+
+  <button class="icon-chip" id="menuBtn" aria-label="Menú"></button>
+
+  <div class="nav-menu-backdrop" id="navBackdrop"></div>
+  <nav class="nav-menu" id="navMenu">
+    <div class="nav-menu-header">
+      <button class="nav-close" id="navClose">x</button>
+    </div>
+    <div class="nav-links">
+      <a class="nav-link" href="index.html">Inicio</a>
+      <a class="nav-link" href="gallery.html">Galería</a>
+      <a class="nav-link active-page" href="viajes.html">Viajes</a>
+      <a class="nav-link" href="javascript:void(0)" id="navMusicBtn">Música</a>
+    </div>
+    <div class="nav-player" id="navPlayer">
+      <div class="nav-player-filter" id="navPlayerFilter"></div>
+      <div class="nav-player-inner">
+        <div class="nav-player-info">
+          <div class="nav-player-name" id="navAuthorName">Kendrick Lamar</div>
+          <div class="nav-player-track" id="navTrackName">@allthestars</div>
+        </div>
+        <div class="nav-player-controls">
+          <button class="nav-player-btn" id="navPrevBtn">⏮&#xFE0E;</button>
+          <button class="nav-player-btn nav-player-play" id="navPlayBtn">▶&#xFE0E;</button>
+          <button class="nav-player-btn" id="navNextBtn">⏭&#xFE0E;</button>
+        </div>
+      </div>
+      <div class="nav-player-bar"><div class="nav-player-progress" id="navProgressFill"></div></div>
+    </div>
+  </nav>
+
+  <div class="scroll">
+    <div class="spacer"></div>
+    <div class="content">
+      <h1 class="trip-title">Candanchú</h1>
+      <div class="trip-row">
+        <span class="trip-location">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+          </svg>
+          Candanchú, Pirineos
+        </span>
+        <div class="trip-btns">
+          <button class="trip-btn" aria-label="Compartir">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/>
+              <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/>
+              <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/>
+            </svg>
+          </button>
+          <button class="trip-btn" aria-label="Favorito">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="section">
+        <p class="section-title">Sobre el viaje</p>
+        <p class="section-body">Escapada a la nieve en los Pirineos. Candanchú en enero, con las pistas, el frío y las noches tranquilas de montaña. Uno de esos planes que parece una locura hasta que estás ahí y no quieres volver.</p>
+      </div>
+      <div class="section">
+        <p class="section-title">Detalles</p>
+        <p class="fact"><strong>Destino:</strong> Candanchú, Huesca</p>
+        <p class="fact"><strong>País:</strong> España</p>
+        <p class="fact"><strong>Fecha:</strong> Enero 2026</p>
+        <p class="fact"><strong>Con:</strong> Jone &amp; Lander</p>
+      </div>
+    </div>
+
+    <!-- ── EDITORIAL ── -->
+    <div class="ed">
+      <section class="e-intro">
+        <div class="e-intro-txt">
+          <span class="e-intro-lbl">— Candanchú · Enero 2026</span>
+          <h2 class="e-intro-ttl">Nieve<br>y más nieve.</h2>
+          <p class="e-intro-body">Aquí puedes añadir el texto que quieras sobre el viaje. Cómo fue llegar, qué sensación tuvisteis al ver la nieve por primera vez, qué hicisteis el primer día. Todo ese detalle que hace que al leerlo meses después vuelvas a estar ahí.</p>
+        </div>
+        <div class="e-intro-img">
+          <img src="links/gallery/136.jpg" alt="">
+        </div>
+      </section>
+
+      <!-- collage fotos galería -->
+      <div class="collage">
+
+        <div class="cpair">
+          <img class="cpair-big" src="links/gallery/137.jpg" alt="">
+          <img class="cpair-sm"  src="links/gallery/138.jpg" alt="">
+        </div>
+
+        <div class="c3 alt">
+          <div class="c3-top">
+            <img class="c3-a" src="links/gallery/139.jpg" alt="">
+            <img class="c3-b" src="links/gallery/140.jpg" alt="">
+          </div>
+          <img class="c3-c" src="links/gallery/141.jpg" alt="">
+        </div>
+
+        <div class="cpair alt">
+          <img class="cpair-big" src="links/gallery/142.jpg" alt="">
+          <img class="cpair-sm"  src="links/gallery/143.jpg" alt="">
+        </div>
+
+        <div class="c3">
+          <div class="c3-top">
+            <img class="c3-a" src="links/gallery/144.jpg" alt="">
+            <img class="c3-b" src="links/gallery/145.jpg" alt="">
+          </div>
+          <img class="c3-c" src="links/gallery/146.jpg" alt="">
+        </div>
+
+        <div class="collage-text">
+          <h2 class="collage-ttl">El resto del día.</h2>
+          <p class="collage-body">Aquí puedes escribir lo que quieras sobre el resto del viaje. Los momentos entre medias, sin plan, sin rumbo. El frío que no molestaba, la tarde que se hizo larga sin que nadie lo forzara. Eso es lo que queda cuando ya no recuerdas los detalles — la sensación de que estabas exactamente donde tenías que estar.</p>
+          <p class="collage-tags">#Candanchú #Enero2026 #Pirineos</p>
+        </div>
+
+        <div class="cpair">
+          <img class="cpair-big" src="links/gallery/147.jpg" alt="">
+          <img class="cpair-sm"  src="links/gallery/148.jpg" alt="">
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const menuBtn     = document.getElementById("menuBtn");
+    const navMenu     = document.getElementById("navMenu");
+    const navClose    = document.getElementById("navClose");
+    const navBackdrop = document.getElementById("navBackdrop");
+
+    function openNav()  { navMenu.classList.add("open");    navBackdrop.classList.add("open"); }
+    function closeNav() { navMenu.classList.remove("open"); navBackdrop.classList.remove("open"); }
+
+    menuBtn.addEventListener("click", openNav);
+    navClose.addEventListener("click", closeNav);
+    navBackdrop.addEventListener("click", closeNav);
+    document.getElementById("navMusicBtn").addEventListener("click", closeNav);
+
+    const navSongs = [
+      { src: "songs/All The Stars.mp3",            title: "All The Stars",     artist: "Kendrick Lamar",  cover: "songs/all the stars.jpeg",    filter: "rgba(90,40,180,0.55)" },
+      { src: "songs/Cinnamon Girl.mp3",            title: "Cinnamon Girl",     artist: "Lana Del Rey",    cover: "songs/Cinnamon Girl.jpg",      filter: "rgba(200,100,30,0.50)" },
+      { src: "songs/Say Yes To Heaven.mp3",        title: "Say Yes To Heaven", artist: "Lana Del Rey",    cover: "songs/Say Yes To Heaven.webp", filter: "rgba(40,90,210,0.50)" },
+      { src: "songs/The Cranberries - Linger.mp3", title: "Linger",            artist: "The Cranberries", cover: "songs/Linger.jpg",             filter: "rgba(30,140,80,0.50)" }
+    ];
+    const navAudio        = new Audio();
+    let   navCurrentIndex = Math.floor(Math.random() * navSongs.length);
+    const navPlayer       = document.getElementById("navPlayer");
+    const navPlayerFilter = document.getElementById("navPlayerFilter");
+    const navAuthorName   = document.getElementById("navAuthorName");
+    const navTrackName    = document.getElementById("navTrackName");
+    const navPlayBtn      = document.getElementById("navPlayBtn");
+    const navPrevBtn      = document.getElementById("navPrevBtn");
+    const navNextBtn      = document.getElementById("navNextBtn");
+    const navProgressFill = document.getElementById("navProgressFill");
+
+    function navLoadSong(index, autoplay = false) {
+      navCurrentIndex = (index + navSongs.length) % navSongs.length;
+      const song = navSongs[navCurrentIndex];
+      navAudio.src = encodeURI(song.src);
+      navAuthorName.textContent = song.artist;
+      navTrackName.textContent  = `@${song.title.toLowerCase().replace(/\s+/g,"")}`;
+      navPlayer.style.backgroundImage = `linear-gradient(180deg,rgba(255,255,255,0.09),rgba(26,26,30,0.82)),url("${encodeURI(song.cover)}")`;
+      navPlayerFilter.style.background = song.filter;
+      navProgressFill.style.width = "0%";
+      navUpdatePlayBtn();
+      if (autoplay) navAudio.play().catch(() => {});
+    }
+    function navUpdatePlayBtn() {
+      navPlayBtn.textContent = (navAudio.paused ? "▶" : "⏸") + "︎";
+    }
+    navPlayBtn.addEventListener("click", () => {
+      if (!navAudio.src) navLoadSong(0, false);
+      navAudio.paused ? navAudio.play().catch(() => {}) : navAudio.pause();
+      navUpdatePlayBtn();
+    });
+    navPrevBtn.addEventListener("click", () => navLoadSong(navCurrentIndex - 1, !navAudio.paused));
+    navNextBtn.addEventListener("click", () => navLoadSong(navCurrentIndex + 1, !navAudio.paused));
+    navAudio.addEventListener("ended", () => navLoadSong(navCurrentIndex + 1, true));
+    navAudio.addEventListener("timeupdate", () => {
+      if (navAudio.duration) navProgressFill.style.width = `${(navAudio.currentTime / navAudio.duration) * 100}%`;
+    });
+
+    const _savedAudio = sessionStorage.getItem('audioState');
+    if (_savedAudio) {
+      const _s = JSON.parse(_savedAudio);
+      sessionStorage.removeItem('audioState');
+      navCurrentIndex = _s.index;
+      navLoadSong(_s.index, false);
+      navAudio.addEventListener('canplay', () => {
+        navAudio.currentTime = _s.time || 0;
+        if (_s.playing) navAudio.play().catch(() => {});
+      }, { once: true });
+    } else {
+      navLoadSong(navCurrentIndex, false);
+    }
+    window.addEventListener('pagehide', () => {
+      sessionStorage.setItem('audioState', JSON.stringify({
+        index: navCurrentIndex,
+        time: navAudio.currentTime,
+        playing: !navAudio.paused
+      }));
+    });
+  </script>
+
+</body>
+</html>
