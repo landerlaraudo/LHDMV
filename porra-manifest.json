@@ -9,12 +9,12 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "porra-icon-v5.png",
+      "src": "porra-icon-v6.png",
       "sizes": "192x192",
       "type": "image/png"
     },
     {
-      "src": "porra-icon-v5.png",
+      "src": "porra-icon-v6.png",
       "sizes": "512x512",
       "type": "image/png"
     }
