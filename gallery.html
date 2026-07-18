@@ -172,6 +172,39 @@
       gap: 10px;
     }
 
+    .gallery-controls {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: 14px;
+    }
+    .sort-toggle {
+      display: flex;
+      gap: 4px;
+      background: rgba(0,0,0,0.05);
+      border-radius: 999px;
+      padding: 4px;
+    }
+    .sort-btn {
+      border: none;
+      background: transparent;
+      border-radius: 999px;
+      padding: 6px 14px;
+      font-size: 11px;
+      font-family: "Europa", sans-serif;
+      font-weight: 500;
+      color: rgba(0,0,0,0.45);
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+    }
+    .sort-btn:hover:not(.active) { color: rgba(0,0,0,0.7); }
+    .sort-btn.active {
+      background: #fff;
+      color: #0a0a0e;
+      font-weight: 500;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+    }
+
     .title {
       font-family: "NeueHaas", sans-serif;
       font-weight: 700;
@@ -598,13 +631,20 @@
       </div>
       <nav class="tabs">
         <a class="tab" href="index.html">Inicio</a>
-        <a class="tab active" href="gallery.html">Galería</a>
+        <a class="tab active" href="gallery.html" style="color: #e11d48;">Galería</a>
         <a class="tab" href="viajes.html">Viajes</a>
       </nav>
       <div class="header-row">
         <h1 class="title">Nuestras<br>locuras</h1>
       </div>
       <p class="subtitle">Porque si lo explicamos, no tiene gracia. Gracias por seguirme el ritmo en cada idea sin sentido y por hacer que lo normal sea lo más aburrido del mundo. Por todo lo que hemos hecho y lo que todavía nos falta por hacer.</p>
+    </div>
+
+    <div class="gallery-controls">
+      <div class="sort-toggle" id="sortToggle">
+        <button class="sort-btn" data-sort="random">Aleatorio</button>
+        <button class="sort-btn" data-sort="date">Fecha</button>
+      </div>
     </div>
 
     <section class="gallery" id="galleryGrid"></section>
@@ -638,7 +678,7 @@
     </div>
     <div class="nav-links">
       <a class="nav-link" href="index.html">Inicio</a>
-      <a class="nav-link active-page" href="gallery.html">Galería</a>
+      <a class="nav-link active-page" href="gallery.html" style="color: #e11d48;">Galería</a>
       <a class="nav-link" href="viajes.html">Viajes</a>
       <a class="nav-link" href="javascript:void(0)" id="navMusicBtn">Música</a>
     </div>
@@ -703,7 +743,12 @@
       sonabia4:     "Subimos de la playa y nos metemos en el coche. Las flores seguían detrás. Le digo a Jone que tengo una sorpresa, me coloco en el asiento de atrás, rodeo los brazos alrededor del asiento de ella y le coloco las flores delante.",
       sonabiaNote:  "La nota iba con las flores, pero le dije que no la lea conmigo delante. Hay que volver, así que arrancamos y para casa. Al final acordamos, y Jone lee la carta mientras conduzco.",
       hossegor:     "Primera escapada para la France, directos a Hossegor. Aparcamos y nos vamos a comer al Gigio. Nos pedimos una pizza y una carbonara (muy bueno). Terminamos de comer, cogemos las bicis y nos vamos para seignosse (Jone está en su Prime). LLegamos a la playa y nos tumbamos un rato. Después unas palas, procierto, qué malos somos. Volvemos para el pueblo, y como no, HELADITOOO :) Jone se coge de Yogur y yo u Smoothie. Últimas horas del día, asique paseto por el sunset y chill. Día Increible, mañana más!",
-      baiona:       "mcwkcwkcwmelkcmwlckwelcw",
+      baiona:       "Amanecemos en Baiona, se nos pegan un poco las sábanas. Vamos a visitar el pueblo y nos encontramos con un mercadillo enorme! Está petado! Jone se coge un cafecito para llevar y nos damos un paseito. Entramos a unas tiendas, y a comer.",
+      biarritz:     "Despues del paseito por Baiona, nos vamos para Biarritz. Hace un poco malo, pero aparcamos en un parking, parece que regalan coches color moco jajaj. Hora de comer en la France, asique buscamos un restaurante, y acertamos, estaba muy bueno. Paseito por biarritz, visitamos una iglesia y el faro. Hacer un poco el retrasado, y para casa. Chill, peli y manta.",
+      baiona2:      "Segundo día amaneciendo en Baiona y último. Vamos a desayunar a el sitio del cafe, yo un chocolate (buenisimoo), Jone un café, y napolitana para compartir. Limpiamos todo, cogemos bicis, las colocamos en el coche y rumbo casa poco a poco.",
+      sanjuandeluz: "Paramos en San Juan de Luz, sacamos las bicis y pasito super bonito. Subimos a un mirador a ver las vistas, estamos en nuestro Prime. Cruzamos todo el pueblo y nos paramos en la ría, nos sentamos y descansito. Mañana aprovechada, hay que seguir tirando para casa.",
+      itziar:       "Última parada, Itziar. No me podía creer que ya se acababa la escapada. Ha sido increible, pero tenía que rematar con algo más, un poco más de tiempo juntos. Asique busco un spot secreto sin que Jone se entere. Nos salimos de la autopista, y entramos en carretera rural. Con dudas, pero confiando en que mereciese la pena, bajamos por una carretera un poco mala y llegamos. Tiene muy buena pinta, así es, es increible. Perfecto para terminar la escapada. Estamos un poco sentimentales, pero felices. Eskerrik asko Jone! Ha sido increíble.",
+      candanchu:    "Primera escapada a la nieve, nos metemos en el mundo prime de Jone. Musiquita en el coche, estamos agustisimo, y de la nada, Jone saca una palmeraaaaaaa! Eres la mejor, eskerrik asko! Llegamos a Candanchu, sacamos todo y Jone se pone a hacer la cena porque yo estoy cansado, eres la mejor. A dormir y mañana primeamos. Subimos a Astún, empieza lo bueno. Primeros 20 metros, primera caída jajaja desastre. Era clickbait, despues de eso un PRO jsjsj. Todo el día a tope, disfrutando muchisimo, pero reventadoo!! Eskerrik asko Jone por esperarme todo el ratooo. Volvemos para casa comidita y chilleada historica.",
     };
 
     // — Calendario (se genera automáticamente desde photoMeta al final) —
@@ -892,7 +937,69 @@
     const knownImages = [
       "links/gallery/27-1.jpg",
       "links/gallery/104.1.jpg",
-      "links/gallery/104.2.jpg"
+      "links/gallery/104.2.jpg",
+      "links/gallery/130.1.jpg",
+      "links/gallery/37765137-50a7-46fd-b5ac-d1995680003d.JPG",
+      "links/gallery/DSC04002.JPG",
+      "links/gallery/DSC04029.JPG",
+      "links/gallery/DSC04072.JPG",
+      "links/gallery/DSC04076.JPG",
+      "links/gallery/DSC04088.JPG",
+      "links/gallery/DSC04093.JPG",
+      "links/gallery/DSC04100.JPG",
+      "links/gallery/DSC04106.JPG",
+      "links/gallery/DSC04110.JPG",
+      "links/gallery/DSC04135.JPG",
+      "links/gallery/DSC04141.JPG",
+      "links/gallery/DSC04154.JPG",
+      "links/gallery/DSC04160.JPG",
+      "links/gallery/DSC04169.JPG",
+      "links/gallery/DSC04177 2.JPG",
+      "links/gallery/DSC04191.JPG",
+      "links/gallery/DSC04198.JPG",
+      "links/gallery/DSC04235.JPG",
+      "links/gallery/DSC04259.JPG",
+      "links/gallery/DSC04260.JPG",
+      "links/gallery/DSC04267.JPG",
+      "links/gallery/DSC04275.JPG",
+      "links/gallery/DSC04299.JPG",
+      "links/gallery/DSC04325.JPG",
+      "links/gallery/DSC04334 2.JPG",
+      "links/gallery/DSC04370.JPG",
+      "links/gallery/DSC04374.JPG",
+      "links/gallery/DSC04375.JPG",
+      "links/gallery/IMG_4210.jpg",
+      "links/gallery/IMG_4213.jpg",
+      "links/gallery/IMG_4225.jpg",
+      "links/gallery/IMG_4241.jpg",
+      "links/gallery/IMG_4246.jpg",
+      "links/gallery/IMG_4251.jpg",
+      "links/gallery/IMG_4256.jpg",
+      "links/gallery/IMG_4259.jpg",
+      "links/gallery/IMG_4260.jpg",
+      "links/gallery/IMG_4269.jpg",
+      "links/gallery/IMG_4272.jpg",
+      "links/gallery/IMG_4280.jpg",
+      "links/gallery/IMG_4537.jpg",
+      "links/gallery/IMG_4541.jpg",
+      "links/gallery/IMG_4542.jpg",
+      "links/gallery/IMG_4543.jpg",
+      "links/gallery/IMG_4545.jpg",
+      "links/gallery/IMG_4546.jpg",
+      "links/gallery/IMG_4564.jpg",
+      "links/gallery/IMG_4565.jpg",
+      "links/gallery/IMG_4567.jpg",
+      "links/gallery/IMG_4573.jpg",
+      "links/gallery/IMG_4576.jpg",
+      "links/gallery/IMG_4578.jpg",
+      "links/gallery/IMG_5091.jpg",
+      "links/gallery/IMG_5092.jpg",
+      "links/gallery/IMG_5096 2.jpg",
+      "links/gallery/IMG_5107.jpg",
+      "links/gallery/IMG_5108.jpg",
+      "links/gallery/IMG_5109.jpg",
+      "links/gallery/IMG_5114.jpg",
+      "links/gallery/IMG_5115.jpg"
     ];
 
     const probeExtensions = ["jpg", "jpeg", "png", "webp", "gif"];
@@ -971,7 +1078,7 @@
       "60.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia1 },
       "61.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia3 },
       "62.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia4 },
-      "63.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.baiona },
+      "63.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia4 },
       "64.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
       "65.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
       "66.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
@@ -1012,66 +1119,135 @@
       "102.jpg":  { date: "16 Enero 2026", place: "Hossegor",          text: T.hossegor },
       "103.jpg":  { date: "16 Enero 2026", place: "Hossegor",          text: T.sonabiaNote },
       "104.jpg":  { date: "16 Enero 2026", place: "Hossegor",          text: T.sonabiaNote },
-      "104.1.jpg":{ date: "17 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "104.2.jpg":{ date: "17 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "105.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "106.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "107.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "108.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "109.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "110.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "111.jpg":  { date: "18 Enero 2026", place: "Baiona",          text: T.sonabiaNote },
-      "112.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
-      "113.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
-      "114.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
-      "115.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sonabiaNote },
-      "116.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "117.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "118.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "119.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "120.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "121.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "122.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "123.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "124.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "125.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "126.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "127.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "128.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "129.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sonabiaNote },
-      "130.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "131.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sonabiaNote },
-      "132.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
-      "133.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
-      "134.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
-      "135.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.sonabiaNote },
-      "136.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "137.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "138.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "139.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "140.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "141.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "142.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "143.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "144.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "145.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "146.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "147.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "148.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote },
-      "149.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.sonabiaNote }
+      "104.1.jpg":{ date: "17 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "104.2.jpg":{ date: "17 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "105.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "106.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "107.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "108.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "109.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "110.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "111.jpg":  { date: "18 Enero 2026", place: "Baiona",            text: T.baiona2 },
+      "112.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sanjuandeluz },
+      "113.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sanjuandeluz },
+      "114.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sanjuandeluz },
+      "115.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",          text: T.sanjuandeluz },
+      "116.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "117.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "118.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "119.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "120.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "121.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "122.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "123.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "124.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "125.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "126.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "127.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "128.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "129.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "130.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "131.jpg":  { date: "18 Enero 2026", place: "San Juan de Luz",       text: T.sanjuandeluz },
+      "132.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.itziar },
+      "133.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.itziar },
+      "134.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.itziar },
+      "135.jpg":  { date: "18 Enero 2026", place: "Itziar",          text: T.itziar },
+      "136.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "137.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "138.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "139.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "140.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "141.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "142.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "143.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "144.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "145.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "146.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "147.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "148.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "149.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "150.jpg":  { date: "28 Enero 2026", place: "Por definir",          text: "Por definir" },
+      "130.1.jpg":{ date: "18 Enero 2026", place: "San Juan de Luz",      text: T.sanjuandeluz },
+      "37765137-50a7-46fd-b5ac-d1995680003d.JPG": { date: "22 Enero 2026", place: "Candanchú", text: T.candanchu },
+      "DSC04002.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04029.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04072.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04076.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04088.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04093.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04100.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04106.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04110.JPG":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04135.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04141.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04154.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04160.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04169.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04177 2.JPG":{ date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04191.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04198.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04235.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04259.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04260.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04267.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04275.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04299.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04325.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04334 2.JPG":{ date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04370.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04374.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "DSC04375.JPG":  { date: "4 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4210.jpg":  { date: "30 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4213.jpg":  { date: "30 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4225.jpg":  { date: "31 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4241.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4246.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4251.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4256.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4259.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4260.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4269.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4272.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4280.jpg":  { date: "3 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_4537.jpg":  { date: "26 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4541.jpg":  { date: "26 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4542.jpg":  { date: "26 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4543.jpg":  { date: "26 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4545.jpg":  { date: "27 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4546.jpg":  { date: "27 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4564.jpg":  { date: "30 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4565.jpg":  { date: "30 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4567.jpg":  { date: "13 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_4573.jpg":  { date: "30 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4576.jpg":  { date: "31 Enero 2026",   place: "Por definir", text: "Por definir" },
+      "IMG_4578.jpg":  { date: "1 Febrero 2026",  place: "Por definir", text: "Por definir" },
+      "IMG_5091.jpg":  { date: "11 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5092.jpg":  { date: "11 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5096 2.jpg":{ date: "13 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5107.jpg":  { date: "14 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5108.jpg":  { date: "14 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5109.jpg":  { date: "15 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5114.jpg":  { date: "17 Febrero 2026", place: "Por definir", text: "Por definir" },
+      "IMG_5115.jpg":  { date: "17 Febrero 2026", place: "Por definir", text: "Por definir" }
     };
+
+    // — Parseo de fechas en español (compartido) —
+    const MES = {"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12};
+    function toISOKey(dateStr) {
+      const parts = dateStr.trim().split(" ");
+      if (parts.length < 3) return null;
+      const [d, m, y] = parts;
+      const mn = MES[m];
+      if (!mn) return null;
+      return `${y}-${String(mn).padStart(2,"0")}-${String(parseInt(d)).padStart(2,"0")}`;
+    }
+    function parseDateStr(dateStr) {
+      const key = toISOKey(dateStr);
+      return key ? new Date(key) : null;
+    }
 
     // — Genera specialDates desde photoMeta automáticamente —
     (function() {
-      const MES = {"Enero":1,"Febrero":2,"Marzo":3,"Abril":4,"Mayo":5,"Junio":6,"Julio":7,"Agosto":8,"Septiembre":9,"Octubre":10,"Noviembre":11,"Diciembre":12};
-      function toISOKey(dateStr) {
-        const parts = dateStr.trim().split(" ");
-        if (parts.length < 3) return null;
-        const [d, m, y] = parts;
-        const mn = MES[m];
-        if (!mn) return null;
-        return `${y}-${String(mn).padStart(2,"0")}-${String(parseInt(d)).padStart(2,"0")}`;
-      }
       specialDates = {};
       for (const [filename, meta] of Object.entries(photoMeta)) {
         const key = toISOKey(meta.date);
@@ -1161,12 +1337,37 @@
       return arr;
     }
 
-    async function renderGallery() {
-      const images = shuffle(await discoverImages());
+    function sortByDate(images) {
+      return images
+        .map((src, i) => ({ src, i }))
+        .sort((a, b) => {
+          const fa = decodeURIComponent(a.src.split("/").pop() || "");
+          const fb = decodeURIComponent(b.src.split("/").pop() || "");
+          const da = parseDateStr((photoMeta[fa] || {}).date || "");
+          const db = parseDateStr((photoMeta[fb] || {}).date || "");
+          const ta = da ? da.getTime() : Infinity;
+          const tb = db ? db.getTime() : Infinity;
+          if (ta !== tb) return ta - tb;
+          return a.i - b.i;
+        })
+        .map((o) => o.src);
+    }
+
+    let cachedImages = null;
+    async function getImages() {
+      if (!cachedImages) cachedImages = await discoverImages();
+      return cachedImages;
+    }
+
+    async function renderGallery(mode) {
+      const base = await getImages();
+      const images = mode === "date" ? sortByDate(base) : shuffle(base.slice());
+      galleryGrid.innerHTML = "";
       if (!images.length) {
         emptyState.style.display = "block";
         return;
       }
+      emptyState.style.display = "none";
       images.forEach((src, index) => {
         galleryGrid.appendChild(createPin(src, index));
       });
@@ -1180,7 +1381,25 @@
       if (event.key === "Escape") closeOverlay();
     });
 
-    renderGallery().then(() => {
+    // — Toggle orden galería —
+    const sortButtons = document.querySelectorAll(".sort-btn");
+    let sortMode = localStorage.getItem("gallerySortMode") === "date" ? "date" : "random";
+
+    function setSortMode(mode) {
+      sortMode = mode;
+      localStorage.setItem("gallerySortMode", mode);
+      sortButtons.forEach((btn) => btn.classList.toggle("active", btn.dataset.sort === mode));
+      return renderGallery(mode);
+    }
+
+    sortButtons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        if (btn.dataset.sort === sortMode) return;
+        setSortMode(btn.dataset.sort);
+      });
+    });
+
+    setSortMode(sortMode).then(() => {
       const autoPhoto = new URLSearchParams(window.location.search).get("photo");
       if (autoPhoto) {
         const src = `links/gallery/${autoPhoto}`;
