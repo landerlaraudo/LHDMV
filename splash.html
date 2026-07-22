@@ -9,29 +9,11 @@
   <link rel="manifest" href="manifest.json" />
   <script>if ('serviceWorker' in navigator) navigator.serviceWorker.register('service-worker.js');</script>
   <style>
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXXThin.ttf') format('truetype'); font-weight: 100; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXXThinItalic.ttf') format('truetype'); font-weight: 100; font-style: italic; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXThin.ttf') format('truetype'); font-weight: 150; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayXThinItalic.ttf') format('truetype'); font-weight: 150; font-style: italic; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayThin.ttf') format('truetype'); font-weight: 200; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayThinItalic.ttf') format('truetype'); font-weight: 200; font-style: italic; }
     @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayLight.ttf') format('truetype'); font-weight: 300; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayLightItalic.ttf') format('truetype'); font-weight: 300; font-style: italic; }
     @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight: 400; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayRomanItalic.ttf') format('truetype'); font-weight: 400; font-style: italic; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight: 500; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayMediumItalic.ttf') format('truetype'); font-weight: 500; font-style: italic; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBold.ttf') format('truetype'); font-weight: 700; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBoldItalic.ttf') format('truetype'); font-weight: 700; font-style: italic; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBlack.ttf') format('truetype'); font-weight: 900; font-style: normal; }
-    @font-face { font-family: 'NeueHaas'; src: url('fonts/NeueHaasDisplayBlackItalic.ttf') format('truetype'); font-weight: 900; font-style: italic; }
-
     @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Lig.otf') format('opentype'); font-weight: 300; font-style: normal; }
     @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Reg.otf') format('opentype'); font-weight: 400; font-style: normal; }
-    @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Ita.otf') format('opentype'); font-weight: 400; font-style: italic; }
     @font-face { font-family: 'Europa'; src: url('fonts/EuropaGroteskSH-Med.otf') format('opentype'); font-weight: 500; font-style: normal; }
-    @font-face { font-family: 'Europa'; src: url('fonts/Europa_Grotesk_SH_DemBol.ttf') format('truetype'); font-weight: 600; font-style: normal; }
-    @font-face { font-family: 'Europa'; src: url('fonts/europa-grotesk-sh-bold.otf') format('opentype'); font-weight: 700; font-style: normal; }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -39,115 +21,127 @@
       height: 100%;
       width: 100%;
       overflow: hidden;
-      background-color: #f6f6f8;
+      background-color: #ffffff;
     }
 
-    /* ── Splash ── */
+    /* ── Login ── */
     #splash {
       position: fixed;
       inset: 0;
       z-index: 100;
-      transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+      background: #ffffff;
+      transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
     }
 
     #splash.hide {
       opacity: 0;
       pointer-events: none;
-      transform: scale(1.04);
+      transform: scale(1.02);
     }
 
-    /* ── Foto full-screen ── */
-    .splash-bg {
-      position: absolute;
-      inset: 0;
-      background: url('splash.jpg') center center / cover no-repeat;
-      z-index: 0;
-    }
-
-    /* ── Degradado: oscurece la parte baja para legibilidad ── */
-    .splash-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.0)  0%,
-        rgba(0, 0, 0, 0.28) 35%,
-        rgba(0, 0, 0, 0.28) 65%,
-        rgba(0, 0, 0, 0.0)  100%
-      );
-    }
-
-    /* ── Contenido inferior centrado ── */
     .splash-content {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
+      inset: 0;
       z-index: 2;
-      padding: calc(max(env(safe-area-inset-top), 18px) + 38vh) 28px 0;
+      padding: max(env(safe-area-inset-top), 24px) 32px max(env(safe-area-inset-bottom), 24px);
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: center;
       text-align: center;
-      animation: fadeUp 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.25s both;
+      animation: fadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
     }
 
     .splash-title {
       font-family: 'NeueHaas', sans-serif;
       font-weight: 300;
       font-style: normal;
-      font-size: clamp(2.9rem, 13vw, 5rem);
-      color: #fff;
+      font-size: clamp(3.2rem, 15vw, 5.5rem);
+      color: #0a0a0e;
       line-height: 1.0;
-      letter-spacing: -0.025em;
-      margin-bottom: 14px;
+      letter-spacing: -0.02em;
+      margin-bottom: 34px;
     }
 
-    .splash-sub {
-      font-family: 'Europa', sans-serif;
-      font-weight: 300;
-      font-size: 0.88rem;
-      color: rgba(255, 255, 255, 0.62);
-      line-height: 1.55;
-      max-width: 280px;
-      margin-bottom: 32px;
-    }
-
-    /* ── Botón oscuro tipo pill ── */
-    .splash-btn {
+    .splash-form {
       width: 280px;
       max-width: 100%;
-      height: 44px;
-      padding: 0 28px;
-      background: rgba(16, 16, 20, 0.62);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.13);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .splash-input {
+      width: 100%;
+      height: 46px;
+      padding: 0 18px;
+      background: #f6f6f8;
+      border: 1px solid rgba(0, 0, 0, 0.10);
       border-radius: 22px;
-      color: rgba(255, 255, 255, 0.92);
+      color: #0a0a0e;
       font-family: 'Europa', sans-serif;
-      font-weight: 300;
+      font-weight: 400;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      text-align: center;
+      -webkit-appearance: none;
+      appearance: none;
+      outline: none;
+      transition: border-color 0.15s, background 0.15s;
+    }
+
+    .splash-input:focus {
+      border-color: rgba(0, 0, 0, 0.28);
+      background: #ffffff;
+    }
+
+    .splash-input.shake {
+      animation: shake 0.4s ease;
+      border-color: #e11d48;
+    }
+
+    .splash-btn {
+      width: 100%;
+      height: 46px;
+      margin-top: 12px;
+      background: #0a0a0e;
+      border: none;
+      border-radius: 22px;
+      color: #ffffff;
+      font-family: 'Europa', sans-serif;
+      font-weight: 400;
       font-size: 0.82rem;
       letter-spacing: 0.06em;
+      text-transform: uppercase;
       cursor: pointer;
-      margin-bottom: 18px;
-      transition: background 0.2s, transform 0.15s;
+      transition: background 0.2s, transform 0.15s, opacity 0.2s;
       -webkit-appearance: none;
       appearance: none;
     }
 
-    .splash-btn:active {
-      background: rgba(16, 16, 20, 0.88);
-      transform: scale(0.975);
+    .splash-btn:active { transform: scale(0.975); }
+    .splash-btn:disabled { opacity: 0.4; cursor: default; }
+
+    .splash-error {
+      min-height: 18px;
+      margin-top: 14px;
+      font-family: 'Europa', sans-serif;
+      font-weight: 400;
+      font-size: 0.76rem;
+      color: #e11d48;
+      letter-spacing: 0.01em;
     }
 
-    /* ── Texto legal/fecha pequeño ── */
     .splash-note {
+      position: absolute;
+      bottom: max(env(safe-area-inset-bottom), 18px);
+      left: 0;
+      right: 0;
+      text-align: center;
       font-family: 'Europa', sans-serif;
       font-weight: 300;
-      font-size: 0.6rem;
-      color: rgba(255, 255, 255, 0.32);
+      font-size: 0.62rem;
+      color: rgba(0, 0, 0, 0.28);
       letter-spacing: 0.06em;
     }
 
@@ -166,23 +160,41 @@
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(28px); }
+      from { opacity: 0; transform: translateY(20px); }
       to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-6px); }
+      40%, 80% { transform: translateX(6px); }
     }
   </style>
 </head>
 <body>
 
   <div id="splash">
-    <div class="splash-bg"></div>
-    <div class="splash-overlay"></div>
-
     <div class="splash-content">
-      <h1 class="splash-title">Nuestros<br>recuerdos</h1>
-      <p class="splash-sub">Cada momento guardado<br>desde el principio</p>
-      <button class="splash-btn" id="splashBtn">Entrar</button>
-      <p class="splash-note" id="splashNote"></p>
+      <h1 class="splash-title">J&amp;L</h1>
+
+      <form class="splash-form" id="loginForm" autocomplete="off">
+        <input
+          class="splash-input"
+          id="passwordInput"
+          type="password"
+          inputmode="text"
+          placeholder="Contraseña"
+          autocomplete="current-password"
+          autocapitalize="off"
+          autocorrect="off"
+          spellcheck="false"
+        />
+        <button class="splash-btn" id="loginBtn" type="submit">Entrar</button>
+        <p class="splash-error" id="loginError"></p>
+      </form>
     </div>
+
+    <p class="splash-note" id="splashNote"></p>
   </div>
 
   <div id="app">
@@ -206,21 +218,109 @@
       document.getElementById('splashNote').textContent = `J&L · juntos desde hace ${t}`;
     })();
 
-    // — Botón entrar —
-    const splash = document.getElementById('splash');
-    const app    = document.getElementById('app');
+    // — Login con contraseña (hash SHA-256, sin backend) —
+    (function() {
+      const PASSWORD_HASH = '7898a191c038ab1cba4336d12dc3f19f86f30c0a6027e71e2f4bf3c07e4912d8';
+      const UNLOCK_KEY     = 'lhdmv_unlocked';
+      const FAILS_KEY      = 'lhdmv_login_fails';
+      const LOCK_KEY       = 'lhdmv_login_lock_until';
+      const MAX_ATTEMPTS   = 5;
+      const LOCK_MS        = 60000; // 60s de bloqueo tras agotar intentos
 
-    document.getElementById('splashBtn').addEventListener('click', () => {
-      splash.classList.add('hide');
-      app.classList.add('show');
-    });
+      const splash    = document.getElementById('splash');
+      const app       = document.getElementById('app');
+      const form      = document.getElementById('loginForm');
+      const input     = document.getElementById('passwordInput');
+      const btn       = document.getElementById('loginBtn');
+      const errorEl   = document.getElementById('loginError');
 
-    // Soporte también para tap en pantalla táctil (UX alternativo)
-    document.getElementById('splashBtn').addEventListener('touchend', (e) => {
-      e.preventDefault();
-      splash.classList.add('hide');
-      app.classList.add('show');
-    });
+      function unlockApp() {
+        splash.classList.add('hide');
+        app.classList.add('show');
+        setTimeout(() => { splash.style.display = 'none'; }, 650);
+      }
+
+      // Ya desbloqueado en este dispositivo — entra directo, sin mostrar el login
+      if (localStorage.getItem(UNLOCK_KEY) === '1') {
+        splash.style.transition = 'none';
+        unlockApp();
+        return;
+      }
+
+      async function sha256Hex(text) {
+        const data = new TextEncoder().encode(text);
+        const digest = await crypto.subtle.digest('SHA-256', data);
+        return Array.from(new Uint8Array(digest))
+          .map(b => b.toString(16).padStart(2, '0'))
+          .join('');
+      }
+
+      function msLockRemaining() {
+        const until = parseInt(localStorage.getItem(LOCK_KEY) || '0', 10);
+        return until - Date.now();
+      }
+
+      function applyLockUI() {
+        const remaining = msLockRemaining();
+        if (remaining <= 0) {
+          btn.disabled = false;
+          input.disabled = false;
+          errorEl.textContent = '';
+          return;
+        }
+        btn.disabled = true;
+        input.disabled = true;
+        const tick = () => {
+          const left = msLockRemaining();
+          if (left <= 0) {
+            btn.disabled = false;
+            input.disabled = false;
+            errorEl.textContent = '';
+            localStorage.removeItem(FAILS_KEY);
+            localStorage.removeItem(LOCK_KEY);
+            return;
+          }
+          errorEl.textContent = `Demasiados intentos. Espera ${Math.ceil(left / 1000)}s`;
+          setTimeout(tick, 1000);
+        };
+        tick();
+      }
+
+      applyLockUI();
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        if (msLockRemaining() > 0) return;
+
+        const value = input.value;
+        if (!value) return;
+
+        const hash = await sha256Hex(value);
+        if (hash === PASSWORD_HASH) {
+          localStorage.setItem(UNLOCK_KEY, '1');
+          localStorage.removeItem(FAILS_KEY);
+          localStorage.removeItem(LOCK_KEY);
+          unlockApp();
+          return;
+        }
+
+        input.value = '';
+        input.classList.remove('shake');
+        void input.offsetWidth;
+        input.classList.add('shake');
+
+        const fails = parseInt(localStorage.getItem(FAILS_KEY) || '0', 10) + 1;
+        localStorage.setItem(FAILS_KEY, String(fails));
+
+        if (fails >= MAX_ATTEMPTS) {
+          localStorage.setItem(LOCK_KEY, String(Date.now() + LOCK_MS));
+          localStorage.setItem(FAILS_KEY, '0');
+          applyLockUI();
+        } else {
+          errorEl.textContent = 'Contraseña incorrecta';
+        }
+      });
+    })();
   </script>
 
 </body>
