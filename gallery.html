@@ -819,7 +819,8 @@
       const pins=moments.map((m,i)=>{
         const h=calHeights[i%calHeights.length];
         const filename=m.src.split("/").pop();
-        return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px"><img src="${m.src}" alt="${m.place}" loading="lazy"/><div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div></a>`;
+        const thumbSrc=`links/gallery/thumb/${filename.replace(/\.[^.]+$/, "")}.jpg`;
+        return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px"><img src="${thumbSrc}" alt="${m.place}" loading="lazy"/><div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div></a>`;
       }).join("");
       const textGroups=[]; const seen=new Set();
       for(const m of moments){
@@ -934,12 +935,161 @@
     });
 
     // — Gallery —
-    const knownImages = [
-      "links/gallery/27-1.jpg",
+    const galleryImages = [
+      "links/gallery/1.jpg",
+      "links/gallery/10.jpg",
+      "links/gallery/100.jpg",
+      "links/gallery/101.jpg",
+      "links/gallery/102.jpg",
+      "links/gallery/103.jpg",
       "links/gallery/104.1.jpg",
       "links/gallery/104.2.jpg",
+      "links/gallery/104.jpg",
+      "links/gallery/105.jpg",
+      "links/gallery/106.jpg",
+      "links/gallery/107.jpg",
+      "links/gallery/108.jpg",
+      "links/gallery/109.jpg",
+      "links/gallery/11.jpg",
+      "links/gallery/110.jpg",
+      "links/gallery/111.jpg",
+      "links/gallery/112.jpg",
+      "links/gallery/113.jpg",
+      "links/gallery/114.jpg",
+      "links/gallery/115.jpg",
+      "links/gallery/116.jpg",
+      "links/gallery/117.jpg",
+      "links/gallery/118.jpg",
+      "links/gallery/119.jpg",
+      "links/gallery/12.jpg",
+      "links/gallery/120.jpg",
+      "links/gallery/121.jpg",
+      "links/gallery/122.jpg",
+      "links/gallery/123.jpg",
+      "links/gallery/124.jpg",
+      "links/gallery/125.jpg",
+      "links/gallery/126.jpg",
+      "links/gallery/127.jpg",
+      "links/gallery/128.jpg",
+      "links/gallery/129.jpg",
+      "links/gallery/13.jpg",
       "links/gallery/130.1.jpg",
+      "links/gallery/130.jpg",
+      "links/gallery/131.jpg",
+      "links/gallery/132.jpg",
+      "links/gallery/133.jpg",
+      "links/gallery/134.jpg",
+      "links/gallery/135.jpg",
+      "links/gallery/136.jpg",
+      "links/gallery/137.jpg",
+      "links/gallery/138.jpg",
+      "links/gallery/139.jpg",
+      "links/gallery/14.jpg",
+      "links/gallery/140.jpg",
+      "links/gallery/141.jpg",
+      "links/gallery/142.JPG",
+      "links/gallery/143.JPG",
+      "links/gallery/144.jpg",
+      "links/gallery/145.jpg",
+      "links/gallery/146.jpg",
+      "links/gallery/147.jpg",
+      "links/gallery/148.jpg",
+      "links/gallery/149.jpg",
+      "links/gallery/15.jpg",
+      "links/gallery/150.jpg",
+      "links/gallery/16.jpg",
+      "links/gallery/17.jpg",
+      "links/gallery/18.jpg",
+      "links/gallery/19.jpg",
+      "links/gallery/2.jpg",
+      "links/gallery/20.jpg",
+      "links/gallery/21.jpg",
+      "links/gallery/22.jpg",
+      "links/gallery/23.jpg",
+      "links/gallery/24.jpg",
+      "links/gallery/25.jpg",
+      "links/gallery/26.jpg",
+      "links/gallery/27-1.jpg",
+      "links/gallery/27.jpg",
+      "links/gallery/28.jpg",
+      "links/gallery/29.jpg",
+      "links/gallery/3.jpg",
+      "links/gallery/30.jpg",
+      "links/gallery/31.jpg",
+      "links/gallery/32.jpg",
+      "links/gallery/33.jpg",
+      "links/gallery/34.jpg",
+      "links/gallery/35.jpg",
+      "links/gallery/36.jpg",
+      "links/gallery/37.jpg",
       "links/gallery/37765137-50a7-46fd-b5ac-d1995680003d.JPG",
+      "links/gallery/38.jpg",
+      "links/gallery/39.jpg",
+      "links/gallery/4.jpg",
+      "links/gallery/40.jpg",
+      "links/gallery/41.jpg",
+      "links/gallery/42.jpg",
+      "links/gallery/43.jpg",
+      "links/gallery/44.jpg",
+      "links/gallery/45.jpg",
+      "links/gallery/46.jpg",
+      "links/gallery/47.jpg",
+      "links/gallery/48.jpg",
+      "links/gallery/49.jpg",
+      "links/gallery/5.jpg",
+      "links/gallery/50.jpg",
+      "links/gallery/51.jpg",
+      "links/gallery/52.jpg",
+      "links/gallery/53.jpg",
+      "links/gallery/54.jpg",
+      "links/gallery/55.jpg",
+      "links/gallery/56.jpg",
+      "links/gallery/57.jpg",
+      "links/gallery/58.jpg",
+      "links/gallery/59.jpg",
+      "links/gallery/6.jpg",
+      "links/gallery/60.jpg",
+      "links/gallery/61.jpg",
+      "links/gallery/62.jpg",
+      "links/gallery/63.JPG",
+      "links/gallery/64.jpg",
+      "links/gallery/65.jpg",
+      "links/gallery/66.jpg",
+      "links/gallery/68.jpg",
+      "links/gallery/69.jpg",
+      "links/gallery/7.jpg",
+      "links/gallery/70.jpg",
+      "links/gallery/71.jpg",
+      "links/gallery/72.jpg",
+      "links/gallery/73.jpg",
+      "links/gallery/74.jpg",
+      "links/gallery/75.jpg",
+      "links/gallery/76.jpg",
+      "links/gallery/77.jpg",
+      "links/gallery/78.jpg",
+      "links/gallery/79.jpg",
+      "links/gallery/8.jpg",
+      "links/gallery/80.jpg",
+      "links/gallery/81.jpg",
+      "links/gallery/82.jpg",
+      "links/gallery/83.jpg",
+      "links/gallery/84.jpg",
+      "links/gallery/85.jpg",
+      "links/gallery/86.jpg",
+      "links/gallery/87.jpg",
+      "links/gallery/88.jpg",
+      "links/gallery/89.jpg",
+      "links/gallery/9.jpg",
+      "links/gallery/90.jpg",
+      "links/gallery/91.jpg",
+      "links/gallery/92.jpg",
+      "links/gallery/93.jpg",
+      "links/gallery/94.jpg",
+      "links/gallery/95.jpg",
+      "links/gallery/96.jpg",
+      "links/gallery/97.jpg",
+      "links/gallery/98.jpg",
+      "links/gallery/99.jpg",
       "links/gallery/DSC04002.JPG",
       "links/gallery/DSC04029.JPG",
       "links/gallery/DSC04072.JPG",
@@ -1002,8 +1152,6 @@
       "links/gallery/IMG_5115.jpg"
     ];
 
-    const probeExtensions = ["jpg", "jpeg", "png", "webp", "gif"];
-    const probeMax = 200;
     const galleryGrid = document.getElementById("galleryGrid");
     const emptyState = document.getElementById("emptyState");
     const overlay = document.getElementById("imageOverlay");
@@ -1078,7 +1226,7 @@
       "60.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia1 },
       "61.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia3 },
       "62.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia4 },
-      "63.jpg":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia4 },
+      "63.JPG":   { date: "23 Diciembre 2025", place: "Sonabia",          text: T.sonabia4 },
       "64.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
       "65.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
       "66.jpg":   { date: "17 Enero 2026", place: "Baiona",               text: T.baiona },
@@ -1158,8 +1306,8 @@
       "139.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
       "140.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
       "141.jpg":  { date: "21 Enero 2026", place: "Candanchú",          text: T.candanchu },
-      "142.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
-      "143.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "142.JPG":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
+      "143.JPG":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
       "144.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
       "145.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
       "146.jpg":  { date: "22 Enero 2026", place: "Candanchú",          text: T.candanchu },
@@ -1257,28 +1405,10 @@
       }
     })();
 
-    function checkImage(src) {
-      return new Promise((resolve) => {
-        const img = new Image();
-        img.onload = () => resolve(src);
-        img.onerror = () => resolve(null);
-        img.src = encodeURI(src);
-      });
-    }
-
-    async function discoverImages() {
-      const probes = [];
-      for (let n = 1; n <= probeMax; n += 1) {
-        for (const ext of probeExtensions) {
-          probes.push(`links/gallery/${n}.${ext}`);
-        }
-      }
-
-      const checked = await Promise.all(
-        [...new Set([...knownImages, ...probes])].map(checkImage)
-      );
-
-      return checked.filter(Boolean);
+    function thumbSrcFor(src) {
+      const fileName = src.split("/").pop();
+      const base = fileName.replace(/\.[^.]+$/, "");
+      return `links/gallery/thumb/${base}.jpg`;
     }
 
     function openOverlay(src, altText) {
@@ -1324,7 +1454,7 @@
       const rowSpan = Math.ceil((height + GAP) / (ROW + GAP));
       button.className = isWide ? "pin wide" : "pin";
       button.style.gridRowEnd = `span ${rowSpan}`;
-      button.innerHTML = `<img loading="lazy" src="${encodeURI(src)}" alt="${fileName}" />`;
+      button.innerHTML = `<img loading="lazy" src="${encodeURI(thumbSrcFor(src))}" alt="${fileName}" />`;
       button.addEventListener("click", () => openOverlay(src, fileName));
       return button;
     }
@@ -1353,10 +1483,8 @@
         .map((o) => o.src);
     }
 
-    let cachedImages = null;
     async function getImages() {
-      if (!cachedImages) cachedImages = await discoverImages();
-      return cachedImages;
+      return galleryImages;
     }
 
     async function renderGallery(mode) {

@@ -406,7 +406,7 @@
     <div class="trips">
 
       <a class="trip-card" href="hossegor.html">
-        <div class="trip-bg" style="background-image: url('links/gallery/100.jpg')"></div>
+        <div class="trip-bg" style="background-image: url('links/gallery/thumb/100.jpg')"></div>
         <div class="trip-overlay"></div>
         <div class="trip-top">
           <span class="trip-label">Agosto 2024</span>
@@ -419,7 +419,7 @@
       </a>
 
       <a class="trip-card" href="candanchu.html">
-        <div class="trip-bg" style="background-image: url('links/viajes/CANDANCHU/Candanchu.jpg')"></div>
+        <div class="trip-bg" style="background-image: url('links/viajes/CANDANCHU/Candanchu-thumb.jpg')"></div>
         <div class="trip-overlay"></div>
         <div class="trip-top">
           <span class="trip-label">Abril 2026</span>
@@ -522,7 +522,7 @@
       "2025-12-13": [{src:"links/gallery/55.jpg",place:"Bilbo",text:tBilbo1},{src:"links/gallery/56.jpg",place:"Bilbo",text:tBilbo1}],
       "2025-12-16": [{src:"links/gallery/57.jpg",place:"Bilbo",text:"Día de Amigo Invisible. Jone me ayuda a comprar maquillaje para mi Ama."}],
       "2025-12-19": [{src:"links/gallery/58.jpg",place:"Plentzi",text:tPlentziJone}],
-      "2025-12-23": [{src:"links/gallery/59.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/60.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/61.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/62.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/63.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/80.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/81.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/82.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/100.jpg",place:"Sonabia",text:tSonabia}]
+      "2025-12-23": [{src:"links/gallery/59.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/60.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/61.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/62.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/63.JPG",place:"Sonabia",text:tSonabia},{src:"links/gallery/80.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/81.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/82.jpg",place:"Sonabia",text:tSonabia},{src:"links/gallery/100.jpg",place:"Sonabia",text:tSonabia}]
     };
 
     (function(){
@@ -561,7 +561,7 @@
     function showMoment(key,dayEl){
       if(calSelected)calSelected.classList.remove("selected");calSelected=dayEl;dayEl.classList.add("selected");
       const moments=specialDates[key],MONTHS_SHORT=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"],[y,mo,d]=key.split("-"),dateStr=`${parseInt(d)} ${MONTHS_SHORT[parseInt(mo)-1]} ${y}`;
-      const pins=moments.map((m,i)=>{const h=calHeights[i%calHeights.length],filename=m.src.split("/").pop();return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px"><img src="${m.src}" alt="${m.place}" loading="lazy"/><div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div></a>`;}).join("");
+      const pins=moments.map((m,i)=>{const h=calHeights[i%calHeights.length],filename=m.src.split("/").pop(),thumbSrc=`links/gallery/thumb/${filename.replace(/\.[^.]+$/, "")}.jpg`;return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px"><img src="${thumbSrc}" alt="${m.place}" loading="lazy"/><div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div></a>`;}).join("");
       const textGroups=[],seen=new Set();
       for(const m of moments){if(!m.text||m.text==="Por definir")continue;if(!seen.has(m.text)){seen.add(m.text);textGroups.push({text:m.text,place:m.place!=="Por definir"?m.place:""}); }}
       const textsHtml=textGroups.length?`<div class="cal-day-texts">${textGroups.map(g=>`<div class="cal-day-text-block"><div class="cal-day-text-date">${dateStr}</div>${g.place?`<div class="cal-day-text-place">${g.place}</div>`:""}<div class="cal-day-text-body">${g.text}</div></div>`).join("")}</div>`:"";

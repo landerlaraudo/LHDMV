@@ -549,7 +549,7 @@
       content: "";
       position: absolute;
       inset: 0;
-      background-image: url(links/DSC04177.JPG);
+      background-image: url(links/DSC04177-thumb.jpg);
       background-size: cover;
       background-position: center;
       border-radius: inherit;
@@ -613,7 +613,7 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: url(links/gallery/97.jpg) center center / cover no-repeat;
+      background: url(links/gallery/thumb/97.jpg) center center / cover no-repeat;
       z-index: 0;
     }
     .full-square::after {
@@ -1197,7 +1197,7 @@
         { src: "links/gallery/60.jpg",  place: "Sonabia", text: tSonabia },
         { src: "links/gallery/61.jpg",  place: "Sonabia", text: tSonabia },
         { src: "links/gallery/62.jpg",  place: "Sonabia", text: tSonabia },
-        { src: "links/gallery/63.jpg",  place: "Sonabia", text: tSonabia },
+        { src: "links/gallery/63.JPG",  place: "Sonabia", text: tSonabia },
         { src: "links/gallery/80.jpg",  place: "Sonabia", text: tSonabia },
         { src: "links/gallery/81.jpg",  place: "Sonabia", text: tSonabia },
         { src: "links/gallery/82.jpg",  place: "Sonabia", text: tSonabia },
@@ -1282,8 +1282,9 @@
       const pins = moments.map((m, i) => {
         const h = calHeights[i % calHeights.length];
         const filename = m.src.split("/").pop();
+        const thumbSrc = `links/gallery/thumb/${filename.replace(/\.[^.]+$/, "")}.jpg`;
         return `<a class="cal-pin" href="gallery.html?photo=${filename}" style="--h:${h}px">
-          <img src="${m.src}" alt="${m.place}" loading="lazy" />
+          <img src="${thumbSrc}" alt="${m.place}" loading="lazy" />
           <div class="cal-pin-info"><div class="cal-pin-place">${m.place}</div></div>
         </a>`;
       }).join("");
@@ -1641,28 +1642,6 @@
       });
     })();
 
-    // — Prefetch de galería en segundo plano —
-    (function() {
-      if (!('serviceWorker' in navigator)) return;
-      const imgs = [];
-      for (let i = 1; i <= 150; i++) imgs.push(`links/gallery/${i}.jpg`);
-      imgs.push('links/gallery/27-1.jpg', 'links/gallery/104.1.jpg', 'links/gallery/104.2.jpg');
-
-      let idx = 0;
-      const BATCH = 5;
-      const idle = window.requestIdleCallback
-        ? fn => requestIdleCallback(fn, { timeout: 3000 })
-        : fn => setTimeout(fn, 300);
-
-      function fetchBatch() {
-        if (idx >= imgs.length) return;
-        const batch = imgs.slice(idx, idx + BATCH);
-        idx += BATCH;
-        Promise.all(batch.map(src => fetch(src).catch(() => {}))).then(() => idle(fetchBatch));
-      }
-
-      window.addEventListener('load', () => idle(fetchBatch));
-    })();
   </script>
 </body>
 </html>
