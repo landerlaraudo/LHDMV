@@ -3,6 +3,11 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <script>
+    if (localStorage.getItem('lhdmv_unlocked') !== '1') { location.replace('splash.html'); }
+  </script>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <title>Mind Guide UI</title>
   <style>
     @font-face { font-family: "NeueHaas"; src: url("fonts/NeueHaasDisplayRoman.ttf") format("truetype"); font-weight: 400; }
