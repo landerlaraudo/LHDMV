@@ -393,6 +393,23 @@
     .nav-player-progress { height: 100%; background: rgba(255,255,255,0.8); width: 0%; transition: width 0.3s linear; }
     .nav-menu-backdrop { position: fixed; inset: 0; z-index: 99; display: none; }
     .nav-menu-backdrop.open { display: block; }
+
+    /* ── Escritorio ── */
+    @media (min-width: 860px) {
+      .shell { width: min(94vw, 1100px); padding: 40px 48px 80px; }
+      .topbar { padding: 0 0 28px; }
+      #menuBtn { display: none; }
+      .nav-menu, .nav-menu-backdrop { display: none !important; }
+      .date-chip { position: static !important; margin-bottom: 24px; }
+      .title { font-size: clamp(56px, 6vw, 96px); }
+      .subtitle { width: 55%; font-size: 14px; }
+      .trips {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+      .trip-card { aspect-ratio: 4 / 3; }
+    }
   </style>
   <script>window.addEventListener('pagereveal',function(e){if(!e.viewTransition)return;var d=sessionStorage.getItem('slideDir')||'left';sessionStorage.removeItem('slideDir');e.viewTransition.ready.then(function(){document.documentElement.animate([{transform:'translateX('+(d==='right'?'-100vw':'100vw')+')'},{transform:'translateX(0)'}],{duration:380,easing:'cubic-bezier(0.22,1,0.36,1)',fill:'both',pseudoElement:'::view-transition-new(root)'});});});</script>
 </head>

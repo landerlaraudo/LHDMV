@@ -252,6 +252,23 @@
       display: block; width: 100%;
       aspect-ratio: 16/9; object-fit: cover;
     }
+
+    /* ── Escritorio ── */
+    @media (min-width: 860px) {
+      #menuBtn { display: none; }
+      .nav-menu, .nav-menu-backdrop { display: none !important; }
+      .content { padding-left: 48px; padding-right: 48px; }
+      .trip-title, .trip-row, .section { max-width: 760px; margin-left: auto; margin-right: auto; }
+      .e-intro, .photo-pair, .ed-video-header, .ed-video, .ed-section, .collage, .photo-pair-footer {
+        max-width: 820px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .e-intro { display: flex; align-items: center; gap: 48px; padding: 88px 0; }
+      .e-intro-txt { padding: 0; flex: 1; }
+      .e-intro-img { padding: 0; flex: 1; }
+      .e-intro-img img { aspect-ratio: 4/5; border-radius: 8px; }
+    }
   </style>
   <script>window.addEventListener('pagereveal',function(e){if(!e.viewTransition)return;var d=sessionStorage.getItem('slideDir')||'left';sessionStorage.removeItem('slideDir');e.viewTransition.ready.then(function(){document.documentElement.animate([{transform:'translateX('+(d==='right'?'-100vw':'100vw')+')'},{transform:'translateX(0)'}],{duration:380,easing:'cubic-bezier(0.22,1,0.36,1)',fill:'both',pseudoElement:'::view-transition-new(root)'});});});</script>
 </head>
