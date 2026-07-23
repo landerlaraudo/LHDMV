@@ -218,7 +218,7 @@
   </div>
 
   <div id="app">
-    <iframe src="index.html" title="J&L"></iframe>
+    <iframe title="J&L"></iframe>
   </div>
 
   <script>
@@ -255,6 +255,8 @@
       const errorEl   = document.getElementById('loginError');
 
       function unlockApp() {
+        const iframe = app.querySelector('iframe');
+        if (!iframe.src) iframe.src = 'index.html';
         splash.classList.add('hide');
         app.classList.add('show');
         setTimeout(() => { splash.style.display = 'none'; }, 650);
