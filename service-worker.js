@@ -1,4 +1,4 @@
-const CACHE_NAME = 'jyl-v3';
+const CACHE_NAME = 'jyl-v4';
 
 const PRECACHE = [
   '/LHDMV/splash.html',
@@ -10,7 +10,13 @@ const PRECACHE = [
 
 self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(PRECACHE))
+    caches.open(CACHE_NAME).then(cache =>
+      Promise.all(PRECACHE.map(url =>
+        fetch(url, { cache: 'reload' }).then(response => {
+          if (response.ok) return cache.put(url, response);
+        }).catch(() => {})
+      ))
+    )
   );
   self.skipWaiting();
 });
@@ -53,7 +59,7 @@ self.addEventListener('fetch', event => {
   // Network-first para HTML (páginas siempre actualizadas)
   if (event.request.mode === 'navigate' || /\.html$/.test(path)) {
     event.respondWith(
-      fetch(event.request)
+      fetch(event.request, { cache: 'no-store' })
         .then(response => {
           const clone = response.clone();
           caches.open(CACHE_NAME).then(cache => cache.put(event.request, clone));
