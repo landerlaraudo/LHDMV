@@ -397,8 +397,17 @@
     /* ── Escritorio ── */
     @media (min-width: 860px) {
       .shell { width: 100%; padding: 40px 56px 80px; }
-      .topbar { padding: 0 0 28px; }
-      .date-chip { position: static !important; margin-bottom: 24px; }
+      .topbar { padding: 0 0 28px; position: relative; }
+      .top-bar { margin-bottom: 24px; }
+      .date-chip { position: static !important; }
+      #menuBtn { position: static !important; }
+      .tabs {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+      }
       .title { font-size: clamp(56px, 6vw, 96px); }
       .subtitle { width: 55%; font-size: 14px; }
       .trips {
@@ -419,6 +428,7 @@
           <span class="dot"></span>
           <span id="dateLabel"></span>
         </button>
+        <button class="icon-chip" id="menuBtn" aria-label="Menú"></button>
       </div>
       <nav class="tabs">
         <a class="tab" href="index.html">Inicio</a>
@@ -459,8 +469,6 @@
 
     </div>
   </main>
-
-  <button class="icon-chip" id="menuBtn" aria-label="Menú"></button>
 
   <div class="cal-overlay" id="calOverlay">
     <div class="cal-backdrop" id="calBackdrop"></div>

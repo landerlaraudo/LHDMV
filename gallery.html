@@ -632,9 +632,17 @@
     /* ── Escritorio ── */
     @media (min-width: 860px) {
       .shell { width: 100%; padding: 40px 56px 80px; }
-      .topbar { margin: 0; padding: 0 0 28px; }
-      .date-chip { position: static !important; margin-bottom: 24px; }
-      .tabs { margin-top: 0; }
+      .topbar { margin: 0; padding: 0 0 28px; position: relative; }
+      .top-bar { margin-bottom: 24px; }
+      .date-chip { position: static !important; }
+      #menuBtn { position: static !important; }
+      .tabs {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+      }
       .title { font-size: clamp(56px, 6vw, 96px); }
       .subtitle { width: 60%; font-size: 14px; }
       .gallery-controls { margin-top: -4px; }
@@ -653,6 +661,7 @@
           <span class="dot"></span>
           <span id="dateLabel"></span>
         </button>
+        <button class="icon-chip" id="menuBtn" aria-label="Menú" style="position:fixed;top:max(env(safe-area-inset-top),18px);right:16px;z-index:98;"></button>
       </div>
       <nav class="tabs">
         <a class="tab" href="index.html">Inicio</a>
@@ -676,7 +685,6 @@
     <div class="empty" id="emptyState">No encontré imágenes en <code>links/gallery</code>.</div>
   </main>
 
-  <button class="icon-chip" id="menuBtn" aria-label="Menú" style="position:fixed;top:max(env(safe-area-inset-top),18px);right:16px;z-index:98;"></button>
   <div class="cal-overlay" id="calOverlay">
     <div class="cal-backdrop" id="calBackdrop"></div>
     <div class="cal-panel">

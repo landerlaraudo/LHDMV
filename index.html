@@ -967,9 +967,17 @@
         padding: 40px 56px 80px;
       }
       .blur { display: none; }
-      .app { gap: 28px; }
+      .app { gap: 28px; position: relative; }
       .top { margin-top: 0; }
-      .tabs { padding: 5px; gap: 8px; }
+      .tabs {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        margin: 0;
+        padding: 5px;
+        gap: 8px;
+      }
       .tab { padding: 9px 20px; font-size: 13px; }
       h1 {
         font-size: clamp(46px, 4.4vw, 68px);
